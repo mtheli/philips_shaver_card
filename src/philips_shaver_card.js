@@ -50,62 +50,52 @@ const MODE_CONFIG = {
   battery_saving: { label: "Eco", color: "#a5d6a7" },
 };
 
-// ---------- Pressure gauge constants ----------
+// ---------- Gauge constants ----------
 const GAUGE = {
-  SIZE: 240,
-  STROKE: 20,
+  CX: 140, CY: 142, R: 108, STROKE: 22,
   PRESSURE_MAX: 6000,
   ZONE_BASE: 500 / 6000,
   ZONE_LOW: 1500 / 6000,
   ZONE_HIGH: 4000 / 6000,
 };
-GAUGE.CX = GAUGE.SIZE / 2;
-GAUGE.CY = GAUGE.SIZE / 2 + 10;
-GAUGE.R = GAUGE.SIZE / 2 - GAUGE.STROKE / 2 - 8;
+const GAUGE_W = 280;
 
-// ---------- SVG arc helpers ----------
-function fracToAngle(f) {
-  return Math.PI - f * Math.PI;
+// ---------- SVG arc helpers (semicircle, CW in SVG) ----------
+function fracToXY(frac, r = GAUGE.R) {
+  // frac: 0 = left (180°), 1 = right (360°=0°)
+  const deg = 180 + 180 * frac;
+  const rad = (deg * Math.PI) / 180;
+  return { x: GAUGE.CX + r * Math.cos(rad), y: GAUGE.CY + r * Math.sin(rad) };
 }
 
-function arcX(f) {
-  return GAUGE.CX + GAUGE.R * Math.cos(fracToAngle(f));
+function describeArc(f1, f2, r = GAUGE.R) {
+  const range = 180;
+  const spanDeg = (f2 - f1) * range;
+  let ef1 = f1, ef2 = f2;
+  if (f2 - f1 >= 0.999) { ef1 = 0.001; ef2 = 0.999; }
+  const p1 = fracToXY(ef1, r), p2 = fracToXY(ef2, r);
+  const large = spanDeg > 180 ? 1 : 0;
+  return `M ${p1.x} ${p1.y} A ${r} ${r} 0 ${large} 1 ${p2.x} ${p2.y}`;
 }
 
-function arcY(f) {
-  return GAUGE.CY - GAUGE.R * Math.sin(fracToAngle(f));
-}
-
-function describeArc(f1, f2) {
-  const x1 = arcX(f1), y1 = arcY(f1);
-  const x2 = arcX(f2), y2 = arcY(f2);
-  return `M ${x1} ${y1} A ${GAUGE.R} ${GAUGE.R} 0 0 1 ${x2} ${y2}`;
-}
-
-// ---------- Mini ring arc helper ----------
-const RING = { CX: 50, CY: 50, R: 42, SW: 7, START: 135, END: 405 };
+// ---------- Mini ring arc helper (270° arc, gap at bottom, CW in SVG) ----------
+const RING = { CX: 18, CY: 18, R: 14, SW: 3, START: 135, END: 405 };
 
 function ringArc(frac) {
-  const clamp = Math.max(0, Math.min(1, frac));
-  const startRad = (RING.START * Math.PI) / 180;
+  const f = Math.max(0, Math.min(1, frac));
   const range = RING.END - RING.START;
-  const endRad = ((RING.START + range * clamp) * Math.PI) / 180;
+  const startRad = (RING.START * Math.PI) / 180;
+  const endRad = ((RING.START + range * f) * Math.PI) / 180;
   const x1 = RING.CX + RING.R * Math.cos(startRad);
   const y1 = RING.CY + RING.R * Math.sin(startRad);
   const x2 = RING.CX + RING.R * Math.cos(endRad);
   const y2 = RING.CY + RING.R * Math.sin(endRad);
-  const large = range * clamp > 180 ? 1 : 0;
+  const large = (range * f > 180) ? 1 : 0;
   return `M ${x1} ${y1} A ${RING.R} ${RING.R} 0 ${large} 1 ${x2} ${y2}`;
 }
 
 function ringBgArc() {
-  const startRad = (RING.START * Math.PI) / 180;
-  const endRad = (RING.END * Math.PI) / 180;
-  const x1 = RING.CX + RING.R * Math.cos(startRad);
-  const y1 = RING.CY + RING.R * Math.sin(startRad);
-  const x2 = RING.CX + RING.R * Math.cos(endRad);
-  const y2 = RING.CY + RING.R * Math.sin(endRad);
-  return `M ${x1} ${y1} A ${RING.R} ${RING.R} 0 1 1 ${x2} ${y2}`;
+  return ringArc(1);
 }
 
 // ---------- Formatting helpers ----------
@@ -126,13 +116,13 @@ function batteryColor(pct) {
 }
 
 function headColor(pct) {
-  if (pct > 30) return "#4caf50";
+  if (pct > 30) return "#3f51b5";
   if (pct > 15) return "#ff9800";
   return "#f44336";
 }
 
 function cleaningColor(remaining) {
-  if (remaining > 15) return "#4caf50";
+  if (remaining > 15) return "#00bcd4";
   if (remaining > 5) return "#ff9800";
   return "#f44336";
 }
@@ -154,6 +144,8 @@ const ICONS = {
   lan_disconnect: '<path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM17 7h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>',
   razor: '<path d="M20 8C19.45 8 19 7.55 19 7C19 6.45 19.45 6 20 6V5H4V6C4.55 6 5 6.45 5 7C5 7.55 4.55 8 4 8H2V15H4C4.55 15 5 15.45 5 16C5 16.55 4.55 17 4 17V18H20V17C19.45 17 19 16.55 19 16C19 15.45 19.45 15 20 15H22V8H20M20 12H19V13H17V12H13.41C13.2 12.58 12.65 13 12 13S10.8 12.58 10.59 12H7V13H5V12H4V11H5V10H7V11H10.59C10.8 10.42 11.35 10 12 10S13.2 10.42 13.41 11H17V10H19V11H20V12Z"/>',
   droplet: '<path d="M12 2c0 0-6 7.34-6 11a6 6 0 0 0 12 0c0-3.66-6-11-6-11zm0 15a3 3 0 0 1-3-3c0-.55.45-1 1-1s1 .45 1 1a1 1 0 0 0 1 1c.55 0 1 .45 1 1s-.45 1-1 1z"/>',
+  motor: '<path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.48 2.54l2.6 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7 0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95 0 5.52 4.47 10 9.99 10 3.31 0 6.24-1.61 8.06-4.09l-2.6-1.53A6.95 6.95 0 0 1 12 19z"/>',
+  charges: '<path d="M15.67 4H14V2h-4v2H8.33A1.33 1.33 0 0 0 7 5.33v15.34C7 21.4 7.6 22 8.33 22h7.34c.74 0 1.33-.6 1.33-1.33V5.33C17 4.6 16.4 4 15.67 4z"/>',
 };
 
 function svgIcon(name) {
@@ -170,14 +162,18 @@ function cardStyles() {
       --ps-border: var(--divider-color, rgba(255,255,255,0.04));
       --ps-track: var(--divider-color, rgba(255,255,255,0.06));
       --ps-card-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));
+      --ps-elevated: color-mix(in srgb, var(--primary-text-color, #fff) 6%, var(--ps-card-bg));
     }
     ha-card {
       overflow: hidden;
       font-family: var(--paper-font-body1_-_font-family, var(--ha-font-family-body, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif));
       color: var(--primary-text-color, #fff);
+      container-type: inline-size;
     }
+
+    /* HEADER */
     .header {
-      padding: 14px 20px 6px;
+      padding: 16px 16px 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -187,21 +183,26 @@ function cardStyles() {
       align-items: center;
       gap: 8px;
       min-width: 0;
+      overflow: hidden;
     }
     .device-name {
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 700;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .model-mode {
       font-size: 11px;
       color: var(--ps-text-dimmest);
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .header-right {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       flex-shrink: 0;
     }
     .conn-icons {
@@ -218,75 +219,159 @@ function cardStyles() {
     .conn-icon.disconnected {
       opacity: 0.25;
     }
-    .gauge-wrap {
-      padding: 8px 0 4px;
+
+    /* MINI TILES ROW */
+    .tiles-row {
       display: flex;
+      gap: 6px;
+      padding: 0 16px 14px;
       justify-content: center;
     }
-    .gauge-container {
-      position: relative;
-      width: ${GAUGE.SIZE}px;
-    }
-    .gauge-label {
-      text-align: center;
-      margin-top: -8px;
-    }
-    .gauge-state {
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 1;
-      transition: color 0.3s;
-    }
-    .gauge-sub {
-      font-size: 11px;
-      color: var(--ps-text-dimmest);
-      margin-top: 3px;
-    }
-    .info-tiles {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .info-tile {
+    .mini-tile {
       display: flex;
       align-items: center;
       gap: 4px;
+      background: var(--ps-elevated);
+      border-radius: 12px;
+      padding: 6px 8px 6px 4px;
+      flex: 1;
+      min-width: 0;
+      max-width: 140px;
       cursor: pointer;
+      transition: background 0.2s;
     }
-    .ring-wrap {
+    .mini-tile:hover {
+      background: color-mix(in srgb, var(--primary-text-color, #fff) 10%, var(--ps-card-bg));
+    }
+    .mini-ring-wrap {
+      position: relative;
       width: 36px;
       height: 36px;
-      position: relative;
+      flex-shrink: 0;
     }
-    .ring-wrap svg.ring-svg {
-      width: 100%;
-      height: 100%;
-    }
-    .ring-icon {
+    .mini-ring-svg { width: 36px; height: 36px; }
+    .mini-ring-icon {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
     }
-    .tile-value {
+    .mini-tile-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .mini-tile-label {
+      font-size: 9px;
+      color: var(--ps-text-dimmest);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+    .mini-tile-value {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* GAUGE */
+    .gauge-section {
+      padding: 4px 0 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .gauge-svg { display: block; max-width: 100%; height: auto; }
+    .gauge-status {
       font-size: 13px;
-      font-weight: 600;
+      color: var(--ps-text-dimmest);
+      margin-top: -2px;
+      margin-bottom: 8px;
+      text-align: center;
       transition: color 0.3s;
     }
+
+    /* Pressure label below gauge */
+    .pressure-label {
+      font-size: 17px;
+      font-weight: 700;
+      text-align: center;
+      margin-top: -6px;
+      margin-bottom: 2px;
+      transition: color 0.3s;
+    }
+    .pressure-value {
+      font-size: 11px;
+      color: var(--ps-text-dimmest);
+      text-align: center;
+      margin-bottom: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Gauge arcs */
+    .gauge-arc-fill {
+      transition: stroke-dashoffset 0.8s cubic-bezier(.4,0,.2,1), stroke 0.4s;
+    }
+    .zone-arc { stroke-linecap: butt; }
+    .zone-separator { stroke: var(--ps-card-bg); stroke-width: 3; }
+
+    /* Needle */
+    .needle-line {
+      stroke-linecap: round;
+      transition: x2 0.5s cubic-bezier(.4,0,.2,1), y2 0.5s cubic-bezier(.4,0,.2,1), stroke 0.3s;
+    }
+    .needle-glow {
+      filter: blur(4px); opacity: 0.5;
+      transition: x2 0.5s cubic-bezier(.4,0,.2,1), y2 0.5s cubic-bezier(.4,0,.2,1), stroke 0.3s;
+    }
+
+    /* Edge labels */
+    .gauge-edge-label { font-size: 10px; fill: var(--ps-text-dimmest); }
+
+    /* Shaving mini stats tiles */
+    .shave-stats {
+      display: flex;
+      gap: 6px;
+      padding: 8px 16px;
+      justify-content: center;
+    }
+    .shave-stat-tile {
+      flex: 1;
+      min-width: 0;
+      max-width: 120px;
+      background: var(--ps-elevated);
+      border-radius: 10px;
+      padding: 10px 4px;
+      text-align: center;
+    }
+    .shave-stat-val {
+      font-size: 15px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .shave-stat-label {
+      font-size: 10px;
+      color: var(--ps-text-dimmest);
+      margin-top: 6px;
+    }
+
+    /* DIVIDER + SPACER */
     .divider {
       height: 1px;
       background: var(--ps-border);
-      margin: 0 20px;
+      margin: 0 16px;
     }
-    .spacer { height: 10px; }
-    .stats { padding: 4px 20px 8px; }
+
+    /* STAT ROWS */
+    .stats { padding: 6px 16px 10px; }
     .stat-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 7px 0;
+      padding: 9px 0;
       border-bottom: 1px solid var(--ps-border);
     }
     .stat-row:last-child { border-bottom: none; }
@@ -295,7 +380,7 @@ function cardStyles() {
       color: var(--ps-text-dim);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
     .stat-icon { width: 16px; height: 16px; opacity: 0.55; }
     .stat-value {
@@ -310,16 +395,27 @@ function cardStyles() {
       margin-left: 2px;
       font-weight: 400;
     }
+
+    /* UNAVAILABLE */
     .unavailable {
       padding: 20px;
       text-align: center;
       color: var(--ps-text-dim);
       font-size: 14px;
     }
-    @keyframes chargeGlow {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
+
+    /* NARROW CARD */
+    @container (max-width: 350px) {
+      .mini-tile-info { display: none; }
+      .mini-tile { padding: 4px; justify-content: center; }
     }
+
+    /* ANIMATIONS */
+    @keyframes chargeGlow {
+      0%, 100% { stroke-opacity: 0.3; }
+      50% { stroke-opacity: 1; }
+    }
+    .charging-arc { animation: chargeGlow 2s ease-in-out infinite; }
   `;
 }
 
@@ -351,8 +447,11 @@ export class PhilipsShaverCard extends HTMLElement {
     };
   }
 
-  static getStubConfig() {
-    return { device_id: "" };
+  static getStubConfig(hass) {
+    const entry = Object.values(hass.entities).find(
+      (e) => e.platform === "philips_shaver" && e.translation_key === "battery"
+    );
+    return { device_id: entry ? entry.device_id : "" };
   }
 
   constructor() {
@@ -371,7 +470,7 @@ export class PhilipsShaverCard extends HTMLElement {
       throw new Error("Please select a Philips Shaver device in the card configuration.");
     }
     this._config = config;
-    this._entities = null; // Re-discover on next render
+    this._entities = null;
     if (this._hass) this._findEntities();
   }
 
@@ -491,8 +590,8 @@ export class PhilipsShaverCard extends HTMLElement {
       const card = document.createElement("ha-card");
       card.innerHTML = `<div class="card-content">
         ${this._renderHeader()}
+        ${this._renderMiniTiles()}
         ${this._renderGauge()}
-        <div class="spacer"></div>
         <div class="divider"></div>
         ${this._renderStats()}
       </div>`;
@@ -512,25 +611,23 @@ export class PhilipsShaverCard extends HTMLElement {
       header.addEventListener("click", () => this._fireMoreInfo(this._entities?.activity));
     }
 
-    // Click on battery ring tile → more-info for battery
+    // Click on mini tiles → more-info
     const batTile = card.querySelector('[data-mini="battery"]');
     if (batTile) batTile.addEventListener("click", () => this._fireMoreInfo(this._entities?.battery));
+    const headTile = card.querySelector('[data-mini="head"]');
+    if (headTile) headTile.addEventListener("click", () => this._fireMoreInfo(this._entities?.head_remaining));
+    const cleanTile = card.querySelector('[data-mini="cleaning"]');
+    if (cleanTile) cleanTile.addEventListener("click", () => this._fireMoreInfo(this._entities?.cleaning_cycles_remaining));
 
-    // Click on mini gauges → more-info
-    const headGauge = card.querySelector('[data-mini="head"]');
-    if (headGauge) headGauge.addEventListener("click", () => this._fireMoreInfo(this._entities?.head_remaining));
-    const cleanGauge = card.querySelector('[data-mini="cleaning"]');
-    if (cleanGauge) cleanGauge.addEventListener("click", () => this._fireMoreInfo(this._entities?.cleaning_cycles_remaining));
-
-    // Click on connection icons → more-info
+    // Click on connection icons → more-info (order: BT first, LAN second)
     const connIcons = card.querySelectorAll(".conn-icon");
     if (connIcons.length >= 2) {
-      const lanEl = connIcons[0];
-      lanEl.style.cursor = "pointer";
-      lanEl.addEventListener("click", () => this._fireMoreInfo(this._entities?.esp_bridge_alive));
-      const btEl = connIcons[1];
+      const btEl = connIcons[0];
       btEl.style.cursor = "pointer";
       btEl.addEventListener("click", () => this._fireMoreInfo(this._entities?.shaver_ble_connected));
+      const lanEl = connIcons[1];
+      lanEl.style.cursor = "pointer";
+      lanEl.addEventListener("click", () => this._fireMoreInfo(this._entities?.esp_bridge_alive));
     }
   }
 
@@ -539,15 +636,18 @@ export class PhilipsShaverCard extends HTMLElement {
     const root = this.shadowRoot;
     if (!root) return;
 
-    // Update battery ring tile
+    // Update mini tiles
     const bat = this._numState("battery", 0);
     const bc = batteryColor(bat);
-    const batVal = root.querySelector(".tile-bat-val");
-    if (batVal) { batVal.textContent = `${bat}%`; batVal.style.color = bc; }
-    const batArc = root.querySelector(".ring-bat-arc");
-    if (batArc) { batArc.setAttribute("d", ringArc(bat / 100)); batArc.setAttribute("stroke", bc); }
-    const batIcon = root.querySelector('[data-mini="battery"] .ring-icon');
-    if (batIcon) batIcon.setAttribute("fill", bc);
+    this._updateMiniTile(root, "battery", bat / 100, bc, `${bat}%`);
+
+    const head = this._numState("head_remaining", 0);
+    const hc = headColor(head);
+    this._updateMiniTile(root, "head", head / 100, hc, `${Math.round(head)}%`);
+
+    const clean = this._numState("cleaning_cycles_remaining", 0);
+    const cc = cleaningColor(clean);
+    this._updateMiniTile(root, "cleaning", clean / 30, cc, clean.toFixed(0));
 
     // Update connection icons
     const espEntity = this._entity("esp_bridge_alive");
@@ -556,34 +656,16 @@ export class PhilipsShaverCard extends HTMLElement {
     const bleConnected = bleEntity ? bleEntity.state === "on" : false;
     const connIcons = root.querySelectorAll(".conn-icon");
     if (connIcons.length >= 2) {
-      const lanEl = connIcons[0];
+      const btEl = connIcons[0];
+      btEl.setAttribute("fill", bleConnected ? "#42a5f5" : "var(--ps-text-dimmest)");
+      btEl.setAttribute("class", bleConnected ? "conn-icon" : "conn-icon disconnected");
+      const lanEl = connIcons[1];
       lanEl.innerHTML = ICONS[espConnected ? "lan_connect" : "lan_disconnect"];
       lanEl.setAttribute("fill", espConnected ? "#42a5f5" : "var(--ps-text-dimmest)");
       lanEl.setAttribute("class", espConnected ? "conn-icon" : "conn-icon disconnected");
-      const btEl = connIcons[1];
-      btEl.setAttribute("fill", bleConnected ? "#42a5f5" : "var(--ps-text-dimmest)");
-      btEl.setAttribute("class", bleConnected ? "conn-icon" : "conn-icon disconnected");
     }
 
-    // Update info tiles (ring arcs + values)
-    const head = this._numState("head_remaining", 0);
-    const hc = headColor(head);
-    const headVal = root.querySelector(".tile-head-val");
-    if (headVal) { headVal.textContent = `${Math.round(head)}%`; headVal.style.color = hc; }
-    const headArc = root.querySelector(".ring-head-arc");
-    if (headArc) { headArc.setAttribute("d", ringArc(head / 100)); headArc.setAttribute("stroke", hc); }
-    const headIcon = root.querySelector('[data-mini="head"] .ring-icon');
-    if (headIcon) headIcon.setAttribute("fill", hc);
-
-    const clean = this._numState("cleaning_cycles_remaining", 0);
-    const cc = cleaningColor(clean);
-    const cleanVal = root.querySelector(".tile-clean-val");
-    if (cleanVal) { cleanVal.textContent = clean.toFixed(1); cleanVal.style.color = cc; }
-    const cleanArc = root.querySelector(".ring-clean-arc");
-    if (cleanArc) { cleanArc.setAttribute("d", ringArc(clean / 30)); cleanArc.setAttribute("stroke", cc); }
-    const cleanIcon = root.querySelector('[data-mini="cleaning"] .ring-icon');
-    if (cleanIcon) cleanIcon.setAttribute("fill", cc);
-
+    // Update gauge
     const activity = this._state("activity", "off");
     if (activity === "shaving") {
       const pressure = this._numState("pressure", 0);
@@ -593,47 +675,62 @@ export class PhilipsShaverCard extends HTMLElement {
       const nc = stateColors[pState] || stateColors.no_contact;
 
       const needleFrac = Math.min(pressure / GAUGE.PRESSURE_MAX, 1);
-      const angle = fracToAngle(needleFrac);
-      const nx = GAUGE.CX + (GAUGE.R - 12) * Math.cos(angle);
-      const ny = GAUGE.CY - (GAUGE.R - 12) * Math.sin(angle);
+      const tip = fracToXY(needleFrac, GAUGE.R - 16);
 
-      const needle = root.querySelector(".gauge-needle");
-      if (needle) { needle.setAttribute("x2", nx); needle.setAttribute("y2", ny); needle.setAttribute("stroke", nc); needle.style.filter = `drop-shadow(0 0 6px ${nc})`; }
+      const needleLine = root.querySelector(".needle-line");
+      if (needleLine) { needleLine.setAttribute("x2", tip.x); needleLine.setAttribute("y2", tip.y); needleLine.setAttribute("stroke", nc); }
+      const needleGlow = root.querySelector(".needle-glow");
+      if (needleGlow) { needleGlow.setAttribute("x2", tip.x); needleGlow.setAttribute("y2", tip.y); needleGlow.setAttribute("stroke", nc); }
       const hubDot = root.querySelector(".gauge-hub-dot");
       if (hubDot) hubDot.setAttribute("fill", nc);
 
-      const stateEl = root.querySelector(".gauge-state");
-      if (stateEl) { stateEl.textContent = stateLabels[pState] || "\u2014"; stateEl.style.color = nc; }
-      const subEl = root.querySelector(".gauge-sub");
-      if (subEl) subEl.textContent = pressure > 0 ? pressure : "\u2014";
+      const pLabel = root.querySelector(".pressure-label");
+      if (pLabel) { pLabel.textContent = stateLabels[pState] || "\u2014"; pLabel.style.color = nc; }
+      const pVal = root.querySelector(".pressure-value");
+      if (pVal) pVal.textContent = pressure > 0 ? pressure : "\u2014";
 
-      this._updateStat("motor_rpm", this._numState("motor_rpm", 0));
-      this._updateStat("motor_current", this._numState("motor_current", 0));
+      // Update shave stat tiles
+      this._updateStatTile(root, "shave-rpm", this._numState("motor_rpm", 0));
+      this._updateStatTile(root, "shave-ma", this._numState("motor_current", 0));
+      const motion = this._state("motion_type", "no_motion");
+      const motionLabels = { no_motion: "\u2014", small_circle: "Circles", large_stroke: "Strokes" };
+      this._updateStatTile(root, "shave-motion", motionLabels[motion] || "\u2014");
+    } else if (activity === "cleaning") {
+      const progress = this._numState("cleaning_progress", 0);
+      const cleanArc = root.querySelector(".gauge-clean-arc");
+      if (cleanArc) cleanArc.setAttribute("d", describeArc(0, progress / 100));
+      const cleanText = root.querySelector(".gauge-clean-text");
+      if (cleanText) cleanText.textContent = `${Math.round(progress)}%`;
     } else {
-      const bat2 = this._numState("battery", 0);
       const batArc = root.querySelector(".gauge-bat-arc");
-      if (batArc) { batArc.setAttribute("d", describeArc(0, bat2 / 100)); batArc.setAttribute("stroke", batteryColor(bat2)); }
+      if (batArc) { batArc.setAttribute("d", describeArc(0, bat / 100)); batArc.setAttribute("stroke", bc); }
       const batText = root.querySelector(".gauge-bat-text");
-      if (batText) batText.textContent = `${bat2}%`;
+      if (batText) batText.textContent = `${bat}%`;
     }
   }
 
-  _updateStat(key, value) {
-    const el = this.shadowRoot?.querySelector(`[data-stat="${key}"]`);
+  _updateMiniTile(root, key, frac, color, text) {
+    const tile = root.querySelector(`[data-mini="${key}"]`);
+    if (!tile) return;
+    const val = tile.querySelector(".mini-tile-value");
+    if (val) { val.textContent = text; val.style.color = color; }
+    const arc = tile.querySelector(".mini-ring-fill");
+    if (arc) { arc.setAttribute("d", ringArc(frac)); arc.setAttribute("stroke", color); }
+    const icon = tile.querySelector(".mini-ring-icon");
+    if (icon) icon.setAttribute("fill", color);
+  }
+
+  _updateStatTile(root, key, value) {
+    const el = root.querySelector(`[data-shave="${key}"]`);
     if (el) el.textContent = value;
   }
 
   // ---------- Header ----------
   _renderHeader() {
-    const bat = this._numState("battery", 0);
-    const bc = batteryColor(bat);
     const model = this._state("model_number", "");
-    const mode = this._state("shaving_mode", "");
-    const modeLabel = MODE_CONFIG[mode]?.label || (mode ? mode.charAt(0).toUpperCase() + mode.slice(1) : "");
-    const modelMode = [model, modeLabel].filter(Boolean).join(" \u00b7 ");
     const name = this._config.title || "Philips Shaver";
 
-    // Connection status (binary_sensor: on = connected)
+    // Connection status
     const espEntity = this._entity("esp_bridge_alive");
     const espConnected = espEntity ? espEntity.state === "on" : false;
     const bleEntity = this._entity("shaver_ble_connected");
@@ -649,15 +746,52 @@ export class PhilipsShaverCard extends HTMLElement {
       <div class="header">
         <div class="header-left">
           <span class="device-name">${name}</span>
-          <span class="model-mode">${modelMode}</span>
+          <span class="model-mode">${model}</span>
         </div>
         <div class="header-right">
           <div class="conn-icons">
-            <svg class="${lanClass}" viewBox="0 0 24 24" fill="${lanColor}">${ICONS[lanIcon]}</svg>
             <svg class="${btClass}" viewBox="0 0 24 24" fill="${btColor}">${ICONS.bluetooth}</svg>
+            <svg class="${lanClass}" viewBox="0 0 24 24" fill="${lanColor}">${ICONS[lanIcon]}</svg>
           </div>
-          ${this._renderInfoTiles()}
         </div>
+      </div>
+    `;
+  }
+
+  // ---------- Mini tiles row ----------
+  _renderMiniTiles() {
+    const bat = this._numState("battery", 0);
+    const bc = batteryColor(bat);
+    const head = this._numState("head_remaining", 0);
+    const hc = headColor(head);
+    const clean = this._numState("cleaning_cycles_remaining", 0);
+    const cc = cleaningColor(clean);
+
+    const tiles = [
+      { key: "battery", label: "Battery", value: `${bat}%`, frac: bat / 100, color: bc, icon: this._state("activity", "off") === "charging" ? ICONS.charge : ICONS.charges },
+      { key: "head", label: "Head", value: `${Math.round(head)}%`, frac: head / 100, color: hc, icon: ICONS.razor },
+      { key: "cleaning", label: "Clean", value: clean.toFixed(0), frac: clean / 30, color: cc, icon: ICONS.droplet },
+    ];
+
+    const bg = ringBgArc();
+
+    return `
+      <div class="tiles-row">
+        ${tiles.map(t => `
+          <div class="mini-tile" data-mini="${t.key}">
+            <div class="mini-ring-wrap">
+              <svg class="mini-ring-svg" viewBox="0 0 36 36">
+                <path d="${bg}" fill="none" stroke="var(--ps-track)" stroke-width="${RING.SW}" stroke-linecap="round"/>
+                <path class="mini-ring-fill" d="${ringArc(t.frac)}" fill="none" stroke="${t.color}" stroke-width="${RING.SW}" stroke-linecap="round"/>
+              </svg>
+              <svg class="mini-ring-icon" viewBox="0 0 24 24" fill="${t.color}">${t.icon}</svg>
+            </div>
+            <div class="mini-tile-info">
+              <span class="mini-tile-label">${t.label}</span>
+              <span class="mini-tile-value" style="color:${t.color}">${t.value}</span>
+            </div>
+          </div>
+        `).join("")}
       </div>
     `;
   }
@@ -666,131 +800,111 @@ export class PhilipsShaverCard extends HTMLElement {
   _renderGauge() {
     const activity = this._state("activity", "off");
     if (activity === "shaving") return this._renderPressureGauge();
+    if (activity === "cleaning") return this._renderCleaningGauge();
     return this._renderBatteryGauge(activity === "charging");
   }
 
   _renderPressureGauge() {
-    const { SIZE: S, CX: cx, CY: cy, STROKE: ST, R: r } = GAUGE;
-    const height = S / 2 + 50;
+    const { CX: cx, CY: cy, R: r, STROKE: st, PRESSURE_MAX: max } = GAUGE;
     const pressure = this._numState("pressure", 0);
     const pState = this._state("pressure_state", "no_contact");
     const elapsed = this._elapsed || this._numState("shaving_time", 0);
     const tm = Math.floor(elapsed / 60);
     const ts = elapsed % 60;
+    const timerStr = String(tm).padStart(2, "0") + ":" + String(ts).padStart(2, "0");
 
-    const needleFrac = Math.min(pressure / GAUGE.PRESSURE_MAX, 1);
-    const angle = fracToAngle(needleFrac);
-    const needleLen = r - 12;
-    const nx = cx + needleLen * Math.cos(angle);
-    const ny = cy - needleLen * Math.sin(angle);
-
+    const needleFrac = Math.min(pressure / max, 0.99);
     const stateColors = { no_contact: "var(--disabled-text-color, #9e9e9e)", too_low: "#42a5f5", optimal: "#4caf50", too_high: "#f44336" };
     const stateLabels = { no_contact: "No Contact", too_low: "Too Low", optimal: "Optimal", too_high: "Too High" };
     const nc = stateColors[pState] || stateColors.no_contact;
 
     const { ZONE_BASE: base, ZONE_LOW: low, ZONE_HIGH: high } = GAUGE;
 
-    const dots = [base, low, high].map(f =>
-      `<circle cx="${arcX(f)}" cy="${arcY(f)}" r="4" style="fill:var(--ps-card-bg);stroke:var(--ps-border)" stroke-width="1"/>`
-    ).join("");
+    // Zone separator lines
+    const sepLines = [base, low, high].map(f => {
+      const inner = fracToXY(f, r - 12);
+      const outer = fracToXY(f, r + 12);
+      return `<line x1="${inner.x}" y1="${inner.y}" x2="${outer.x}" y2="${outer.y}" class="zone-separator"/>`;
+    }).join("");
+
+    const tip = fracToXY(needleFrac, r - 16);
 
     return `
-      <div class="gauge-wrap">
-        <div class="gauge-container" style="min-height:${height}px">
-          <svg width="${S}" height="${height}" viewBox="0 0 ${S} ${height}">
-            <path d="${describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${ST}" stroke-linecap="round"/>
-            <path d="${describeArc(0, base)}" fill="none" stroke="var(--ps-track)" stroke-width="${ST}" stroke-linecap="round"/>
-            <path d="${describeArc(base, low)}" fill="none" stroke="#42a5f5" stroke-width="${ST}" stroke-linecap="butt" opacity="0.6"/>
-            <path d="${describeArc(low, high)}" fill="none" stroke="#4caf50" stroke-width="${ST}" stroke-linecap="butt" opacity="0.75"/>
-            <path d="${describeArc(high, 1)}" fill="none" stroke="#ff9800" stroke-width="${ST}" stroke-linecap="round" opacity="0.6"/>
-            ${dots}
-            <line class="gauge-needle" x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}"
-              stroke="${nc}" stroke-width="3.5" stroke-linecap="round"
-              style="transition:x2 0.5s cubic-bezier(.4,0,.2,1),y2 0.5s cubic-bezier(.4,0,.2,1),stroke 0.3s;filter:drop-shadow(0 0 6px ${nc})"/>
-            <circle cx="${cx}" cy="${cy}" r="8" style="fill:var(--ps-card-bg);stroke:var(--ps-border)" stroke-width="2"/>
-            <circle class="gauge-hub-dot" cx="${cx}" cy="${cy}" r="4" fill="${nc}" style="transition:fill 0.3s"/>
-            <text x="24" y="${cy + 26}" text-anchor="start" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit">Low</text>
-            <text x="${S - 24}" y="${cy + 26}" text-anchor="end" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit">High</text>
-            <text x="${cx}" y="${cy - 38}" text-anchor="middle" font-size="11" fill="var(--ps-text-dimmer)" font-family="inherit" letter-spacing="1">SESSION</text>
-            <text class="gauge-timer" x="${cx}" y="${cy - 12}" text-anchor="middle" font-size="34" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="'SF Mono','Menlo','Consolas',monospace" letter-spacing="1">${String(tm).padStart(2, "0")}:${String(ts).padStart(2, "0")}</text>
-          </svg>
-          <div class="gauge-label">
-            <div class="gauge-state" style="color:${nc}">${stateLabels[pState] || "\u2014"}</div>
-            <div class="gauge-sub">${pressure > 0 ? pressure : "\u2014"}</div>
-          </div>
-        </div>
+      <div class="gauge-section">
+        <svg class="gauge-svg" width="${GAUGE_W}" height="186" viewBox="0 0 ${GAUGE_W} 186">
+          <!-- Track -->
+          <path d="${describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${st}" stroke-linecap="butt"/>
+          <!-- Zones -->
+          <path d="${describeArc(0, base)}" fill="none" stroke="var(--ps-track)" stroke-width="${st}" stroke-linecap="round" class="zone-arc"/>
+          <path d="${describeArc(base, low)}" fill="none" stroke="#42a5f5" stroke-width="${st}" class="zone-arc" opacity="0.5"/>
+          <path d="${describeArc(low, high)}" fill="none" stroke="#4caf50" stroke-width="${st}" class="zone-arc" opacity="0.65"/>
+          <path d="${describeArc(high, 1)}" fill="none" stroke="#ff9800" stroke-width="${st}" stroke-linecap="round" class="zone-arc" opacity="0.5"/>
+          <!-- Zone separators -->
+          ${sepLines}
+          <!-- Session timer -->
+          <text x="${cx}" y="${cy - 48}" text-anchor="middle" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit" letter-spacing="1.5" text-transform="uppercase">SESSION</text>
+          <text class="gauge-timer" x="${cx}" y="${cy - 12}" text-anchor="middle" font-size="38" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="'SF Mono','Menlo','Consolas',monospace" letter-spacing="1">${timerStr}</text>
+          <!-- Needle -->
+          <line x1="${cx}" y1="${cy + 10}" x2="${tip.x}" y2="${tip.y}" stroke="${nc}" stroke-width="6" class="needle-glow"/>
+          <line x1="${cx}" y1="${cy + 10}" x2="${tip.x}" y2="${tip.y}" stroke="${nc}" stroke-width="3" class="needle-line"/>
+          <!-- Hub -->
+          <circle cx="${cx}" cy="${cy + 10}" r="8" fill="var(--ps-card-bg)" stroke="var(--ps-border)" stroke-width="2"/>
+          <circle class="gauge-hub-dot" cx="${cx}" cy="${cy + 10}" r="4" fill="${nc}"/>
+          <!-- Edge labels -->
+          <text x="26" y="${cy + 28}" class="gauge-edge-label" text-anchor="start">Low</text>
+          <text x="${GAUGE_W - 26}" y="${cy + 28}" class="gauge-edge-label" text-anchor="end">High</text>
+        </svg>
+        <div class="pressure-label" style="color:${nc}">${stateLabels[pState] || "\u2014"}</div>
+        <div class="pressure-value">${pressure > 0 ? pressure : "\u2014"}</div>
       </div>
     `;
   }
 
   _renderBatteryGauge(isCharging) {
-    const { SIZE: S, CX: cx, CY: cy, STROKE: ST } = GAUGE;
-    const height = S / 2 + 50;
+    const { CX: cx, CY: cy, R: r, STROKE: st } = GAUGE;
     const bat = this._numState("battery", 0);
     const bc = batteryColor(bat);
-    const chargeAttr = isCharging ? ' style="animation:chargeGlow 2s ease-in-out infinite"' : ' opacity="0.85"';
+    const arcClass = isCharging ? "gauge-bat-arc charging-arc" : "gauge-bat-arc";
 
     return `
-      <div class="gauge-wrap">
-        <div class="gauge-container" style="min-height:${height}px">
-          <svg width="${S}" height="${height}" viewBox="0 0 ${S} ${height}">
-            <path d="${describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${ST}" stroke-linecap="round"/>
-            <path class="gauge-bat-arc" d="${describeArc(0, bat / 100)}" fill="none" stroke="${bc}" stroke-width="${ST}" stroke-linecap="round"${chargeAttr}/>
-            <text class="gauge-bat-text" x="${cx}" y="${cy - 24}" text-anchor="middle" font-size="48" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit">${bat}%</text>
-            <text x="${cx}" y="${cy + 2}" text-anchor="middle" font-size="13" fill="var(--ps-text-dim)" font-family="inherit">${isCharging ? "\u26A1 Charging" : "Battery"}</text>
-          </svg>
-          <div class="gauge-label" style="margin-top:-4px">
-            <div style="font-size:13px;color:${isCharging ? "#4caf50" : "var(--ps-text-dimmest)"}">
-              ${isCharging ? "Plugged In" : "Standby"}
-            </div>
-          </div>
+      <div class="gauge-section">
+        <svg class="gauge-svg" width="${GAUGE_W}" height="180" viewBox="0 0 ${GAUGE_W} 180">
+          <path d="${describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${st}" stroke-linecap="round"/>
+          <path class="${arcClass}" d="${describeArc(0, bat / 100)}" fill="none" stroke="${bc}" stroke-width="${st}" stroke-linecap="round"/>
+          <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="52" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit" letter-spacing="-2">
+            <tspan class="gauge-bat-text">${bat}%</tspan>
+          </text>
+          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="${isCharging ? "#4caf50" : "var(--ps-text-dim)"}" font-family="inherit">
+            ${isCharging ? "\u26A1 Charging" : "Battery"}
+          </text>
+        </svg>
+        <div class="gauge-status" style="color:${isCharging ? "#4caf50" : "var(--ps-text-dimmest)"}">
+          ${isCharging ? "Plugged In" : "Standby"}
         </div>
       </div>
     `;
   }
 
-  // ---------- Info tiles ----------
-  _renderInfoTiles() {
-    const bat = this._numState("battery", 0);
-    const bc = batteryColor(bat);
-    const head = this._numState("head_remaining", 0);
-    const hc = headColor(head);
-    const clean = this._numState("cleaning_cycles_remaining", 0);
-    const cc = cleaningColor(clean);
-
-    const bg = ringBgArc();
+  _renderCleaningGauge() {
+    const { CX: cx, CY: cy, STROKE: st } = GAUGE;
+    const progress = this._numState("cleaning_progress", 0);
+    const frac = Math.max(0, Math.min(1, progress / 100));
+    const color = "#42a5f5";
 
     return `
-      <div class="info-tiles">
-        <div class="info-tile" data-mini="battery">
-          <div class="ring-wrap">
-            <svg class="ring-svg" viewBox="0 0 100 100">
-              <path d="${bg}" fill="none" stroke="var(--ps-track)" stroke-width="${RING.SW}" stroke-linecap="round"/>
-              <path class="ring-bat-arc" d="${ringArc(bat / 100)}" fill="none" stroke="${bc}" stroke-width="${RING.SW}" stroke-linecap="round"/>
-            </svg>
-            <svg class="ring-icon" viewBox="0 0 24 24" fill="${bc}">${ICONS.charge}</svg>
-          </div>
-          <span class="tile-value tile-bat-val" style="color:${bc}">${bat}%</span>
-        </div>
-        <div class="info-tile" data-mini="head">
-          <div class="ring-wrap">
-            <svg class="ring-svg" viewBox="0 0 100 100">
-              <path d="${bg}" fill="none" stroke="var(--ps-track)" stroke-width="${RING.SW}" stroke-linecap="round"/>
-              <path class="ring-head-arc" d="${ringArc(head / 100)}" fill="none" stroke="${hc}" stroke-width="${RING.SW}" stroke-linecap="round"/>
-            </svg>
-            <svg class="ring-icon" viewBox="0 0 24 24" fill="${hc}">${ICONS.razor}</svg>
-          </div>
-          <span class="tile-value tile-head-val" style="color:${hc}">${Math.round(head)}%</span>
-        </div>
-        <div class="info-tile" data-mini="cleaning">
-          <div class="ring-wrap">
-            <svg class="ring-svg" viewBox="0 0 100 100">
-              <path d="${bg}" fill="none" stroke="var(--ps-track)" stroke-width="${RING.SW}" stroke-linecap="round"/>
-              <path class="ring-clean-arc" d="${ringArc(clean / 30)}" fill="none" stroke="${cc}" stroke-width="${RING.SW}" stroke-linecap="round"/>
-            </svg>
-            <svg class="ring-icon" viewBox="0 0 24 24" fill="${cc}">${ICONS.droplet}</svg>
-          </div>
-          <span class="tile-value tile-clean-val" style="color:${cc}">${clean.toFixed(1)}</span>
+      <div class="gauge-section">
+        <svg class="gauge-svg" width="${GAUGE_W}" height="180" viewBox="0 0 ${GAUGE_W} 180">
+          <path d="${describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${st}" stroke-linecap="round"/>
+          <path class="gauge-clean-arc charging-arc" d="${describeArc(0, frac)}" fill="none" stroke="${color}" stroke-width="${st}" stroke-linecap="round"/>
+          <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="52" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit" letter-spacing="-2">
+            <tspan class="gauge-clean-text">${Math.round(progress)}%</tspan>
+          </text>
+          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="var(--ps-text-dim)" font-family="inherit">
+            ${ICONS.droplet ? `<tspan>Cleaning</tspan>` : "Cleaning"}
+          </text>
+        </svg>
+        <div class="gauge-status" style="color:${color}">
+          In Progress
         </div>
       </div>
     `;
@@ -802,15 +916,21 @@ export class PhilipsShaverCard extends HTMLElement {
     const isShaving = activity === "shaving";
     const isCharging = activity === "charging";
 
-    let rows = "";
     if (isShaving) {
-      rows = this._statRow("speed", "Motor Speed", `<span data-stat="motor_rpm">${this._numState("motor_rpm", 0)}</span>`, "RPM")
-           + this._statRow("current", "Motor Current", `<span data-stat="motor_current">${this._numState("motor_current", 0)}</span>`, "mA");
-    } else if (isCharging) {
-      rows = this._statRow("charge", "Charge Cycles", this._numState("amount_of_charges", 0))
+      return this._renderShaveStats();
+    }
+
+    let rows = "";
+    if (isCharging) {
+      rows = this._statRow("charges", "Charge Cycles", this._numState("amount_of_charges", 0))
            + this._statRow("clock", "Last Session", formatSession(this._numState("shaving_time", 0)))
            + this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0))
            + this._statRow("clock", "Total Time", formatAge(this._numState("total_age", 0)));
+    } else if (activity === "cleaning") {
+      const remaining = this._numState("cleaning_cycles_remaining", 0);
+      rows = this._statRow("droplet", "Cycles Remaining", remaining.toFixed(1))
+           + this._statRow("clock", "Last Session", formatSession(this._numState("shaving_time", 0)))
+           + this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0));
     } else {
       const daysUsed = this._numState("days_last_used", null);
       const daysText = daysUsed === null ? "\u2014" : daysUsed === 0 ? "Today" : daysUsed === 1 ? "Yesterday" : `${daysUsed}d ago`;
@@ -821,6 +941,30 @@ export class PhilipsShaverCard extends HTMLElement {
     }
 
     return `<div class="stats">${rows}</div>`;
+  }
+
+  _renderShaveStats() {
+    const rpm = this._numState("motor_rpm", 0);
+    const ma = this._numState("motor_current", 0);
+    const motion = this._state("motion_type", "no_motion");
+    const motionLabels = { no_motion: "\u2014", small_circle: "Circles", large_stroke: "Strokes" };
+
+    return `
+      <div class="shave-stats">
+        <div class="shave-stat-tile">
+          <div class="shave-stat-val" data-shave="shave-rpm">${rpm}</div>
+          <div class="shave-stat-label">RPM</div>
+        </div>
+        <div class="shave-stat-tile">
+          <div class="shave-stat-val" data-shave="shave-ma">${ma}</div>
+          <div class="shave-stat-label">mA</div>
+        </div>
+        <div class="shave-stat-tile">
+          <div class="shave-stat-val" data-shave="shave-motion">${motionLabels[motion] || "\u2014"}</div>
+          <div class="shave-stat-label">Motion</div>
+        </div>
+      </div>
+    `;
   }
 
   _statRow(icon, label, value, unit) {

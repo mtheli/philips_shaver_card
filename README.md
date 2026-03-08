@@ -6,6 +6,8 @@
 
 Custom Lovelace card for the [Philips Shaver](https://github.com/mtheli/philips_shaver) Home Assistant integration.
 
+![Shaving mode](./screenshots/shaving.png)
+
 ## Features
 
 - **Pressure gauge** with animated needle during shaving (blue/green/orange zones)
@@ -19,7 +21,7 @@ The card automatically switches between three modes based on the shaver's activi
 
 | Standby | Shaving | Charging |
 | :---: | :---: | :---: |
-| Battery gauge | Pressure gauge + timer | Battery gauge + animation |
+| ![Standby](./screenshots/standby.png) | ![Shaving](./screenshots/shaving.png) | ![Charging](./screenshots/charging.png) |
 
 ## Installation
 
