@@ -1,4 +1,4 @@
-import { PhilipsShaverCard } from "./philips-shaver-card.js";
+import { PhilipsShaverCard } from "./philips_shaver_card.js";
 
 customElements.define("philips-shaver-card", PhilipsShaverCard);
 

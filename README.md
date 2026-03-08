@@ -1,8 +1,8 @@
 # Philips Shaver Card
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
-[![GitHub Release](https://img.shields.io/github/v/release/mtheli/philips-shaver-card)](https://github.com/mtheli/philips-shaver-card/releases)
-[![License: MIT](https://img.shields.io/github/license/mtheli/philips-shaver-card)](LICENSE)
+[![GitHub Release](https://img.shields.io/github/v/release/mtheli/philips_shaver_card)](https://github.com/mtheli/philips_shaver_card/releases)
+[![License: MIT](https://img.shields.io/github/license/mtheli/philips_shaver_card)](LICENSE)
 
 Custom Lovelace card for the [Philips Shaver](https://github.com/mtheli/philips_shaver) Home Assistant integration.
 
@@ -27,16 +27,16 @@ The card automatically switches between three modes based on the shaver's activi
 
 1. Go to **HACS** > **Frontend**
 2. Click the three-dot menu > **Custom repositories**
-3. Add `https://github.com/mtheli/philips-shaver-card` with category **Dashboard**
+3. Add `https://github.com/mtheli/philips_shaver_card` with category **Dashboard**
 4. Find "Philips Shaver Card" and click **Install**
 5. Reload your browser
 
 ### Manual
 
-1. Download `philips-shaver-card.js` from the [latest release](https://github.com/mtheli/philips-shaver-card/releases/latest)
-2. Copy it to `config/www/philips-shaver-card.js`
+1. Download `philips_shaver_card.js` from the [latest release](https://github.com/mtheli/philips_shaver_card/releases/latest)
+2. Copy it to `config/www/philips_shaver_card.js`
 3. Add the resource in **Settings** > **Dashboards** > **Resources**:
-   - URL: `/local/philips-shaver-card.js`
+   - URL: `/local/philips_shaver_card.js`
    - Type: JavaScript Module
 
 ## Configuration

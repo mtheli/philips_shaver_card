@@ -1,8 +1,8 @@
 /**
  * Philips Shaver Card for Home Assistant
- * https://github.com/mtheli/philips-shaver-card
+ * https://github.com/mtheli/philips_shaver_card
  */ // ---------- Entity discovery map: translation_key → local alias ----------
-const $f46165c551e58a9b$var$TRANSLATION_KEY_MAP = {
+const $8b62e546fdd14731$var$TRANSLATION_KEY_MAP = {
     // Sensors
     battery: "battery",
     activity: "activity",
@@ -26,15 +26,18 @@ const $f46165c551e58a9b$var$TRANSLATION_KEY_MAP = {
     handle_load_type: "handle_load_type",
     motion_type: "motion_type",
     cleaning_progress: "cleaning_progress",
+    cleaning_cycles_remaining: "cleaning_cycles_remaining",
     // Binary sensors
     charging: "is_charging",
     travel_lock: "travel_lock",
+    esp_bridge_alive: "esp_bridge_alive",
+    shaver_ble_connected: "shaver_ble_connected",
     // Selects
     shaving_mode: "shaving_mode",
     lightring_brightness: "lightring_brightness"
 };
 // ---------- Mode config ----------
-const $f46165c551e58a9b$var$MODE_CONFIG = {
+const $8b62e546fdd14731$var$MODE_CONFIG = {
     sensitive: {
         label: "Sensitive",
         color: "#90caf9"
@@ -65,7 +68,7 @@ const $f46165c551e58a9b$var$MODE_CONFIG = {
     }
 };
 // ---------- Pressure gauge constants ----------
-const $f46165c551e58a9b$var$GAUGE = {
+const $8b62e546fdd14731$var$GAUGE = {
     SIZE: 240,
     STROKE: 20,
     PRESSURE_MAX: 6000,
@@ -73,46 +76,80 @@ const $f46165c551e58a9b$var$GAUGE = {
     ZONE_LOW: 0.25,
     ZONE_HIGH: 4000 / 6000
 };
-$f46165c551e58a9b$var$GAUGE.CX = $f46165c551e58a9b$var$GAUGE.SIZE / 2;
-$f46165c551e58a9b$var$GAUGE.CY = $f46165c551e58a9b$var$GAUGE.SIZE / 2 + 10;
-$f46165c551e58a9b$var$GAUGE.R = $f46165c551e58a9b$var$GAUGE.SIZE / 2 - $f46165c551e58a9b$var$GAUGE.STROKE / 2 - 8;
+$8b62e546fdd14731$var$GAUGE.CX = $8b62e546fdd14731$var$GAUGE.SIZE / 2;
+$8b62e546fdd14731$var$GAUGE.CY = $8b62e546fdd14731$var$GAUGE.SIZE / 2 + 10;
+$8b62e546fdd14731$var$GAUGE.R = $8b62e546fdd14731$var$GAUGE.SIZE / 2 - $8b62e546fdd14731$var$GAUGE.STROKE / 2 - 8;
 // ---------- SVG arc helpers ----------
-function $f46165c551e58a9b$var$fracToAngle(f) {
+function $8b62e546fdd14731$var$fracToAngle(f) {
     return Math.PI - f * Math.PI;
 }
-function $f46165c551e58a9b$var$arcX(f) {
-    return $f46165c551e58a9b$var$GAUGE.CX + $f46165c551e58a9b$var$GAUGE.R * Math.cos($f46165c551e58a9b$var$fracToAngle(f));
+function $8b62e546fdd14731$var$arcX(f) {
+    return $8b62e546fdd14731$var$GAUGE.CX + $8b62e546fdd14731$var$GAUGE.R * Math.cos($8b62e546fdd14731$var$fracToAngle(f));
 }
-function $f46165c551e58a9b$var$arcY(f) {
-    return $f46165c551e58a9b$var$GAUGE.CY - $f46165c551e58a9b$var$GAUGE.R * Math.sin($f46165c551e58a9b$var$fracToAngle(f));
+function $8b62e546fdd14731$var$arcY(f) {
+    return $8b62e546fdd14731$var$GAUGE.CY - $8b62e546fdd14731$var$GAUGE.R * Math.sin($8b62e546fdd14731$var$fracToAngle(f));
 }
-function $f46165c551e58a9b$var$describeArc(f1, f2) {
-    const x1 = $f46165c551e58a9b$var$arcX(f1), y1 = $f46165c551e58a9b$var$arcY(f1);
-    const x2 = $f46165c551e58a9b$var$arcX(f2), y2 = $f46165c551e58a9b$var$arcY(f2);
-    const large = f2 - f1 > 0.5 ? 1 : 0;
-    return `M ${x1} ${y1} A ${$f46165c551e58a9b$var$GAUGE.R} ${$f46165c551e58a9b$var$GAUGE.R} 0 ${large} 0 ${x2} ${y2}`;
+function $8b62e546fdd14731$var$describeArc(f1, f2) {
+    const x1 = $8b62e546fdd14731$var$arcX(f1), y1 = $8b62e546fdd14731$var$arcY(f1);
+    const x2 = $8b62e546fdd14731$var$arcX(f2), y2 = $8b62e546fdd14731$var$arcY(f2);
+    return `M ${x1} ${y1} A ${$8b62e546fdd14731$var$GAUGE.R} ${$8b62e546fdd14731$var$GAUGE.R} 0 0 1 ${x2} ${y2}`;
+}
+// ---------- Mini ring arc helper ----------
+const $8b62e546fdd14731$var$RING = {
+    CX: 50,
+    CY: 50,
+    R: 42,
+    SW: 7,
+    START: 135,
+    END: 405
+};
+function $8b62e546fdd14731$var$ringArc(frac) {
+    const clamp = Math.max(0, Math.min(1, frac));
+    const startRad = $8b62e546fdd14731$var$RING.START * Math.PI / 180;
+    const range = $8b62e546fdd14731$var$RING.END - $8b62e546fdd14731$var$RING.START;
+    const endRad = ($8b62e546fdd14731$var$RING.START + range * clamp) * Math.PI / 180;
+    const x1 = $8b62e546fdd14731$var$RING.CX + $8b62e546fdd14731$var$RING.R * Math.cos(startRad);
+    const y1 = $8b62e546fdd14731$var$RING.CY + $8b62e546fdd14731$var$RING.R * Math.sin(startRad);
+    const x2 = $8b62e546fdd14731$var$RING.CX + $8b62e546fdd14731$var$RING.R * Math.cos(endRad);
+    const y2 = $8b62e546fdd14731$var$RING.CY + $8b62e546fdd14731$var$RING.R * Math.sin(endRad);
+    const large = range * clamp > 180 ? 1 : 0;
+    return `M ${x1} ${y1} A ${$8b62e546fdd14731$var$RING.R} ${$8b62e546fdd14731$var$RING.R} 0 ${large} 1 ${x2} ${y2}`;
+}
+function $8b62e546fdd14731$var$ringBgArc() {
+    const startRad = $8b62e546fdd14731$var$RING.START * Math.PI / 180;
+    const endRad = $8b62e546fdd14731$var$RING.END * Math.PI / 180;
+    const x1 = $8b62e546fdd14731$var$RING.CX + $8b62e546fdd14731$var$RING.R * Math.cos(startRad);
+    const y1 = $8b62e546fdd14731$var$RING.CY + $8b62e546fdd14731$var$RING.R * Math.sin(startRad);
+    const x2 = $8b62e546fdd14731$var$RING.CX + $8b62e546fdd14731$var$RING.R * Math.cos(endRad);
+    const y2 = $8b62e546fdd14731$var$RING.CY + $8b62e546fdd14731$var$RING.R * Math.sin(endRad);
+    return `M ${x1} ${y1} A ${$8b62e546fdd14731$var$RING.R} ${$8b62e546fdd14731$var$RING.R} 0 1 1 ${x2} ${y2}`;
 }
 // ---------- Formatting helpers ----------
-function $f46165c551e58a9b$var$formatAge(s) {
+function $8b62e546fdd14731$var$formatAge(s) {
     const d = Math.floor(s / 86400);
     const h = Math.floor(s % 86400 / 3600);
     return `${d}d ${h}h`;
 }
-function $f46165c551e58a9b$var$formatSession(s) {
+function $8b62e546fdd14731$var$formatSession(s) {
     return `${Math.floor(s / 60)}m ${s % 60}s`;
 }
-function $f46165c551e58a9b$var$batteryColor(pct) {
+function $8b62e546fdd14731$var$batteryColor(pct) {
     if (pct > 50) return "#4caf50";
     if (pct > 20) return "#ff9800";
     return "#f44336";
 }
-function $f46165c551e58a9b$var$headColor(pct) {
+function $8b62e546fdd14731$var$headColor(pct) {
     if (pct > 30) return "#4caf50";
     if (pct > 15) return "#ff9800";
     return "#f44336";
 }
+function $8b62e546fdd14731$var$cleaningColor(remaining) {
+    if (remaining > 15) return "#4caf50";
+    if (remaining > 5) return "#ff9800";
+    return "#f44336";
+}
 // ---------- SVG Icon paths ----------
-const $f46165c551e58a9b$var$ICONS = {
+const $8b62e546fdd14731$var$ICONS = {
     speed: '<path d="M12 16a3 3 0 0 1-2.12-.88L4.93 10.2a8 8 0 1 1 14.14 0l-4.95 4.95A3 3 0 0 1 12 16zm0-12a6 6 0 0 0-4.24 10.24L12 18.49l4.24-4.25A6 6 0 0 0 12 4z"/>',
     current: '<path d="M7 2v11h3v9l7-12h-4l4-8z"/>',
     clock: '<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>',
@@ -122,20 +159,26 @@ const $f46165c551e58a9b$var$ICONS = {
     signal: '<path d="M12 6c3.33 0 6 2.67 6 6h2c0-4.42-3.58-8-8-8S4 7.58 4 12h2c0-3.33 2.67-6 6-6zm0 4c1.1 0 2 .9 2 2h2a4 4 0 0 0-8 0h2c0-1.1.9-2 2-2zm-1 4h2v2h-2z"/>',
     firmware: '<path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6z"/>',
     lock: '<path d="M18 8h-1V6a5 5 0 0 0-10 0v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zm-6 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM9 8V6a3 3 0 0 1 6 0v2H9z"/>',
-    charge: '<path d="M15.67 4H14V2h-4v2H8.33A1.33 1.33 0 0 0 7 5.33v15.34C7 21.4 7.6 22 8.33 22h7.34c.74 0 1.33-.6 1.33-1.33V5.33C17 4.6 16.4 4 15.67 4zM11 20v-5.5H9L13 7v5.5h2L11 20z"/>'
+    charge: '<path d="M15.67 4H14V2h-4v2H8.33A1.33 1.33 0 0 0 7 5.33v15.34C7 21.4 7.6 22 8.33 22h7.34c.74 0 1.33-.6 1.33-1.33V5.33C17 4.6 16.4 4 15.67 4zM11 20v-5.5H9L13 7v5.5h2L11 20z"/>',
+    bluetooth: '<path d="M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z"/>',
+    lan_connect: '<path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>',
+    lan_disconnect: '<path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM17 7h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>',
+    razor: '<path d="M20 8C19.45 8 19 7.55 19 7C19 6.45 19.45 6 20 6V5H4V6C4.55 6 5 6.45 5 7C5 7.55 4.55 8 4 8H2V15H4C4.55 15 5 15.45 5 16C5 16.55 4.55 17 4 17V18H20V17C19.45 17 19 16.55 19 16C19 15.45 19.45 15 20 15H22V8H20M20 12H19V13H17V12H13.41C13.2 12.58 12.65 13 12 13S10.8 12.58 10.59 12H7V13H5V12H4V11H5V10H7V11H10.59C10.8 10.42 11.35 10 12 10S13.2 10.42 13.41 11H17V10H19V11H20V12Z"/>',
+    droplet: '<path d="M12 2c0 0-6 7.34-6 11a6 6 0 0 0 12 0c0-3.66-6-11-6-11zm0 15a3 3 0 0 1-3-3c0-.55.45-1 1-1s1 .45 1 1a1 1 0 0 0 1 1c.55 0 1 .45 1 1s-.45 1-1 1z"/>'
 };
-function $f46165c551e58a9b$var$svgIcon(name) {
-    return `<svg class="stat-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">${$f46165c551e58a9b$var$ICONS[name] || ""}</svg>`;
+function $8b62e546fdd14731$var$svgIcon(name) {
+    return `<svg class="stat-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">${$8b62e546fdd14731$var$ICONS[name] || ""}</svg>`;
 }
 // ---------- CSS ----------
-function $f46165c551e58a9b$var$cardStyles() {
+function $8b62e546fdd14731$var$cardStyles() {
     return `
     :host {
-      --ps-text-dim: rgba(255,255,255,0.5);
-      --ps-text-dimmer: rgba(255,255,255,0.35);
-      --ps-text-dimmest: rgba(255,255,255,0.25);
-      --ps-border: rgba(255,255,255,0.04);
-      --ps-track: rgba(255,255,255,0.06);
+      --ps-text-dim: var(--secondary-text-color, rgba(255,255,255,0.5));
+      --ps-text-dimmer: var(--disabled-text-color, rgba(255,255,255,0.35));
+      --ps-text-dimmest: var(--disabled-text-color, rgba(255,255,255,0.25));
+      --ps-border: var(--divider-color, rgba(255,255,255,0.04));
+      --ps-track: var(--divider-color, rgba(255,255,255,0.06));
+      --ps-card-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));
     }
     ha-card {
       overflow: hidden;
@@ -154,15 +197,6 @@ function $f46165c551e58a9b$var$cardStyles() {
       gap: 8px;
       min-width: 0;
     }
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .status-dot.active {
-      animation: pulse 2s infinite;
-    }
     .device-name {
       font-size: 15px;
       font-weight: 600;
@@ -173,13 +207,25 @@ function $f46165c551e58a9b$var$cardStyles() {
       color: var(--ps-text-dimmest);
       white-space: nowrap;
     }
-    .battery-badge {
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .conn-icons {
       display: flex;
       align-items: center;
       gap: 4px;
-      font-size: 13px;
-      font-weight: 600;
-      flex-shrink: 0;
+    }
+    .conn-icon {
+      width: 16px;
+      height: 16px;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+    .conn-icon.disconnected {
+      opacity: 0.25;
     }
     .gauge-wrap {
       padding: 8px 0 4px;
@@ -188,7 +234,7 @@ function $f46165c551e58a9b$var$cardStyles() {
     }
     .gauge-container {
       position: relative;
-      width: ${$f46165c551e58a9b$var$GAUGE.SIZE}px;
+      width: ${$8b62e546fdd14731$var$GAUGE.SIZE}px;
     }
     .gauge-label {
       text-align: center;
@@ -205,28 +251,42 @@ function $f46165c551e58a9b$var$cardStyles() {
       color: var(--ps-text-dimmest);
       margin-top: 3px;
     }
-    .head-bar-wrap { padding: 0 20px; }
-    .head-bar-header {
+    .info-tiles {
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 4px;
+      align-items: center;
+      gap: 8px;
     }
-    .head-bar-label { font-size: 11px; color: var(--ps-text-dim); }
-    .head-bar-value { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); }
-    .head-bar-track {
-      height: 4px;
-      background: var(--ps-track);
-      border-radius: 2px;
-      overflow: hidden;
+    .info-tile {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
     }
-    .head-bar-fill {
+    .ring-wrap {
+      width: 36px;
+      height: 36px;
+      position: relative;
+    }
+    .ring-wrap svg.ring-svg {
+      width: 100%;
       height: 100%;
-      border-radius: 2px;
-      transition: width 0.5s;
+    }
+    .ring-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+    }
+    .tile-value {
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.3s;
     }
     .divider {
       height: 1px;
-      background: rgba(255,255,255,0.05);
+      background: var(--ps-border);
       margin: 0 20px;
     }
     .spacer { height: 10px; }
@@ -250,7 +310,7 @@ function $f46165c551e58a9b$var$cardStyles() {
     .stat-value {
       font-size: 13px;
       font-weight: 600;
-      color: rgba(255,255,255,0.9);
+      color: var(--primary-text-color);
       font-variant-numeric: tabular-nums;
     }
     .stat-unit {
@@ -259,42 +319,19 @@ function $f46165c551e58a9b$var$cardStyles() {
       margin-left: 2px;
       font-weight: 400;
     }
-    .diag-header {
-      padding: 10px 20px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      user-select: none;
-    }
-    .diag-label { font-size: 12px; color: var(--ps-text-dimmest); }
-    .diag-chevron { transition: transform 0.25s; }
-    .diag-chevron.open { transform: rotate(180deg); }
-    .diag-content {
-      padding: 0 20px 14px;
-      animation: slideIn 0.2s ease;
-    }
     .unavailable {
       padding: 20px;
       text-align: center;
       color: var(--ps-text-dim);
       font-size: 14px;
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
     @keyframes chargeGlow {
       0%, 100% { opacity: 0.6; }
       50% { opacity: 1; }
     }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
   `;
 }
-class $f46165c551e58a9b$export$4778d74453ecc150 extends HTMLElement {
+class $8b62e546fdd14731$export$4778d74453ecc150 extends HTMLElement {
     // ---- Config form (HA visual editor) ----
     static getConfigForm() {
         return {
@@ -334,7 +371,6 @@ class $f46165c551e58a9b$export$4778d74453ecc150 extends HTMLElement {
         this._hass = null;
         this._config = null;
         this._entities = null;
-        this._diagOpen = false;
         this._timer = null;
         this._elapsed = 0;
         this._lastActivity = null;
@@ -363,7 +399,7 @@ class $f46165c551e58a9b$export$4778d74453ecc150 extends HTMLElement {
             const entity = allEntities[entityId];
             if (entity.device_id !== deviceId) continue;
             const tKey = entity.translation_key;
-            if (tKey && $f46165c551e58a9b$var$TRANSLATION_KEY_MAP[tKey]) found[$f46165c551e58a9b$var$TRANSLATION_KEY_MAP[tKey]] = entity.entity_id;
+            if (tKey && $8b62e546fdd14731$var$TRANSLATION_KEY_MAP[tKey]) found[$8b62e546fdd14731$var$TRANSLATION_KEY_MAP[tKey]] = entity.entity_id;
             // Fallback: battery via device_class
             const state = this._hass.states[entity.entity_id];
             if (!found.battery && state?.attributes?.device_class === "battery") found.battery = entity.entity_id;
@@ -436,18 +472,15 @@ class $f46165c551e58a9b$export$4778d74453ecc150 extends HTMLElement {
             const root = this.shadowRoot;
             root.innerHTML = "";
             const style = document.createElement("style");
-            style.textContent = $f46165c551e58a9b$var$cardStyles();
+            style.textContent = $8b62e546fdd14731$var$cardStyles();
             root.appendChild(style);
             const card = document.createElement("ha-card");
             card.innerHTML = `<div class="card-content">
         ${this._renderHeader()}
         ${this._renderGauge()}
-        ${this._renderHeadBar()}
         <div class="spacer"></div>
         <div class="divider"></div>
         ${this._renderStats()}
-        <div class="divider"></div>
-        ${this._renderDiagnostics()}
       </div>`;
             root.appendChild(card);
             this._bind(card);
@@ -455,53 +488,100 @@ class $f46165c551e58a9b$export$4778d74453ecc150 extends HTMLElement {
     }
     // ---------- Event binding ----------
     _bind(card) {
-        const diagHeader = card.querySelector(".diag-header");
-        if (diagHeader) diagHeader.addEventListener("click", ()=>{
-            this._diagOpen = !this._diagOpen;
-            this._lastActivity = null; // Force full re-render
-            this._render();
-        });
         // Click on header → more-info for activity
         const header = card.querySelector(".header-left");
         if (header) {
             header.style.cursor = "pointer";
             header.addEventListener("click", ()=>this._fireMoreInfo(this._entities?.activity));
         }
-        // Click on battery → more-info for battery
-        const batBadge = card.querySelector(".battery-badge");
-        if (batBadge) {
-            batBadge.style.cursor = "pointer";
-            batBadge.addEventListener("click", ()=>this._fireMoreInfo(this._entities?.battery));
-        }
-        // Click on head bar → more-info for head_remaining
-        const headBar = card.querySelector(".head-bar-wrap");
-        if (headBar) {
-            headBar.style.cursor = "pointer";
-            headBar.addEventListener("click", ()=>this._fireMoreInfo(this._entities?.head_remaining));
+        // Click on battery ring tile → more-info for battery
+        const batTile = card.querySelector('[data-mini="battery"]');
+        if (batTile) batTile.addEventListener("click", ()=>this._fireMoreInfo(this._entities?.battery));
+        // Click on mini gauges → more-info
+        const headGauge = card.querySelector('[data-mini="head"]');
+        if (headGauge) headGauge.addEventListener("click", ()=>this._fireMoreInfo(this._entities?.head_remaining));
+        const cleanGauge = card.querySelector('[data-mini="cleaning"]');
+        if (cleanGauge) cleanGauge.addEventListener("click", ()=>this._fireMoreInfo(this._entities?.cleaning_cycles_remaining));
+        // Click on connection icons → more-info
+        const connIcons = card.querySelectorAll(".conn-icon");
+        if (connIcons.length >= 2) {
+            const lanEl = connIcons[0];
+            lanEl.style.cursor = "pointer";
+            lanEl.addEventListener("click", ()=>this._fireMoreInfo(this._entities?.esp_bridge_alive));
+            const btEl = connIcons[1];
+            btEl.style.cursor = "pointer";
+            btEl.addEventListener("click", ()=>this._fireMoreInfo(this._entities?.shaver_ble_connected));
         }
     }
     // ---------- Partial update ----------
     _updateDynamic() {
         const root = this.shadowRoot;
         if (!root) return;
+        // Update battery ring tile
         const bat = this._numState("battery", 0);
-        const bc = $f46165c551e58a9b$var$batteryColor(bat);
-        const batVal = root.querySelector(".battery-value");
-        if (batVal) batVal.textContent = `${bat}%`;
-        const head = this._numState("head_remaining", 0);
-        const headFill = root.querySelector(".head-bar-fill");
-        if (headFill) {
-            headFill.style.width = `${head}%`;
-            headFill.style.background = $f46165c551e58a9b$var$headColor(head);
+        const bc = $8b62e546fdd14731$var$batteryColor(bat);
+        const batVal = root.querySelector(".tile-bat-val");
+        if (batVal) {
+            batVal.textContent = `${bat}%`;
+            batVal.style.color = bc;
         }
-        const headVal = root.querySelector(".head-bar-value");
-        if (headVal) headVal.textContent = `${head}%`;
+        const batArc = root.querySelector(".ring-bat-arc");
+        if (batArc) {
+            batArc.setAttribute("d", $8b62e546fdd14731$var$ringArc(bat / 100));
+            batArc.setAttribute("stroke", bc);
+        }
+        const batIcon = root.querySelector('[data-mini="battery"] .ring-icon');
+        if (batIcon) batIcon.setAttribute("fill", bc);
+        // Update connection icons
+        const espEntity = this._entity("esp_bridge_alive");
+        const espConnected = espEntity ? espEntity.state === "on" : false;
+        const bleEntity = this._entity("shaver_ble_connected");
+        const bleConnected = bleEntity ? bleEntity.state === "on" : false;
+        const connIcons = root.querySelectorAll(".conn-icon");
+        if (connIcons.length >= 2) {
+            const lanEl = connIcons[0];
+            lanEl.innerHTML = $8b62e546fdd14731$var$ICONS[espConnected ? "lan_connect" : "lan_disconnect"];
+            lanEl.setAttribute("fill", espConnected ? "#42a5f5" : "var(--ps-text-dimmest)");
+            lanEl.setAttribute("class", espConnected ? "conn-icon" : "conn-icon disconnected");
+            const btEl = connIcons[1];
+            btEl.setAttribute("fill", bleConnected ? "#42a5f5" : "var(--ps-text-dimmest)");
+            btEl.setAttribute("class", bleConnected ? "conn-icon" : "conn-icon disconnected");
+        }
+        // Update info tiles (ring arcs + values)
+        const head = this._numState("head_remaining", 0);
+        const hc = $8b62e546fdd14731$var$headColor(head);
+        const headVal = root.querySelector(".tile-head-val");
+        if (headVal) {
+            headVal.textContent = `${Math.round(head)}%`;
+            headVal.style.color = hc;
+        }
+        const headArc = root.querySelector(".ring-head-arc");
+        if (headArc) {
+            headArc.setAttribute("d", $8b62e546fdd14731$var$ringArc(head / 100));
+            headArc.setAttribute("stroke", hc);
+        }
+        const headIcon = root.querySelector('[data-mini="head"] .ring-icon');
+        if (headIcon) headIcon.setAttribute("fill", hc);
+        const clean = this._numState("cleaning_cycles_remaining", 0);
+        const cc = $8b62e546fdd14731$var$cleaningColor(clean);
+        const cleanVal = root.querySelector(".tile-clean-val");
+        if (cleanVal) {
+            cleanVal.textContent = clean.toFixed(1);
+            cleanVal.style.color = cc;
+        }
+        const cleanArc = root.querySelector(".ring-clean-arc");
+        if (cleanArc) {
+            cleanArc.setAttribute("d", $8b62e546fdd14731$var$ringArc(clean / 30));
+            cleanArc.setAttribute("stroke", cc);
+        }
+        const cleanIcon = root.querySelector('[data-mini="cleaning"] .ring-icon');
+        if (cleanIcon) cleanIcon.setAttribute("fill", cc);
         const activity = this._state("activity", "off");
         if (activity === "shaving") {
             const pressure = this._numState("pressure", 0);
             const pState = this._state("pressure_state", "no_contact");
             const stateColors = {
-                no_contact: "rgba(255,255,255,0.25)",
+                no_contact: "var(--disabled-text-color, #9e9e9e)",
                 too_low: "#42a5f5",
                 optimal: "#4caf50",
                 too_high: "#f44336"
@@ -513,10 +593,10 @@ class $f46165c551e58a9b$export$4778d74453ecc150 extends HTMLElement {
                 too_high: "Too High"
             };
             const nc = stateColors[pState] || stateColors.no_contact;
-            const needleFrac = Math.min(pressure / $f46165c551e58a9b$var$GAUGE.PRESSURE_MAX, 1);
-            const angle = $f46165c551e58a9b$var$fracToAngle(needleFrac);
-            const nx = $f46165c551e58a9b$var$GAUGE.CX + ($f46165c551e58a9b$var$GAUGE.R - 12) * Math.cos(angle);
-            const ny = $f46165c551e58a9b$var$GAUGE.CY - ($f46165c551e58a9b$var$GAUGE.R - 12) * Math.sin(angle);
+            const needleFrac = Math.min(pressure / $8b62e546fdd14731$var$GAUGE.PRESSURE_MAX, 1);
+            const angle = $8b62e546fdd14731$var$fracToAngle(needleFrac);
+            const nx = $8b62e546fdd14731$var$GAUGE.CX + ($8b62e546fdd14731$var$GAUGE.R - 12) * Math.cos(angle);
+            const ny = $8b62e546fdd14731$var$GAUGE.CY - ($8b62e546fdd14731$var$GAUGE.R - 12) * Math.sin(angle);
             const needle = root.querySelector(".gauge-needle");
             if (needle) {
                 needle.setAttribute("x2", nx);
@@ -539,8 +619,8 @@ class $f46165c551e58a9b$export$4778d74453ecc150 extends HTMLElement {
             const bat2 = this._numState("battery", 0);
             const batArc = root.querySelector(".gauge-bat-arc");
             if (batArc) {
-                batArc.setAttribute("d", $f46165c551e58a9b$var$describeArc(0, bat2 / 100));
-                batArc.setAttribute("stroke", $f46165c551e58a9b$var$batteryColor(bat2));
+                batArc.setAttribute("d", $8b62e546fdd14731$var$describeArc(0, bat2 / 100));
+                batArc.setAttribute("stroke", $8b62e546fdd14731$var$batteryColor(bat2));
             }
             const batText = root.querySelector(".gauge-bat-text");
             if (batText) batText.textContent = `${bat2}%`;
@@ -553,36 +633,37 @@ class $f46165c551e58a9b$export$4778d74453ecc150 extends HTMLElement {
     // ---------- Header ----------
     _renderHeader() {
         const bat = this._numState("battery", 0);
-        const bc = $f46165c551e58a9b$var$batteryColor(bat);
-        const activity = this._state("activity", "off");
-        const isShaving = activity === "shaving";
-        const isCharging = activity === "charging";
-        const statusColor = isShaving ? "#ffab40" : isCharging ? "#4caf50" : "rgba(255,255,255,0.25)";
-        const dotClass = isShaving || isCharging ? "status-dot active" : "status-dot";
+        const bc = $8b62e546fdd14731$var$batteryColor(bat);
         const model = this._state("model_number", "");
         const mode = this._state("shaving_mode", "");
-        const modeLabel = $f46165c551e58a9b$var$MODE_CONFIG[mode]?.label || (mode ? mode.charAt(0).toUpperCase() + mode.slice(1) : "");
+        const modeLabel = $8b62e546fdd14731$var$MODE_CONFIG[mode]?.label || (mode ? mode.charAt(0).toUpperCase() + mode.slice(1) : "");
         const modelMode = [
             model,
             modeLabel
         ].filter(Boolean).join(" \u00b7 ");
         const name = this._config.title || "Philips Shaver";
-        const batFill = Math.max(0, bat / 100 * 17);
-        const batSvg = `<svg viewBox="0 0 24 14" width="20" height="12" fill="${bc}">
-      <rect x="0.5" y="0.5" width="20" height="13" rx="2" ry="2" fill="none" stroke="${bc}" stroke-width="1.5"/>
-      <rect x="21" y="4" width="2.5" height="6" rx="1" fill="${bc}" opacity="0.6"/>
-      <rect x="2" y="2" width="${batFill}" height="10" rx="1" fill="${bc}"/>
-    </svg>`;
+        // Connection status (binary_sensor: on = connected)
+        const espEntity = this._entity("esp_bridge_alive");
+        const espConnected = espEntity ? espEntity.state === "on" : false;
+        const bleEntity = this._entity("shaver_ble_connected");
+        const bleConnected = bleEntity ? bleEntity.state === "on" : false;
+        const lanIcon = espConnected ? "lan_connect" : "lan_disconnect";
+        const lanColor = espConnected ? "#42a5f5" : "var(--ps-text-dimmest)";
+        const lanClass = espConnected ? "conn-icon" : "conn-icon disconnected";
+        const btColor = bleConnected ? "#42a5f5" : "var(--ps-text-dimmest)";
+        const btClass = bleConnected ? "conn-icon" : "conn-icon disconnected";
         return `
       <div class="header">
         <div class="header-left">
-          <div class="${dotClass}" style="background:${statusColor};${isShaving || isCharging ? `box-shadow:0 0 8px ${statusColor}` : ""}"></div>
           <span class="device-name">${name}</span>
           <span class="model-mode">${modelMode}</span>
         </div>
-        <div class="battery-badge" style="color:${bc}">
-          ${batSvg}
-          <span class="battery-value">${bat}%</span>
+        <div class="header-right">
+          <div class="conn-icons">
+            <svg class="${lanClass}" viewBox="0 0 24 24" fill="${lanColor}">${$8b62e546fdd14731$var$ICONS[lanIcon]}</svg>
+            <svg class="${btClass}" viewBox="0 0 24 24" fill="${btColor}">${$8b62e546fdd14731$var$ICONS.bluetooth}</svg>
+          </div>
+          ${this._renderInfoTiles()}
         </div>
       </div>
     `;
@@ -594,20 +675,20 @@ class $f46165c551e58a9b$export$4778d74453ecc150 extends HTMLElement {
         return this._renderBatteryGauge(activity === "charging");
     }
     _renderPressureGauge() {
-        const { SIZE: S, CX: cx, CY: cy, STROKE: ST, R: r } = $f46165c551e58a9b$var$GAUGE;
+        const { SIZE: S, CX: cx, CY: cy, STROKE: ST, R: r } = $8b62e546fdd14731$var$GAUGE;
         const height = S / 2 + 50;
         const pressure = this._numState("pressure", 0);
         const pState = this._state("pressure_state", "no_contact");
         const elapsed = this._elapsed || this._numState("shaving_time", 0);
         const tm = Math.floor(elapsed / 60);
         const ts = elapsed % 60;
-        const needleFrac = Math.min(pressure / $f46165c551e58a9b$var$GAUGE.PRESSURE_MAX, 1);
-        const angle = $f46165c551e58a9b$var$fracToAngle(needleFrac);
+        const needleFrac = Math.min(pressure / $8b62e546fdd14731$var$GAUGE.PRESSURE_MAX, 1);
+        const angle = $8b62e546fdd14731$var$fracToAngle(needleFrac);
         const needleLen = r - 12;
         const nx = cx + needleLen * Math.cos(angle);
         const ny = cy - needleLen * Math.sin(angle);
         const stateColors = {
-            no_contact: "rgba(255,255,255,0.25)",
+            no_contact: "var(--disabled-text-color, #9e9e9e)",
             too_low: "#42a5f5",
             optimal: "#4caf50",
             too_high: "#f44336"
@@ -619,26 +700,26 @@ class $f46165c551e58a9b$export$4778d74453ecc150 extends HTMLElement {
             too_high: "Too High"
         };
         const nc = stateColors[pState] || stateColors.no_contact;
-        const { ZONE_BASE: base, ZONE_LOW: low, ZONE_HIGH: high } = $f46165c551e58a9b$var$GAUGE;
+        const { ZONE_BASE: base, ZONE_LOW: low, ZONE_HIGH: high } = $8b62e546fdd14731$var$GAUGE;
         const dots = [
             base,
             low,
             high
-        ].map((f)=>`<circle cx="${$f46165c551e58a9b$var$arcX(f)}" cy="${$f46165c551e58a9b$var$arcY(f)}" r="4" fill="rgba(28,28,28,0.95)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>`).join("");
+        ].map((f)=>`<circle cx="${$8b62e546fdd14731$var$arcX(f)}" cy="${$8b62e546fdd14731$var$arcY(f)}" r="4" style="fill:var(--ps-card-bg);stroke:var(--ps-border)" stroke-width="1"/>`).join("");
         return `
       <div class="gauge-wrap">
-        <div class="gauge-container" style="height:${height}px">
+        <div class="gauge-container" style="min-height:${height}px">
           <svg width="${S}" height="${height}" viewBox="0 0 ${S} ${height}">
-            <path d="${$f46165c551e58a9b$var$describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${ST}" stroke-linecap="round"/>
-            <path d="${$f46165c551e58a9b$var$describeArc(0, base)}" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="${ST}" stroke-linecap="round"/>
-            <path d="${$f46165c551e58a9b$var$describeArc(base, low)}" fill="none" stroke="#42a5f5" stroke-width="${ST}" stroke-linecap="butt" opacity="0.6"/>
-            <path d="${$f46165c551e58a9b$var$describeArc(low, high)}" fill="none" stroke="#4caf50" stroke-width="${ST}" stroke-linecap="butt" opacity="0.75"/>
-            <path d="${$f46165c551e58a9b$var$describeArc(high, 1)}" fill="none" stroke="#ff9800" stroke-width="${ST}" stroke-linecap="round" opacity="0.6"/>
+            <path d="${$8b62e546fdd14731$var$describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${ST}" stroke-linecap="round"/>
+            <path d="${$8b62e546fdd14731$var$describeArc(0, base)}" fill="none" stroke="var(--ps-track)" stroke-width="${ST}" stroke-linecap="round"/>
+            <path d="${$8b62e546fdd14731$var$describeArc(base, low)}" fill="none" stroke="#42a5f5" stroke-width="${ST}" stroke-linecap="butt" opacity="0.6"/>
+            <path d="${$8b62e546fdd14731$var$describeArc(low, high)}" fill="none" stroke="#4caf50" stroke-width="${ST}" stroke-linecap="butt" opacity="0.75"/>
+            <path d="${$8b62e546fdd14731$var$describeArc(high, 1)}" fill="none" stroke="#ff9800" stroke-width="${ST}" stroke-linecap="round" opacity="0.6"/>
             ${dots}
             <line class="gauge-needle" x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}"
               stroke="${nc}" stroke-width="3.5" stroke-linecap="round"
               style="transition:x2 0.5s cubic-bezier(.4,0,.2,1),y2 0.5s cubic-bezier(.4,0,.2,1),stroke 0.3s;filter:drop-shadow(0 0 6px ${nc})"/>
-            <circle cx="${cx}" cy="${cy}" r="8" fill="#252525" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+            <circle cx="${cx}" cy="${cy}" r="8" style="fill:var(--ps-card-bg);stroke:var(--ps-border)" stroke-width="2"/>
             <circle class="gauge-hub-dot" cx="${cx}" cy="${cy}" r="4" fill="${nc}" style="transition:fill 0.3s"/>
             <text x="24" y="${cy + 26}" text-anchor="start" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit">Low</text>
             <text x="${S - 24}" y="${cy + 26}" text-anchor="end" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit">High</text>
@@ -654,17 +735,17 @@ class $f46165c551e58a9b$export$4778d74453ecc150 extends HTMLElement {
     `;
     }
     _renderBatteryGauge(isCharging) {
-        const { SIZE: S, CX: cx, CY: cy, STROKE: ST } = $f46165c551e58a9b$var$GAUGE;
+        const { SIZE: S, CX: cx, CY: cy, STROKE: ST } = $8b62e546fdd14731$var$GAUGE;
         const height = S / 2 + 50;
         const bat = this._numState("battery", 0);
-        const bc = $f46165c551e58a9b$var$batteryColor(bat);
+        const bc = $8b62e546fdd14731$var$batteryColor(bat);
         const chargeAttr = isCharging ? ' style="animation:chargeGlow 2s ease-in-out infinite"' : ' opacity="0.85"';
         return `
       <div class="gauge-wrap">
-        <div class="gauge-container" style="height:${height}px">
+        <div class="gauge-container" style="min-height:${height}px">
           <svg width="${S}" height="${height}" viewBox="0 0 ${S} ${height}">
-            <path d="${$f46165c551e58a9b$var$describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${ST}" stroke-linecap="round"/>
-            <path class="gauge-bat-arc" d="${$f46165c551e58a9b$var$describeArc(0, bat / 100)}" fill="none" stroke="${bc}" stroke-width="${ST}" stroke-linecap="round"${chargeAttr}/>
+            <path d="${$8b62e546fdd14731$var$describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${ST}" stroke-linecap="round"/>
+            <path class="gauge-bat-arc" d="${$8b62e546fdd14731$var$describeArc(0, bat / 100)}" fill="none" stroke="${bc}" stroke-width="${ST}" stroke-linecap="round"${chargeAttr}/>
             <text class="gauge-bat-text" x="${cx}" y="${cy - 24}" text-anchor="middle" font-size="48" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit">${bat}%</text>
             <text x="${cx}" y="${cy + 2}" text-anchor="middle" font-size="13" fill="var(--ps-text-dim)" font-family="inherit">${isCharging ? "\u26A1 Charging" : "Battery"}</text>
           </svg>
@@ -677,18 +758,46 @@ class $f46165c551e58a9b$export$4778d74453ecc150 extends HTMLElement {
       </div>
     `;
     }
-    // ---------- Head bar ----------
-    _renderHeadBar() {
+    // ---------- Info tiles ----------
+    _renderInfoTiles() {
+        const bat = this._numState("battery", 0);
+        const bc = $8b62e546fdd14731$var$batteryColor(bat);
         const head = this._numState("head_remaining", 0);
-        const hc = $f46165c551e58a9b$var$headColor(head);
+        const hc = $8b62e546fdd14731$var$headColor(head);
+        const clean = this._numState("cleaning_cycles_remaining", 0);
+        const cc = $8b62e546fdd14731$var$cleaningColor(clean);
+        const bg = $8b62e546fdd14731$var$ringBgArc();
         return `
-      <div class="head-bar-wrap">
-        <div class="head-bar-header">
-          <span class="head-bar-label">Shaver Head</span>
-          <span class="head-bar-value">${head}%</span>
+      <div class="info-tiles">
+        <div class="info-tile" data-mini="battery">
+          <div class="ring-wrap">
+            <svg class="ring-svg" viewBox="0 0 100 100">
+              <path d="${bg}" fill="none" stroke="var(--ps-track)" stroke-width="${$8b62e546fdd14731$var$RING.SW}" stroke-linecap="round"/>
+              <path class="ring-bat-arc" d="${$8b62e546fdd14731$var$ringArc(bat / 100)}" fill="none" stroke="${bc}" stroke-width="${$8b62e546fdd14731$var$RING.SW}" stroke-linecap="round"/>
+            </svg>
+            <svg class="ring-icon" viewBox="0 0 24 24" fill="${bc}">${$8b62e546fdd14731$var$ICONS.charge}</svg>
+          </div>
+          <span class="tile-value tile-bat-val" style="color:${bc}">${bat}%</span>
         </div>
-        <div class="head-bar-track">
-          <div class="head-bar-fill" style="width:${head}%;background:${hc}"></div>
+        <div class="info-tile" data-mini="head">
+          <div class="ring-wrap">
+            <svg class="ring-svg" viewBox="0 0 100 100">
+              <path d="${bg}" fill="none" stroke="var(--ps-track)" stroke-width="${$8b62e546fdd14731$var$RING.SW}" stroke-linecap="round"/>
+              <path class="ring-head-arc" d="${$8b62e546fdd14731$var$ringArc(head / 100)}" fill="none" stroke="${hc}" stroke-width="${$8b62e546fdd14731$var$RING.SW}" stroke-linecap="round"/>
+            </svg>
+            <svg class="ring-icon" viewBox="0 0 24 24" fill="${hc}">${$8b62e546fdd14731$var$ICONS.razor}</svg>
+          </div>
+          <span class="tile-value tile-head-val" style="color:${hc}">${Math.round(head)}%</span>
+        </div>
+        <div class="info-tile" data-mini="cleaning">
+          <div class="ring-wrap">
+            <svg class="ring-svg" viewBox="0 0 100 100">
+              <path d="${bg}" fill="none" stroke="var(--ps-track)" stroke-width="${$8b62e546fdd14731$var$RING.SW}" stroke-linecap="round"/>
+              <path class="ring-clean-arc" d="${$8b62e546fdd14731$var$ringArc(clean / 30)}" fill="none" stroke="${cc}" stroke-width="${$8b62e546fdd14731$var$RING.SW}" stroke-linecap="round"/>
+            </svg>
+            <svg class="ring-icon" viewBox="0 0 24 24" fill="${cc}">${$8b62e546fdd14731$var$ICONS.droplet}</svg>
+          </div>
+          <span class="tile-value tile-clean-val" style="color:${cc}">${clean.toFixed(1)}</span>
         </div>
       </div>
     `;
@@ -700,56 +809,26 @@ class $f46165c551e58a9b$export$4778d74453ecc150 extends HTMLElement {
         const isCharging = activity === "charging";
         let rows = "";
         if (isShaving) rows = this._statRow("speed", "Motor Speed", `<span data-stat="motor_rpm">${this._numState("motor_rpm", 0)}</span>`, "RPM") + this._statRow("current", "Motor Current", `<span data-stat="motor_current">${this._numState("motor_current", 0)}</span>`, "mA");
-        else if (isCharging) rows = this._statRow("charge", "Charge Cycles", this._numState("amount_of_charges", 0)) + this._statRow("clock", "Last Session", $f46165c551e58a9b$var$formatSession(this._numState("shaving_time", 0))) + this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0)) + this._statRow("clock", "Total Time", $f46165c551e58a9b$var$formatAge(this._numState("total_age", 0)));
+        else if (isCharging) rows = this._statRow("charge", "Charge Cycles", this._numState("amount_of_charges", 0)) + this._statRow("clock", "Last Session", $8b62e546fdd14731$var$formatSession(this._numState("shaving_time", 0))) + this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0)) + this._statRow("clock", "Total Time", $8b62e546fdd14731$var$formatAge(this._numState("total_age", 0)));
         else {
             const daysUsed = this._numState("days_last_used", null);
             const daysText = daysUsed === null ? "\u2014" : daysUsed === 0 ? "Today" : daysUsed === 1 ? "Yesterday" : `${daysUsed}d ago`;
-            rows = this._statRow("clock", "Last Session", $f46165c551e58a9b$var$formatSession(this._numState("shaving_time", 0))) + this._statRow("calendar", "Last Used", daysText) + this._statRow("clean", "Cleaning Cycles", this._numState("cleaning_cycles", 0)) + this._statRow("clock", "Total Time", $f46165c551e58a9b$var$formatAge(this._numState("total_age", 0))) + this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0));
+            rows = this._statRow("clock", "Last Session", $8b62e546fdd14731$var$formatSession(this._numState("shaving_time", 0))) + this._statRow("calendar", "Last Used", daysText) + this._statRow("clock", "Total Time", $8b62e546fdd14731$var$formatAge(this._numState("total_age", 0))) + this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0));
         }
         return `<div class="stats">${rows}</div>`;
     }
     _statRow(icon, label, value, unit) {
         return `
       <div class="stat-row">
-        <span class="stat-label">${$f46165c551e58a9b$var$svgIcon(icon)}${label}</span>
+        <span class="stat-label">${$8b62e546fdd14731$var$svgIcon(icon)}${label}</span>
         <span class="stat-value">${value}${unit ? `<span class="stat-unit">${unit}</span>` : ""}</span>
       </div>
-    `;
-    }
-    // ---------- Diagnostics ----------
-    _renderDiagnostics() {
-        const chevronClass = this._diagOpen ? "diag-chevron open" : "diag-chevron";
-        let content = "";
-        if (this._diagOpen) {
-            const rssi = this._state("rssi");
-            const fw = this._state("firmware", "\u2014");
-            const motorMax = this._numState("motor_current_max", null);
-            const travelLock = this._state("travel_lock");
-            const lockText = travelLock === "on" ? "Locked" : "Unlocked";
-            const charges = this._numState("amount_of_charges", 0);
-            let rows = "";
-            if (rssi !== null) rows += this._statRow("signal", "RSSI", rssi, "dBm");
-            rows += this._statRow("firmware", "Firmware", fw);
-            if (motorMax !== null) rows += this._statRow("current", "Motor Limit", motorMax, "mA");
-            rows += this._statRow("lock", "Travel Lock", lockText);
-            rows += this._statRow("charge", "Charge Cycles", charges);
-            content = `<div class="diag-content">${rows}</div>`;
-        }
-        return `
-      <div class="diag-header">
-        <span class="diag-label">Diagnostics</span>
-        <svg class="${chevronClass}" width="14" height="14" viewBox="0 0 24 24" fill="none"
-          stroke="var(--ps-text-dimmest)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="6,9 12,15 18,9"/>
-        </svg>
-      </div>
-      ${content}
     `;
     }
 }
 
 
-customElements.define("philips-shaver-card", (0, $f46165c551e58a9b$export$4778d74453ecc150));
+customElements.define("philips-shaver-card", (0, $8b62e546fdd14731$export$4778d74453ecc150));
 window.customCards = window.customCards || [];
 window.customCards.push({
     type: "philips-shaver-card",

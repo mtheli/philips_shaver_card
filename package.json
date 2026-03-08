@@ -1,9 +1,9 @@
 {
-  "name": "philips-shaver-card",
+  "name": "philips_shaver_card",
   "version": "1.0.0",
   "description": "Custom Lovelace card for the Philips Shaver integration",
   "source": "src/index.js",
-  "module": "dist/philips-shaver-card.js",
+  "module": "dist/philips_shaver_card.js",
   "targets": {
     "module": {
       "includeNodeModules": true
