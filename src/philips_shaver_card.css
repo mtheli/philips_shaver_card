@@ -1,0 +1,274 @@
+ha-card {
+    container-type: inline-size;
+    overflow: hidden;
+    min-height: 500px;
+    font-family: var(--paper-font-body1_-_font-family, var(--ha-font-family-body, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif));
+    color: var(--primary-text-color, #fff);
+}
+
+:host {
+    --ps-text-dim: var(--secondary-text-color, rgba(255,255,255,0.5));
+    --ps-text-dimmer: var(--disabled-text-color, rgba(255,255,255,0.35));
+    --ps-text-dimmest: var(--disabled-text-color, rgba(255,255,255,0.25));
+    --ps-border: var(--divider-color, rgba(255,255,255,0.04));
+    --ps-track: var(--divider-color, rgba(255,255,255,0.06));
+    --ps-card-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));
+    --ps-elevated: color-mix(in srgb, var(--primary-text-color, #fff) 6%, var(--ps-card-bg));
+}
+
+/* ── HEADER ── */
+.card-header {
+    padding: 16px 18px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--divider-color, #e5e7eb);
+}
+.header-title {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    min-width: 0;
+    overflow: hidden;
+    cursor: pointer;
+}
+.header-title h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.01em;
+}
+.header-sub {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--secondary-text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.header-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+.conn-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--primary-color, #3b82f6);
+    fill: currentColor;
+    cursor: pointer;
+    opacity: 1;
+    transition: color 0.4s, opacity 0.4s;
+}
+.conn-icon.disconnected {
+    color: var(--disabled-text-color, #9ca3af);
+    opacity: 0.3;
+}
+.more-info-btn {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    color: var(--secondary-text-color) !important;
+}
+.more-info-btn:hover {
+    opacity: 1;
+}
+
+/* ── CHIPS ROW ── */
+.chips-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    padding: 12px 14px;
+}
+.chip {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 8px;
+    align-items: center;
+    background: var(--card-background-color, #f9fafb);
+    border: 1px solid var(--divider-color, #e5e7eb);
+    border-radius: 10px;
+    padding: 8px 10px;
+    min-width: 0;
+    cursor: pointer;
+}
+.chip-icon {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    grid-row: 1 / 3;
+}
+.chip-ring-svg { width: 36px; height: 36px; }
+.chip-ring-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+}
+.chip-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--secondary-text-color, #6b7280);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1;
+}
+.chip-value {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── VISUAL AREA (gauge) ── */
+.visual-area {
+    padding: 4px 14px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.gauge-svg { display: block; max-width: 100%; height: auto; }
+.gauge-status {
+    font-size: 13px;
+    color: var(--ps-text-dimmest);
+    margin-top: -2px;
+    margin-bottom: 8px;
+    text-align: center;
+    transition: color 0.3s;
+}
+
+/* Pressure label below gauge */
+.pressure-label {
+    font-size: 17px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: -6px;
+    margin-bottom: 2px;
+    transition: color 0.3s;
+}
+.pressure-value {
+    font-size: 11px;
+    color: var(--ps-text-dimmest);
+    text-align: center;
+    margin-bottom: 8px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Gauge arcs */
+.gauge-arc-fill {
+    transition: stroke-dashoffset 0.8s cubic-bezier(.4,0,.2,1), stroke 0.4s;
+}
+.zone-arc { stroke-linecap: butt; }
+.zone-separator { stroke: var(--ps-card-bg); stroke-width: 3; }
+
+/* Needle */
+.needle-line {
+    stroke-linecap: round;
+    transition: x2 0.5s cubic-bezier(.4,0,.2,1), y2 0.5s cubic-bezier(.4,0,.2,1), stroke 0.3s;
+}
+.needle-glow {
+    filter: blur(4px); opacity: 0.5;
+    transition: x2 0.5s cubic-bezier(.4,0,.2,1), y2 0.5s cubic-bezier(.4,0,.2,1), stroke 0.3s;
+}
+
+/* Edge labels */
+.gauge-edge-label { font-size: 10px; fill: var(--ps-text-dimmest); }
+
+/* ── SHAVING STAT TILES ── */
+.shave-stats {
+    display: flex;
+    gap: 6px;
+    padding: 8px 14px;
+    justify-content: center;
+}
+.shave-stat-tile {
+    flex: 1;
+    min-width: 0;
+    max-width: 120px;
+    background: var(--ps-elevated);
+    border: 1px solid var(--divider-color, rgba(255,255,255,0.06));
+    border-radius: 10px;
+    padding: 10px 4px;
+    text-align: center;
+}
+.shave-stat-val {
+    font-size: 15px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+.shave-stat-label {
+    font-size: 10px;
+    color: var(--ps-text-dimmest);
+    margin-top: 6px;
+}
+
+/* ── DIVIDER ── */
+.divider {
+    height: 1px;
+    background: var(--ps-border);
+    margin: 0 14px;
+}
+
+/* ── STAT ROWS ── */
+.stats { padding: 6px 14px 10px; }
+.stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--ps-border);
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-label {
+    font-size: 13px;
+    color: var(--ps-text-dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.stat-icon { width: 16px; height: 16px; opacity: 0.55; }
+.stat-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-text-color);
+    font-variant-numeric: tabular-nums;
+}
+.stat-unit {
+    font-size: 11px;
+    color: var(--ps-text-dimmer);
+    margin-left: 2px;
+    font-weight: 400;
+}
+
+/* ── UNAVAILABLE ── */
+.unavailable {
+    padding: 20px;
+    text-align: center;
+    color: var(--ps-text-dim);
+    font-size: 14px;
+}
+
+/* ── NARROW CARD ── */
+@container (max-width: 350px) {
+    .chip-label, .chip-value { display: none; }
+    .chip { grid-template-columns: auto; padding: 6px; justify-items: center; }
+    .chip-icon { grid-row: 1; }
+}
+
+/* ── ANIMATIONS ── */
+@keyframes chargeGlow {
+    0%, 100% { stroke-opacity: 0.3; }
+    50% { stroke-opacity: 1; }
+}
+.charging-arc { animation: chargeGlow 2s ease-in-out infinite; }

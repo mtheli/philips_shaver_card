@@ -1,9 +1,634 @@
+
+function $parcel$interopDefault(a) {
+  return a && a.__esModule ? a.default : a;
+}
 /**
  * Philips Shaver Card for Home Assistant
  * https://github.com/mtheli/philips_shaver_card
- */ // ---------- Entity discovery map: translation_key → local alias ----------
+ */ /**
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */ const $06bdd16cbb4a41b3$var$t = globalThis, $06bdd16cbb4a41b3$export$b4d10f6001c083c2 = $06bdd16cbb4a41b3$var$t.ShadowRoot && (void 0 === $06bdd16cbb4a41b3$var$t.ShadyCSS || $06bdd16cbb4a41b3$var$t.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype, $06bdd16cbb4a41b3$var$s = Symbol(), $06bdd16cbb4a41b3$var$o = new WeakMap;
+class $06bdd16cbb4a41b3$export$505d1e8739bad805 {
+    constructor(t, e, o){
+        if (this._$cssResult$ = !0, o !== $06bdd16cbb4a41b3$var$s) throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
+        this.cssText = t, this.t = e;
+    }
+    get styleSheet() {
+        let t = this.o;
+        const s = this.t;
+        if ($06bdd16cbb4a41b3$export$b4d10f6001c083c2 && void 0 === t) {
+            const e = void 0 !== s && 1 === s.length;
+            e && (t = $06bdd16cbb4a41b3$var$o.get(s)), void 0 === t && ((this.o = t = new CSSStyleSheet).replaceSync(this.cssText), e && $06bdd16cbb4a41b3$var$o.set(s, t));
+        }
+        return t;
+    }
+    toString() {
+        return this.cssText;
+    }
+}
+const $06bdd16cbb4a41b3$export$8d80f9cac07cdb3 = (t)=>new $06bdd16cbb4a41b3$export$505d1e8739bad805("string" == typeof t ? t : t + "", void 0, $06bdd16cbb4a41b3$var$s), $06bdd16cbb4a41b3$export$dbf350e5966cf602 = (t, ...e)=>{
+    const o = 1 === t.length ? t[0] : e.reduce((e, s, o)=>e + ((t)=>{
+            if (!0 === t._$cssResult$) return t.cssText;
+            if ("number" == typeof t) return t;
+            throw Error("Value passed to 'css' function must be a 'css' function result: " + t + ". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.");
+        })(s) + t[o + 1], t[0]);
+    return new $06bdd16cbb4a41b3$export$505d1e8739bad805(o, t, $06bdd16cbb4a41b3$var$s);
+}, $06bdd16cbb4a41b3$export$2ca4a66ec4cecb90 = (s, o)=>{
+    if ($06bdd16cbb4a41b3$export$b4d10f6001c083c2) s.adoptedStyleSheets = o.map((t)=>t instanceof CSSStyleSheet ? t : t.styleSheet);
+    else for (const e of o){
+        const o = document.createElement("style"), n = $06bdd16cbb4a41b3$var$t.litNonce;
+        void 0 !== n && o.setAttribute("nonce", n), o.textContent = e.cssText, s.appendChild(o);
+    }
+}, $06bdd16cbb4a41b3$export$ee69dfd951e24778 = $06bdd16cbb4a41b3$export$b4d10f6001c083c2 ? (t)=>t : (t)=>t instanceof CSSStyleSheet ? ((t)=>{
+        let e = "";
+        for (const s of t.cssRules)e += s.cssText;
+        return $06bdd16cbb4a41b3$export$8d80f9cac07cdb3(e);
+    })(t) : t;
+
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */ const { is: $375b48187e686ca2$var$i, defineProperty: $375b48187e686ca2$var$e, getOwnPropertyDescriptor: $375b48187e686ca2$var$h, getOwnPropertyNames: $375b48187e686ca2$var$r, getOwnPropertySymbols: $375b48187e686ca2$var$o, getPrototypeOf: $375b48187e686ca2$var$n } = Object, $375b48187e686ca2$var$a = globalThis, $375b48187e686ca2$var$c = $375b48187e686ca2$var$a.trustedTypes, $375b48187e686ca2$var$l = $375b48187e686ca2$var$c ? $375b48187e686ca2$var$c.emptyScript : "", $375b48187e686ca2$var$p = $375b48187e686ca2$var$a.reactiveElementPolyfillSupport, $375b48187e686ca2$var$d = (t, s)=>t, $375b48187e686ca2$export$7312b35fbf521afb = {
+    toAttribute (t, s) {
+        switch(s){
+            case Boolean:
+                t = t ? $375b48187e686ca2$var$l : null;
+                break;
+            case Object:
+            case Array:
+                t = null == t ? t : JSON.stringify(t);
+        }
+        return t;
+    },
+    fromAttribute (t, s) {
+        let i = t;
+        switch(s){
+            case Boolean:
+                i = null !== t;
+                break;
+            case Number:
+                i = null === t ? null : Number(t);
+                break;
+            case Object:
+            case Array:
+                try {
+                    i = JSON.parse(t);
+                } catch (t) {
+                    i = null;
+                }
+        }
+        return i;
+    }
+}, $375b48187e686ca2$export$53a6892c50694894 = (t, s)=>!$375b48187e686ca2$var$i(t, s), $375b48187e686ca2$var$b = {
+    attribute: !0,
+    type: String,
+    converter: $375b48187e686ca2$export$7312b35fbf521afb,
+    reflect: !1,
+    useDefault: !1,
+    hasChanged: $375b48187e686ca2$export$53a6892c50694894
+};
+Symbol.metadata ??= Symbol("metadata"), $375b48187e686ca2$var$a.litPropertyMetadata ??= new WeakMap;
+class $375b48187e686ca2$export$c7c07a37856565d extends HTMLElement {
+    static addInitializer(t) {
+        this._$Ei(), (this.l ??= []).push(t);
+    }
+    static get observedAttributes() {
+        return this.finalize(), this._$Eh && [
+            ...this._$Eh.keys()
+        ];
+    }
+    static createProperty(t, s = $375b48187e686ca2$var$b) {
+        if (s.state && (s.attribute = !1), this._$Ei(), this.prototype.hasOwnProperty(t) && ((s = Object.create(s)).wrapped = !0), this.elementProperties.set(t, s), !s.noAccessor) {
+            const i = Symbol(), h = this.getPropertyDescriptor(t, i, s);
+            void 0 !== h && $375b48187e686ca2$var$e(this.prototype, t, h);
+        }
+    }
+    static getPropertyDescriptor(t, s, i) {
+        const { get: e, set: r } = $375b48187e686ca2$var$h(this.prototype, t) ?? {
+            get () {
+                return this[s];
+            },
+            set (t) {
+                this[s] = t;
+            }
+        };
+        return {
+            get: e,
+            set (s) {
+                const h = e?.call(this);
+                r?.call(this, s), this.requestUpdate(t, h, i);
+            },
+            configurable: !0,
+            enumerable: !0
+        };
+    }
+    static getPropertyOptions(t) {
+        return this.elementProperties.get(t) ?? $375b48187e686ca2$var$b;
+    }
+    static _$Ei() {
+        if (this.hasOwnProperty($375b48187e686ca2$var$d("elementProperties"))) return;
+        const t = $375b48187e686ca2$var$n(this);
+        t.finalize(), void 0 !== t.l && (this.l = [
+            ...t.l
+        ]), this.elementProperties = new Map(t.elementProperties);
+    }
+    static finalize() {
+        if (this.hasOwnProperty($375b48187e686ca2$var$d("finalized"))) return;
+        if (this.finalized = !0, this._$Ei(), this.hasOwnProperty($375b48187e686ca2$var$d("properties"))) {
+            const t = this.properties, s = [
+                ...$375b48187e686ca2$var$r(t),
+                ...$375b48187e686ca2$var$o(t)
+            ];
+            for (const i of s)this.createProperty(i, t[i]);
+        }
+        const t = this[Symbol.metadata];
+        if (null !== t) {
+            const s = litPropertyMetadata.get(t);
+            if (void 0 !== s) for (const [t, i] of s)this.elementProperties.set(t, i);
+        }
+        this._$Eh = new Map;
+        for (const [t, s] of this.elementProperties){
+            const i = this._$Eu(t, s);
+            void 0 !== i && this._$Eh.set(i, t);
+        }
+        this.elementStyles = this.finalizeStyles(this.styles);
+    }
+    static finalizeStyles(s) {
+        const i = [];
+        if (Array.isArray(s)) {
+            const e = new Set(s.flat(1 / 0).reverse());
+            for (const s of e)i.unshift((0, $06bdd16cbb4a41b3$export$ee69dfd951e24778)(s));
+        } else void 0 !== s && i.push((0, $06bdd16cbb4a41b3$export$ee69dfd951e24778)(s));
+        return i;
+    }
+    static _$Eu(t, s) {
+        const i = s.attribute;
+        return !1 === i ? void 0 : "string" == typeof i ? i : "string" == typeof t ? t.toLowerCase() : void 0;
+    }
+    constructor(){
+        super(), this._$Ep = void 0, this.isUpdatePending = !1, this.hasUpdated = !1, this._$Em = null, this._$Ev();
+    }
+    _$Ev() {
+        this._$ES = new Promise((t)=>this.enableUpdating = t), this._$AL = new Map, this._$E_(), this.requestUpdate(), this.constructor.l?.forEach((t)=>t(this));
+    }
+    addController(t) {
+        (this._$EO ??= new Set).add(t), void 0 !== this.renderRoot && this.isConnected && t.hostConnected?.();
+    }
+    removeController(t) {
+        this._$EO?.delete(t);
+    }
+    _$E_() {
+        const t = new Map, s = this.constructor.elementProperties;
+        for (const i of s.keys())this.hasOwnProperty(i) && (t.set(i, this[i]), delete this[i]);
+        t.size > 0 && (this._$Ep = t);
+    }
+    createRenderRoot() {
+        const t = this.shadowRoot ?? this.attachShadow(this.constructor.shadowRootOptions);
+        return (0, $06bdd16cbb4a41b3$export$2ca4a66ec4cecb90)(t, this.constructor.elementStyles), t;
+    }
+    connectedCallback() {
+        this.renderRoot ??= this.createRenderRoot(), this.enableUpdating(!0), this._$EO?.forEach((t)=>t.hostConnected?.());
+    }
+    enableUpdating(t) {}
+    disconnectedCallback() {
+        this._$EO?.forEach((t)=>t.hostDisconnected?.());
+    }
+    attributeChangedCallback(t, s, i) {
+        this._$AK(t, i);
+    }
+    _$ET(t, s) {
+        const i = this.constructor.elementProperties.get(t), e = this.constructor._$Eu(t, i);
+        if (void 0 !== e && !0 === i.reflect) {
+            const h = (void 0 !== i.converter?.toAttribute ? i.converter : $375b48187e686ca2$export$7312b35fbf521afb).toAttribute(s, i.type);
+            this._$Em = t, null == h ? this.removeAttribute(e) : this.setAttribute(e, h), this._$Em = null;
+        }
+    }
+    _$AK(t, s) {
+        const i = this.constructor, e = i._$Eh.get(t);
+        if (void 0 !== e && this._$Em !== e) {
+            const t = i.getPropertyOptions(e), h = "function" == typeof t.converter ? {
+                fromAttribute: t.converter
+            } : void 0 !== t.converter?.fromAttribute ? t.converter : $375b48187e686ca2$export$7312b35fbf521afb;
+            this._$Em = e;
+            const r = h.fromAttribute(s, t.type);
+            this[e] = r ?? this._$Ej?.get(e) ?? r, this._$Em = null;
+        }
+    }
+    requestUpdate(t, s, i, e = !1, h) {
+        if (void 0 !== t) {
+            const r = this.constructor;
+            if (!1 === e && (h = this[t]), i ??= r.getPropertyOptions(t), !((i.hasChanged ?? $375b48187e686ca2$export$53a6892c50694894)(h, s) || i.useDefault && i.reflect && h === this._$Ej?.get(t) && !this.hasAttribute(r._$Eu(t, i)))) return;
+            this.C(t, s, i);
+        }
+        !1 === this.isUpdatePending && (this._$ES = this._$EP());
+    }
+    C(t, s, { useDefault: i, reflect: e, wrapped: h }, r) {
+        i && !(this._$Ej ??= new Map).has(t) && (this._$Ej.set(t, r ?? s ?? this[t]), !0 !== h || void 0 !== r) || (this._$AL.has(t) || (this.hasUpdated || i || (s = void 0), this._$AL.set(t, s)), !0 === e && this._$Em !== t && (this._$Eq ??= new Set).add(t));
+    }
+    async _$EP() {
+        this.isUpdatePending = !0;
+        try {
+            await this._$ES;
+        } catch (t) {
+            Promise.reject(t);
+        }
+        const t = this.scheduleUpdate();
+        return null != t && await t, !this.isUpdatePending;
+    }
+    scheduleUpdate() {
+        return this.performUpdate();
+    }
+    performUpdate() {
+        if (!this.isUpdatePending) return;
+        if (!this.hasUpdated) {
+            if (this.renderRoot ??= this.createRenderRoot(), this._$Ep) {
+                for (const [t, s] of this._$Ep)this[t] = s;
+                this._$Ep = void 0;
+            }
+            const t = this.constructor.elementProperties;
+            if (t.size > 0) for (const [s, i] of t){
+                const { wrapped: t } = i, e = this[s];
+                !0 !== t || this._$AL.has(s) || void 0 === e || this.C(s, void 0, i, e);
+            }
+        }
+        let t = !1;
+        const s = this._$AL;
+        try {
+            t = this.shouldUpdate(s), t ? (this.willUpdate(s), this._$EO?.forEach((t)=>t.hostUpdate?.()), this.update(s)) : this._$EM();
+        } catch (s) {
+            throw t = !1, this._$EM(), s;
+        }
+        t && this._$AE(s);
+    }
+    willUpdate(t) {}
+    _$AE(t) {
+        this._$EO?.forEach((t)=>t.hostUpdated?.()), this.hasUpdated || (this.hasUpdated = !0, this.firstUpdated(t)), this.updated(t);
+    }
+    _$EM() {
+        this._$AL = new Map, this.isUpdatePending = !1;
+    }
+    get updateComplete() {
+        return this.getUpdateComplete();
+    }
+    getUpdateComplete() {
+        return this._$ES;
+    }
+    shouldUpdate(t) {
+        return !0;
+    }
+    update(t) {
+        this._$Eq &&= this._$Eq.forEach((t)=>this._$ET(t, this[t])), this._$EM();
+    }
+    updated(t) {}
+    firstUpdated(t) {}
+}
+$375b48187e686ca2$export$c7c07a37856565d.elementStyles = [], $375b48187e686ca2$export$c7c07a37856565d.shadowRootOptions = {
+    mode: "open"
+}, $375b48187e686ca2$export$c7c07a37856565d[$375b48187e686ca2$var$d("elementProperties")] = new Map, $375b48187e686ca2$export$c7c07a37856565d[$375b48187e686ca2$var$d("finalized")] = new Map, $375b48187e686ca2$var$p?.({
+    ReactiveElement: $375b48187e686ca2$export$c7c07a37856565d
+}), ($375b48187e686ca2$var$a.reactiveElementVersions ??= []).push("2.1.2");
+
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */ const $d33ef1320595a3ac$var$t = globalThis, $d33ef1320595a3ac$var$i = (t)=>t, $d33ef1320595a3ac$var$s = $d33ef1320595a3ac$var$t.trustedTypes, $d33ef1320595a3ac$var$e = $d33ef1320595a3ac$var$s ? $d33ef1320595a3ac$var$s.createPolicy("lit-html", {
+    createHTML: (t)=>t
+}) : void 0, $d33ef1320595a3ac$var$h = "$lit$", $d33ef1320595a3ac$var$o = `lit$${Math.random().toFixed(9).slice(2)}$`, $d33ef1320595a3ac$var$n = "?" + $d33ef1320595a3ac$var$o, $d33ef1320595a3ac$var$r = `<${$d33ef1320595a3ac$var$n}>`, $d33ef1320595a3ac$var$l = document, $d33ef1320595a3ac$var$c = ()=>$d33ef1320595a3ac$var$l.createComment(""), $d33ef1320595a3ac$var$a = (t)=>null === t || "object" != typeof t && "function" != typeof t, $d33ef1320595a3ac$var$u = Array.isArray, $d33ef1320595a3ac$var$d = (t)=>$d33ef1320595a3ac$var$u(t) || "function" == typeof t?.[Symbol.iterator], $d33ef1320595a3ac$var$f = "[ \t\n\f\r]", $d33ef1320595a3ac$var$v = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, $d33ef1320595a3ac$var$_ = /-->/g, $d33ef1320595a3ac$var$m = />/g, $d33ef1320595a3ac$var$p = RegExp(`>|${$d33ef1320595a3ac$var$f}(?:([^\\s"'>=/]+)(${$d33ef1320595a3ac$var$f}*=${$d33ef1320595a3ac$var$f}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`, "g"), $d33ef1320595a3ac$var$g = /'/g, $d33ef1320595a3ac$var$$ = /"/g, $d33ef1320595a3ac$var$y = /^(?:script|style|textarea|title)$/i, $d33ef1320595a3ac$var$x = (t)=>(i, ...s)=>({
+            _$litType$: t,
+            strings: i,
+            values: s
+        }), $d33ef1320595a3ac$export$c0bb0b647f701bb5 = $d33ef1320595a3ac$var$x(1), $d33ef1320595a3ac$export$7ed1367e7fa1ad68 = $d33ef1320595a3ac$var$x(2), $d33ef1320595a3ac$export$47d5b44d225be5b4 = $d33ef1320595a3ac$var$x(3), $d33ef1320595a3ac$export$9c068ae9cc5db4e8 = Symbol.for("lit-noChange"), $d33ef1320595a3ac$export$45b790e32b2810ee = Symbol.for("lit-nothing"), $d33ef1320595a3ac$var$C = new WeakMap, $d33ef1320595a3ac$var$P = $d33ef1320595a3ac$var$l.createTreeWalker($d33ef1320595a3ac$var$l, 129);
+function $d33ef1320595a3ac$var$V(t, i) {
+    if (!$d33ef1320595a3ac$var$u(t) || !t.hasOwnProperty("raw")) throw Error("invalid template strings array");
+    return void 0 !== $d33ef1320595a3ac$var$e ? $d33ef1320595a3ac$var$e.createHTML(i) : i;
+}
+const $d33ef1320595a3ac$var$N = (t, i)=>{
+    const s = t.length - 1, e = [];
+    let n, l = 2 === i ? "<svg>" : 3 === i ? "<math>" : "", c = $d33ef1320595a3ac$var$v;
+    for(let i = 0; i < s; i++){
+        const s = t[i];
+        let a, u, d = -1, f = 0;
+        for(; f < s.length && (c.lastIndex = f, u = c.exec(s), null !== u);)f = c.lastIndex, c === $d33ef1320595a3ac$var$v ? "!--" === u[1] ? c = $d33ef1320595a3ac$var$_ : void 0 !== u[1] ? c = $d33ef1320595a3ac$var$m : void 0 !== u[2] ? ($d33ef1320595a3ac$var$y.test(u[2]) && (n = RegExp("</" + u[2], "g")), c = $d33ef1320595a3ac$var$p) : void 0 !== u[3] && (c = $d33ef1320595a3ac$var$p) : c === $d33ef1320595a3ac$var$p ? ">" === u[0] ? (c = n ?? $d33ef1320595a3ac$var$v, d = -1) : void 0 === u[1] ? d = -2 : (d = c.lastIndex - u[2].length, a = u[1], c = void 0 === u[3] ? $d33ef1320595a3ac$var$p : '"' === u[3] ? $d33ef1320595a3ac$var$$ : $d33ef1320595a3ac$var$g) : c === $d33ef1320595a3ac$var$$ || c === $d33ef1320595a3ac$var$g ? c = $d33ef1320595a3ac$var$p : c === $d33ef1320595a3ac$var$_ || c === $d33ef1320595a3ac$var$m ? c = $d33ef1320595a3ac$var$v : (c = $d33ef1320595a3ac$var$p, n = void 0);
+        const x = c === $d33ef1320595a3ac$var$p && t[i + 1].startsWith("/>") ? " " : "";
+        l += c === $d33ef1320595a3ac$var$v ? s + $d33ef1320595a3ac$var$r : d >= 0 ? (e.push(a), s.slice(0, d) + $d33ef1320595a3ac$var$h + s.slice(d) + $d33ef1320595a3ac$var$o + x) : s + $d33ef1320595a3ac$var$o + (-2 === d ? i : x);
+    }
+    return [
+        $d33ef1320595a3ac$var$V(t, l + (t[s] || "<?>") + (2 === i ? "</svg>" : 3 === i ? "</math>" : "")),
+        e
+    ];
+};
+class $d33ef1320595a3ac$var$S {
+    constructor({ strings: t, _$litType$: i }, e){
+        let r;
+        this.parts = [];
+        let l = 0, a = 0;
+        const u = t.length - 1, d = this.parts, [f, v] = $d33ef1320595a3ac$var$N(t, i);
+        if (this.el = $d33ef1320595a3ac$var$S.createElement(f, e), $d33ef1320595a3ac$var$P.currentNode = this.el.content, 2 === i || 3 === i) {
+            const t = this.el.content.firstChild;
+            t.replaceWith(...t.childNodes);
+        }
+        for(; null !== (r = $d33ef1320595a3ac$var$P.nextNode()) && d.length < u;){
+            if (1 === r.nodeType) {
+                if (r.hasAttributes()) for (const t of r.getAttributeNames())if (t.endsWith($d33ef1320595a3ac$var$h)) {
+                    const i = v[a++], s = r.getAttribute(t).split($d33ef1320595a3ac$var$o), e = /([.?@])?(.*)/.exec(i);
+                    d.push({
+                        type: 1,
+                        index: l,
+                        name: e[2],
+                        strings: s,
+                        ctor: "." === e[1] ? $d33ef1320595a3ac$var$I : "?" === e[1] ? $d33ef1320595a3ac$var$L : "@" === e[1] ? $d33ef1320595a3ac$var$z : $d33ef1320595a3ac$var$H
+                    }), r.removeAttribute(t);
+                } else t.startsWith($d33ef1320595a3ac$var$o) && (d.push({
+                    type: 6,
+                    index: l
+                }), r.removeAttribute(t));
+                if ($d33ef1320595a3ac$var$y.test(r.tagName)) {
+                    const t = r.textContent.split($d33ef1320595a3ac$var$o), i = t.length - 1;
+                    if (i > 0) {
+                        r.textContent = $d33ef1320595a3ac$var$s ? $d33ef1320595a3ac$var$s.emptyScript : "";
+                        for(let s = 0; s < i; s++)r.append(t[s], $d33ef1320595a3ac$var$c()), $d33ef1320595a3ac$var$P.nextNode(), d.push({
+                            type: 2,
+                            index: ++l
+                        });
+                        r.append(t[i], $d33ef1320595a3ac$var$c());
+                    }
+                }
+            } else if (8 === r.nodeType) {
+                if (r.data === $d33ef1320595a3ac$var$n) d.push({
+                    type: 2,
+                    index: l
+                });
+                else {
+                    let t = -1;
+                    for(; -1 !== (t = r.data.indexOf($d33ef1320595a3ac$var$o, t + 1));)d.push({
+                        type: 7,
+                        index: l
+                    }), t += $d33ef1320595a3ac$var$o.length - 1;
+                }
+            }
+            l++;
+        }
+    }
+    static createElement(t, i) {
+        const s = $d33ef1320595a3ac$var$l.createElement("template");
+        return s.innerHTML = t, s;
+    }
+}
+function $d33ef1320595a3ac$var$M(t, i, s = t, e) {
+    if (i === $d33ef1320595a3ac$export$9c068ae9cc5db4e8) return i;
+    let h = void 0 !== e ? s._$Co?.[e] : s._$Cl;
+    const o = $d33ef1320595a3ac$var$a(i) ? void 0 : i._$litDirective$;
+    return h?.constructor !== o && (h?._$AO?.(!1), void 0 === o ? h = void 0 : (h = new o(t), h._$AT(t, s, e)), void 0 !== e ? (s._$Co ??= [])[e] = h : s._$Cl = h), void 0 !== h && (i = $d33ef1320595a3ac$var$M(t, h._$AS(t, i.values), h, e)), i;
+}
+class $d33ef1320595a3ac$var$R {
+    constructor(t, i){
+        this._$AV = [], this._$AN = void 0, this._$AD = t, this._$AM = i;
+    }
+    get parentNode() {
+        return this._$AM.parentNode;
+    }
+    get _$AU() {
+        return this._$AM._$AU;
+    }
+    u(t) {
+        const { el: { content: i }, parts: s } = this._$AD, e = (t?.creationScope ?? $d33ef1320595a3ac$var$l).importNode(i, !0);
+        $d33ef1320595a3ac$var$P.currentNode = e;
+        let h = $d33ef1320595a3ac$var$P.nextNode(), o = 0, n = 0, r = s[0];
+        for(; void 0 !== r;){
+            if (o === r.index) {
+                let i;
+                2 === r.type ? i = new $d33ef1320595a3ac$var$k(h, h.nextSibling, this, t) : 1 === r.type ? i = new r.ctor(h, r.name, r.strings, this, t) : 6 === r.type && (i = new $d33ef1320595a3ac$var$Z(h, this, t)), this._$AV.push(i), r = s[++n];
+            }
+            o !== r?.index && (h = $d33ef1320595a3ac$var$P.nextNode(), o++);
+        }
+        return $d33ef1320595a3ac$var$P.currentNode = $d33ef1320595a3ac$var$l, e;
+    }
+    p(t) {
+        let i = 0;
+        for (const s of this._$AV)void 0 !== s && (void 0 !== s.strings ? (s._$AI(t, s, i), i += s.strings.length - 2) : s._$AI(t[i])), i++;
+    }
+}
+class $d33ef1320595a3ac$var$k {
+    get _$AU() {
+        return this._$AM?._$AU ?? this._$Cv;
+    }
+    constructor(t, i, s, e){
+        this.type = 2, this._$AH = $d33ef1320595a3ac$export$45b790e32b2810ee, this._$AN = void 0, this._$AA = t, this._$AB = i, this._$AM = s, this.options = e, this._$Cv = e?.isConnected ?? !0;
+    }
+    get parentNode() {
+        let t = this._$AA.parentNode;
+        const i = this._$AM;
+        return void 0 !== i && 11 === t?.nodeType && (t = i.parentNode), t;
+    }
+    get startNode() {
+        return this._$AA;
+    }
+    get endNode() {
+        return this._$AB;
+    }
+    _$AI(t, i = this) {
+        t = $d33ef1320595a3ac$var$M(this, t, i), $d33ef1320595a3ac$var$a(t) ? t === $d33ef1320595a3ac$export$45b790e32b2810ee || null == t || "" === t ? (this._$AH !== $d33ef1320595a3ac$export$45b790e32b2810ee && this._$AR(), this._$AH = $d33ef1320595a3ac$export$45b790e32b2810ee) : t !== this._$AH && t !== $d33ef1320595a3ac$export$9c068ae9cc5db4e8 && this._(t) : void 0 !== t._$litType$ ? this.$(t) : void 0 !== t.nodeType ? this.T(t) : $d33ef1320595a3ac$var$d(t) ? this.k(t) : this._(t);
+    }
+    O(t) {
+        return this._$AA.parentNode.insertBefore(t, this._$AB);
+    }
+    T(t) {
+        this._$AH !== t && (this._$AR(), this._$AH = this.O(t));
+    }
+    _(t) {
+        this._$AH !== $d33ef1320595a3ac$export$45b790e32b2810ee && $d33ef1320595a3ac$var$a(this._$AH) ? this._$AA.nextSibling.data = t : this.T($d33ef1320595a3ac$var$l.createTextNode(t)), this._$AH = t;
+    }
+    $(t) {
+        const { values: i, _$litType$: s } = t, e = "number" == typeof s ? this._$AC(t) : (void 0 === s.el && (s.el = $d33ef1320595a3ac$var$S.createElement($d33ef1320595a3ac$var$V(s.h, s.h[0]), this.options)), s);
+        if (this._$AH?._$AD === e) this._$AH.p(i);
+        else {
+            const t = new $d33ef1320595a3ac$var$R(e, this), s = t.u(this.options);
+            t.p(i), this.T(s), this._$AH = t;
+        }
+    }
+    _$AC(t) {
+        let i = $d33ef1320595a3ac$var$C.get(t.strings);
+        return void 0 === i && $d33ef1320595a3ac$var$C.set(t.strings, i = new $d33ef1320595a3ac$var$S(t)), i;
+    }
+    k(t) {
+        $d33ef1320595a3ac$var$u(this._$AH) || (this._$AH = [], this._$AR());
+        const i = this._$AH;
+        let s, e = 0;
+        for (const h of t)e === i.length ? i.push(s = new $d33ef1320595a3ac$var$k(this.O($d33ef1320595a3ac$var$c()), this.O($d33ef1320595a3ac$var$c()), this, this.options)) : s = i[e], s._$AI(h), e++;
+        e < i.length && (this._$AR(s && s._$AB.nextSibling, e), i.length = e);
+    }
+    _$AR(t = this._$AA.nextSibling, s) {
+        for(this._$AP?.(!1, !0, s); t !== this._$AB;){
+            const s = $d33ef1320595a3ac$var$i(t).nextSibling;
+            $d33ef1320595a3ac$var$i(t).remove(), t = s;
+        }
+    }
+    setConnected(t) {
+        void 0 === this._$AM && (this._$Cv = t, this._$AP?.(t));
+    }
+}
+class $d33ef1320595a3ac$var$H {
+    get tagName() {
+        return this.element.tagName;
+    }
+    get _$AU() {
+        return this._$AM._$AU;
+    }
+    constructor(t, i, s, e, h){
+        this.type = 1, this._$AH = $d33ef1320595a3ac$export$45b790e32b2810ee, this._$AN = void 0, this.element = t, this.name = i, this._$AM = e, this.options = h, s.length > 2 || "" !== s[0] || "" !== s[1] ? (this._$AH = Array(s.length - 1).fill(new String), this.strings = s) : this._$AH = $d33ef1320595a3ac$export$45b790e32b2810ee;
+    }
+    _$AI(t, i = this, s, e) {
+        const h = this.strings;
+        let o = !1;
+        if (void 0 === h) t = $d33ef1320595a3ac$var$M(this, t, i, 0), o = !$d33ef1320595a3ac$var$a(t) || t !== this._$AH && t !== $d33ef1320595a3ac$export$9c068ae9cc5db4e8, o && (this._$AH = t);
+        else {
+            const e = t;
+            let n, r;
+            for(t = h[0], n = 0; n < h.length - 1; n++)r = $d33ef1320595a3ac$var$M(this, e[s + n], i, n), r === $d33ef1320595a3ac$export$9c068ae9cc5db4e8 && (r = this._$AH[n]), o ||= !$d33ef1320595a3ac$var$a(r) || r !== this._$AH[n], r === $d33ef1320595a3ac$export$45b790e32b2810ee ? t = $d33ef1320595a3ac$export$45b790e32b2810ee : t !== $d33ef1320595a3ac$export$45b790e32b2810ee && (t += (r ?? "") + h[n + 1]), this._$AH[n] = r;
+        }
+        o && !e && this.j(t);
+    }
+    j(t) {
+        t === $d33ef1320595a3ac$export$45b790e32b2810ee ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t ?? "");
+    }
+}
+class $d33ef1320595a3ac$var$I extends $d33ef1320595a3ac$var$H {
+    constructor(){
+        super(...arguments), this.type = 3;
+    }
+    j(t) {
+        this.element[this.name] = t === $d33ef1320595a3ac$export$45b790e32b2810ee ? void 0 : t;
+    }
+}
+class $d33ef1320595a3ac$var$L extends $d33ef1320595a3ac$var$H {
+    constructor(){
+        super(...arguments), this.type = 4;
+    }
+    j(t) {
+        this.element.toggleAttribute(this.name, !!t && t !== $d33ef1320595a3ac$export$45b790e32b2810ee);
+    }
+}
+class $d33ef1320595a3ac$var$z extends $d33ef1320595a3ac$var$H {
+    constructor(t, i, s, e, h){
+        super(t, i, s, e, h), this.type = 5;
+    }
+    _$AI(t, i = this) {
+        if ((t = $d33ef1320595a3ac$var$M(this, t, i, 0) ?? $d33ef1320595a3ac$export$45b790e32b2810ee) === $d33ef1320595a3ac$export$9c068ae9cc5db4e8) return;
+        const s = this._$AH, e = t === $d33ef1320595a3ac$export$45b790e32b2810ee && s !== $d33ef1320595a3ac$export$45b790e32b2810ee || t.capture !== s.capture || t.once !== s.once || t.passive !== s.passive, h = t !== $d33ef1320595a3ac$export$45b790e32b2810ee && (s === $d33ef1320595a3ac$export$45b790e32b2810ee || e);
+        e && this.element.removeEventListener(this.name, this, s), h && this.element.addEventListener(this.name, this, t), this._$AH = t;
+    }
+    handleEvent(t) {
+        "function" == typeof this._$AH ? this._$AH.call(this.options?.host ?? this.element, t) : this._$AH.handleEvent(t);
+    }
+}
+class $d33ef1320595a3ac$var$Z {
+    constructor(t, i, s){
+        this.element = t, this.type = 6, this._$AN = void 0, this._$AM = i, this.options = s;
+    }
+    get _$AU() {
+        return this._$AM._$AU;
+    }
+    _$AI(t) {
+        $d33ef1320595a3ac$var$M(this, t);
+    }
+}
+const $d33ef1320595a3ac$export$8613d1ca9052b22e = {
+    M: $d33ef1320595a3ac$var$h,
+    P: $d33ef1320595a3ac$var$o,
+    A: $d33ef1320595a3ac$var$n,
+    C: 1,
+    L: $d33ef1320595a3ac$var$N,
+    R: $d33ef1320595a3ac$var$R,
+    D: $d33ef1320595a3ac$var$d,
+    V: $d33ef1320595a3ac$var$M,
+    I: $d33ef1320595a3ac$var$k,
+    H: $d33ef1320595a3ac$var$H,
+    N: $d33ef1320595a3ac$var$L,
+    U: $d33ef1320595a3ac$var$z,
+    B: $d33ef1320595a3ac$var$I,
+    F: $d33ef1320595a3ac$var$Z
+}, $d33ef1320595a3ac$var$B = $d33ef1320595a3ac$var$t.litHtmlPolyfillSupport;
+$d33ef1320595a3ac$var$B?.($d33ef1320595a3ac$var$S, $d33ef1320595a3ac$var$k), ($d33ef1320595a3ac$var$t.litHtmlVersions ??= []).push("3.3.2");
+const $d33ef1320595a3ac$export$b3890eb0ae9dca99 = (t, i, s)=>{
+    const e = s?.renderBefore ?? i;
+    let h = e._$litPart$;
+    if (void 0 === h) {
+        const t = s?.renderBefore ?? null;
+        e._$litPart$ = h = new $d33ef1320595a3ac$var$k(i.insertBefore($d33ef1320595a3ac$var$c(), t), t, void 0, s ?? {});
+    }
+    return h._$AI(t), h;
+};
+
+
+
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */ const $528e4332d1e3099e$var$s = globalThis;
+class $528e4332d1e3099e$export$3f2f9f5909897157 extends (0, $375b48187e686ca2$export$c7c07a37856565d) {
+    constructor(){
+        super(...arguments), this.renderOptions = {
+            host: this
+        }, this._$Do = void 0;
+    }
+    createRenderRoot() {
+        const t = super.createRenderRoot();
+        return this.renderOptions.renderBefore ??= t.firstChild, t;
+    }
+    update(t) {
+        const r = this.render();
+        this.hasUpdated || (this.renderOptions.isConnected = this.isConnected), super.update(t), this._$Do = (0, $d33ef1320595a3ac$export$b3890eb0ae9dca99)(r, this.renderRoot, this.renderOptions);
+    }
+    connectedCallback() {
+        super.connectedCallback(), this._$Do?.setConnected(!0);
+    }
+    disconnectedCallback() {
+        super.disconnectedCallback(), this._$Do?.setConnected(!1);
+    }
+    render() {
+        return 0, $d33ef1320595a3ac$export$9c068ae9cc5db4e8;
+    }
+}
+$528e4332d1e3099e$export$3f2f9f5909897157._$litElement$ = !0, $528e4332d1e3099e$export$3f2f9f5909897157["finalized"] = !0, $528e4332d1e3099e$var$s.litElementHydrateSupport?.({
+    LitElement: $528e4332d1e3099e$export$3f2f9f5909897157
+});
+const $528e4332d1e3099e$var$o = $528e4332d1e3099e$var$s.litElementPolyfillSupport;
+$528e4332d1e3099e$var$o?.({
+    LitElement: $528e4332d1e3099e$export$3f2f9f5909897157
+});
+const $528e4332d1e3099e$export$f5c524615a7708d6 = {
+    _$AK: (t, e, r)=>{
+        t._$AK(e, r);
+    },
+    _$AL: (t)=>t._$AL
+};
+($528e4332d1e3099e$var$s.litElementVersions ??= []).push("4.2.2");
+
+
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */ const $56239b0c931b817c$export$6acf61af03e62db = !1;
+
+
+
+
+var $43a89528e95f706e$exports = {};
+$43a89528e95f706e$exports = "ha-card {\n  min-height: 500px;\n  font-family: var(--paper-font-body1_-_font-family, var(--ha-font-family-body, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif));\n  color: var(--primary-text-color, #fff);\n  overflow: hidden;\n  container-type: inline-size;\n}\n\n:host {\n  --ps-text-dim: var(--secondary-text-color, #ffffff80);\n  --ps-text-dimmer: var(--disabled-text-color, #ffffff59);\n  --ps-text-dimmest: var(--disabled-text-color, #ffffff40);\n  --ps-border: var(--divider-color, #ffffff0a);\n  --ps-track: var(--divider-color, #ffffff0f);\n  --ps-card-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));\n  --ps-elevated: color-mix(in srgb, var(--primary-text-color, #fff) 6%, var(--ps-card-bg));\n}\n\n.card-header {\n  border-bottom: 1px solid var(--divider-color, #e5e7eb);\n  justify-content: space-between;\n  align-items: center;\n  padding: 16px 18px 12px;\n  display: flex;\n}\n\n.header-title {\n  cursor: pointer;\n  align-items: baseline;\n  gap: 7px;\n  min-width: 0;\n  display: flex;\n  overflow: hidden;\n}\n\n.header-title h2 {\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  letter-spacing: -.01em;\n  margin: 0;\n  font-size: 15px;\n  font-weight: 700;\n  overflow: hidden;\n}\n\n.header-sub {\n  color: var(--secondary-text-color);\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  font-size: 12px;\n  font-weight: 400;\n  overflow: hidden;\n}\n\n.header-icons {\n  flex-shrink: 0;\n  align-items: center;\n  gap: 10px;\n  display: flex;\n}\n\n.conn-icon {\n  width: 18px;\n  height: 18px;\n  color: var(--primary-color, #3b82f6);\n  fill: currentColor;\n  cursor: pointer;\n  opacity: 1;\n  transition: color .4s, opacity .4s;\n}\n\n.conn-icon.disconnected {\n  color: var(--disabled-text-color, #9ca3af);\n  opacity: .3;\n}\n\n.more-info-btn {\n  cursor: pointer;\n  opacity: .5;\n  width: 18px;\n  height: 18px;\n  transition: opacity .2s;\n  color: var(--secondary-text-color) !important;\n}\n\n.more-info-btn:hover {\n  opacity: 1;\n}\n\n.chips-row {\n  grid-template-columns: 1fr 1fr 1fr;\n  gap: 8px;\n  padding: 12px 14px;\n  display: grid;\n}\n\n.chip {\n  background: var(--card-background-color, #f9fafb);\n  border: 1px solid var(--divider-color, #e5e7eb);\n  cursor: pointer;\n  border-radius: 10px;\n  grid-template-rows: auto auto;\n  grid-template-columns: auto 1fr;\n  align-items: center;\n  column-gap: 8px;\n  min-width: 0;\n  padding: 8px 10px;\n  display: grid;\n}\n\n.chip-icon {\n  flex-shrink: 0;\n  grid-row: 1 / 3;\n  width: 36px;\n  height: 36px;\n  position: relative;\n}\n\n.chip-ring-svg {\n  width: 36px;\n  height: 36px;\n}\n\n.chip-ring-icon {\n  width: 14px;\n  height: 14px;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n}\n\n.chip-label {\n  color: var(--secondary-text-color, #6b7280);\n  text-transform: uppercase;\n  letter-spacing: .06em;\n  font-size: 9px;\n  font-weight: 600;\n  line-height: 1;\n}\n\n.chip-value {\n  font-variant-numeric: tabular-nums;\n  font-size: 15px;\n  font-weight: 700;\n  line-height: 1;\n}\n\n.visual-area {\n  flex-direction: column;\n  align-items: center;\n  padding: 4px 14px 0;\n  display: flex;\n}\n\n.gauge-svg {\n  max-width: 100%;\n  height: auto;\n  display: block;\n}\n\n.gauge-status {\n  color: var(--ps-text-dimmest);\n  text-align: center;\n  margin-top: -2px;\n  margin-bottom: 8px;\n  font-size: 13px;\n  transition: color .3s;\n}\n\n.pressure-label {\n  text-align: center;\n  margin-top: -6px;\n  margin-bottom: 2px;\n  font-size: 17px;\n  font-weight: 700;\n  transition: color .3s;\n}\n\n.pressure-value {\n  color: var(--ps-text-dimmest);\n  text-align: center;\n  font-variant-numeric: tabular-nums;\n  margin-bottom: 8px;\n  font-size: 11px;\n}\n\n.gauge-arc-fill {\n  transition: stroke-dashoffset .8s cubic-bezier(.4, 0, .2, 1), stroke .4s;\n}\n\n.zone-arc {\n  stroke-linecap: butt;\n}\n\n.zone-separator {\n  stroke: var(--ps-card-bg);\n  stroke-width: 3px;\n}\n\n.needle-line {\n  stroke-linecap: round;\n  transition: x2 .5s cubic-bezier(.4, 0, .2, 1), y2 .5s cubic-bezier(.4, 0, .2, 1), stroke .3s;\n}\n\n.needle-glow {\n  filter: blur(4px);\n  opacity: .5;\n  transition: x2 .5s cubic-bezier(.4, 0, .2, 1), y2 .5s cubic-bezier(.4, 0, .2, 1), stroke .3s;\n}\n\n.gauge-edge-label {\n  fill: var(--ps-text-dimmest);\n  font-size: 10px;\n}\n\n.shave-stats {\n  justify-content: center;\n  gap: 6px;\n  padding: 8px 14px;\n  display: flex;\n}\n\n.shave-stat-tile {\n  background: var(--ps-elevated);\n  border: 1px solid var(--divider-color, #ffffff0f);\n  text-align: center;\n  border-radius: 10px;\n  flex: 1;\n  min-width: 0;\n  max-width: 120px;\n  padding: 10px 4px;\n}\n\n.shave-stat-val {\n  font-variant-numeric: tabular-nums;\n  font-size: 15px;\n  font-weight: 700;\n}\n\n.shave-stat-label {\n  color: var(--ps-text-dimmest);\n  margin-top: 6px;\n  font-size: 10px;\n}\n\n.divider {\n  background: var(--ps-border);\n  height: 1px;\n  margin: 0 14px;\n}\n\n.stats {\n  padding: 6px 14px 10px;\n}\n\n.stat-row {\n  border-bottom: 1px solid var(--ps-border);\n  justify-content: space-between;\n  align-items: center;\n  padding: 9px 0;\n  display: flex;\n}\n\n.stat-row:last-child {\n  border-bottom: none;\n}\n\n.stat-label {\n  color: var(--ps-text-dim);\n  align-items: center;\n  gap: 10px;\n  font-size: 13px;\n  display: flex;\n}\n\n.stat-icon {\n  opacity: .55;\n  width: 16px;\n  height: 16px;\n}\n\n.stat-value {\n  color: var(--primary-text-color);\n  font-variant-numeric: tabular-nums;\n  font-size: 13px;\n  font-weight: 600;\n}\n\n.stat-unit {\n  color: var(--ps-text-dimmer);\n  margin-left: 2px;\n  font-size: 11px;\n  font-weight: 400;\n}\n\n.unavailable {\n  text-align: center;\n  color: var(--ps-text-dim);\n  padding: 20px;\n  font-size: 14px;\n}\n\n@container (width <= 350px) {\n  .chip-label, .chip-value {\n    display: none;\n  }\n\n  .chip {\n    grid-template-columns: auto;\n    justify-items: center;\n    padding: 6px;\n  }\n\n  .chip-icon {\n    grid-row: 1;\n  }\n}\n\n@keyframes chargeGlow {\n  0%, 100% {\n    stroke-opacity: .3;\n  }\n\n  50% {\n    stroke-opacity: 1;\n  }\n}\n\n.charging-arc {\n  animation: 2s ease-in-out infinite chargeGlow;\n}\n";
+
+
+const $8b62e546fdd14731$export$d5e7ce6d07daf10f = "0.2.0";
+// ---------- Entity discovery map: translation_key → local alias ----------
 const $8b62e546fdd14731$var$TRANSLATION_KEY_MAP = {
-    // Sensors
     battery: "battery",
     activity: "activity",
     device_state: "device_state",
@@ -27,45 +652,12 @@ const $8b62e546fdd14731$var$TRANSLATION_KEY_MAP = {
     motion_type: "motion_type",
     cleaning_progress: "cleaning_progress",
     cleaning_cycles_remaining: "cleaning_cycles_remaining",
-    // Binary sensors
     charging: "is_charging",
     travel_lock: "travel_lock",
     esp_bridge_alive: "esp_bridge_alive",
     shaver_ble_connected: "shaver_ble_connected",
-    // Selects
     shaving_mode: "shaving_mode",
     lightring_brightness: "lightring_brightness"
-};
-// ---------- Mode config ----------
-const $8b62e546fdd14731$var$MODE_CONFIG = {
-    sensitive: {
-        label: "Sensitive",
-        color: "#90caf9"
-    },
-    regular: {
-        label: "Regular",
-        color: "#a5d6a7"
-    },
-    normal: {
-        label: "Normal",
-        color: "#a5d6a7"
-    },
-    intense: {
-        label: "Intense",
-        color: "#ffab40"
-    },
-    custom: {
-        label: "Custom",
-        color: "#ce93d8"
-    },
-    foam: {
-        label: "Foam",
-        color: "#80deea"
-    },
-    battery_saving: {
-        label: "Eco",
-        color: "#a5d6a7"
-    }
 };
 // ---------- Gauge constants ----------
 const $8b62e546fdd14731$var$GAUGE = {
@@ -81,7 +673,6 @@ const $8b62e546fdd14731$var$GAUGE = {
 const $8b62e546fdd14731$var$GAUGE_W = 280;
 // ---------- SVG arc helpers (semicircle, CW in SVG) ----------
 function $8b62e546fdd14731$var$fracToXY(frac, r = $8b62e546fdd14731$var$GAUGE.R) {
-    // frac: 0 = left (180°), 1 = right (360°=0°)
     const deg = 180 + 180 * frac;
     const rad = deg * Math.PI / 180;
     return {
@@ -151,361 +742,75 @@ function $8b62e546fdd14731$var$cleaningColor(remaining) {
 }
 // ---------- SVG Icon paths ----------
 const $8b62e546fdd14731$var$ICONS = {
-    speed: '<path d="M12 16a3 3 0 0 1-2.12-.88L4.93 10.2a8 8 0 1 1 14.14 0l-4.95 4.95A3 3 0 0 1 12 16zm0-12a6 6 0 0 0-4.24 10.24L12 18.49l4.24-4.25A6 6 0 0 0 12 4z"/>',
-    current: '<path d="M7 2v11h3v9l7-12h-4l4-8z"/>',
-    clock: '<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>',
-    calendar: '<path d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 16H5V8h14z"/>',
-    clean: '<path d="M16 11h-1V3a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v8H8a5 5 0 0 0-5 5v5a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-5a5 5 0 0 0-5-5z"/>',
-    counter: '<path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm3 3h2v2H9V9zm0 4h6v2H9v-2zm4-4h2v2h-2V9z"/>',
-    signal: '<path d="M12 6c3.33 0 6 2.67 6 6h2c0-4.42-3.58-8-8-8S4 7.58 4 12h2c0-3.33 2.67-6 6-6zm0 4c1.1 0 2 .9 2 2h2a4 4 0 0 0-8 0h2c0-1.1.9-2 2-2zm-1 4h2v2h-2z"/>',
-    firmware: '<path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6z"/>',
-    lock: '<path d="M18 8h-1V6a5 5 0 0 0-10 0v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zm-6 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM9 8V6a3 3 0 0 1 6 0v2H9z"/>',
-    charge: '<path d="M15.67 4H14V2h-4v2H8.33A1.33 1.33 0 0 0 7 5.33v15.34C7 21.4 7.6 22 8.33 22h7.34c.74 0 1.33-.6 1.33-1.33V5.33C17 4.6 16.4 4 15.67 4zM11 20v-5.5H9L13 7v5.5h2L11 20z"/>',
-    bluetooth: '<path d="M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z"/>',
-    lan_connect: '<path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>',
-    lan_disconnect: '<path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM17 7h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>',
-    razor: '<path d="M20 8C19.45 8 19 7.55 19 7C19 6.45 19.45 6 20 6V5H4V6C4.55 6 5 6.45 5 7C5 7.55 4.55 8 4 8H2V15H4C4.55 15 5 15.45 5 16C5 16.55 4.55 17 4 17V18H20V17C19.45 17 19 16.55 19 16C19 15.45 19.45 15 20 15H22V8H20M20 12H19V13H17V12H13.41C13.2 12.58 12.65 13 12 13S10.8 12.58 10.59 12H7V13H5V12H4V11H5V10H7V11H10.59C10.8 10.42 11.35 10 12 10S13.2 10.42 13.41 11H17V10H19V11H20V12Z"/>',
-    droplet: '<path d="M12 2c0 0-6 7.34-6 11a6 6 0 0 0 12 0c0-3.66-6-11-6-11zm0 15a3 3 0 0 1-3-3c0-.55.45-1 1-1s1 .45 1 1a1 1 0 0 0 1 1c.55 0 1 .45 1 1s-.45 1-1 1z"/>',
-    motor: '<path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.48 2.54l2.6 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7 0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95 0 5.52 4.47 10 9.99 10 3.31 0 6.24-1.61 8.06-4.09l-2.6-1.53A6.95 6.95 0 0 1 12 19z"/>',
-    charges: '<path d="M15.67 4H14V2h-4v2H8.33A1.33 1.33 0 0 0 7 5.33v15.34C7 21.4 7.6 22 8.33 22h7.34c.74 0 1.33-.6 1.33-1.33V5.33C17 4.6 16.4 4 15.67 4z"/>'
+    speed: 'M12 16a3 3 0 0 1-2.12-.88L4.93 10.2a8 8 0 1 1 14.14 0l-4.95 4.95A3 3 0 0 1 12 16zm0-12a6 6 0 0 0-4.24 10.24L12 18.49l4.24-4.25A6 6 0 0 0 12 4z',
+    current: 'M7 2v11h3v9l7-12h-4l4-8z',
+    clock: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z',
+    calendar: 'M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 16H5V8h14z',
+    clean: 'M16 11h-1V3a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v8H8a5 5 0 0 0-5 5v5a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-5a5 5 0 0 0-5-5z',
+    counter: 'M4 4h16v16H4V4zm2 2v12h12V6H6zm3 3h2v2H9V9zm0 4h6v2H9v-2zm4-4h2v2h-2V9z',
+    signal: 'M12 6c3.33 0 6 2.67 6 6h2c0-4.42-3.58-8-8-8S4 7.58 4 12h2c0-3.33 2.67-6 6-6zm0 4c1.1 0 2 .9 2 2h2a4 4 0 0 0-8 0h2c0-1.1.9-2 2-2zm-1 4h2v2h-2z',
+    firmware: 'M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6z',
+    lock: 'M18 8h-1V6a5 5 0 0 0-10 0v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zm-6 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM9 8V6a3 3 0 0 1 6 0v2H9z',
+    charge: 'M15.67 4H14V2h-4v2H8.33A1.33 1.33 0 0 0 7 5.33v15.34C7 21.4 7.6 22 8.33 22h7.34c.74 0 1.33-.6 1.33-1.33V5.33C17 4.6 16.4 4 15.67 4zM11 20v-5.5H9L13 7v5.5h2L11 20z',
+    bluetooth: 'M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z',
+    lan_connect: 'M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z',
+    lan_disconnect: 'M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM17 7h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z',
+    razor: 'M20 8C19.45 8 19 7.55 19 7C19 6.45 19.45 6 20 6V5H4V6C4.55 6 5 6.45 5 7C5 7.55 4.55 8 4 8H2V15H4C4.55 15 5 15.45 5 16C5 16.55 4.55 17 4 17V18H20V17C19.45 17 19 16.55 19 16C19 15.45 19.45 15 20 15H22V8H20M20 12H19V13H17V12H13.41C13.2 12.58 12.65 13 12 13S10.8 12.58 10.59 12H7V13H5V12H4V11H5V10H7V11H10.59C10.8 10.42 11.35 10 12 10S13.2 10.42 13.41 11H17V10H19V11H20V12Z',
+    droplet: 'M12 2c0 0-6 7.34-6 11a6 6 0 0 0 12 0c0-3.66-6-11-6-11zm0 15a3 3 0 0 1-3-3c0-.55.45-1 1-1s1 .45 1 1a1 1 0 0 0 1 1c.55 0 1 .45 1 1s-.45 1-1 1z',
+    motor: 'M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.48 2.54l2.6 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7 0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95 0 5.52 4.47 10 9.99 10 3.31 0 6.24-1.61 8.06-4.09l-2.6-1.53A6.95 6.95 0 0 1 12 19z',
+    charges: 'M15.67 4H14V2h-4v2H8.33A1.33 1.33 0 0 0 7 5.33v15.34C7 21.4 7.6 22 8.33 22h7.34c.74 0 1.33-.6 1.33-1.33V5.33C17 4.6 16.4 4 15.67 4z'
 };
-function $8b62e546fdd14731$var$svgIcon(name) {
-    return `<svg class="stat-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">${$8b62e546fdd14731$var$ICONS[name] || ""}</svg>`;
-}
-// ---------- CSS ----------
-function $8b62e546fdd14731$var$cardStyles() {
-    return `
-    :host {
-      --ps-text-dim: var(--secondary-text-color, rgba(255,255,255,0.5));
-      --ps-text-dimmer: var(--disabled-text-color, rgba(255,255,255,0.35));
-      --ps-text-dimmest: var(--disabled-text-color, rgba(255,255,255,0.25));
-      --ps-border: var(--divider-color, rgba(255,255,255,0.04));
-      --ps-track: var(--divider-color, rgba(255,255,255,0.06));
-      --ps-card-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));
-      --ps-elevated: color-mix(in srgb, var(--primary-text-color, #fff) 6%, var(--ps-card-bg));
+const $8b62e546fdd14731$var$PRESSURE_COLORS = {
+    no_contact: "var(--disabled-text-color, #9e9e9e)",
+    too_low: "#42a5f5",
+    optimal: "#4caf50",
+    too_high: "#f44336"
+};
+const $8b62e546fdd14731$var$PRESSURE_LABELS = {
+    no_contact: "No Contact",
+    too_low: "Too Low",
+    optimal: "Optimal",
+    too_high: "Too High"
+};
+const $8b62e546fdd14731$var$MOTION_LABELS = {
+    no_motion: "\u2014",
+    small_circle: "Circles",
+    large_stroke: "Strokes"
+};
+class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$export$3f2f9f5909897157) {
+    set hass(hass) {
+        this._hass = hass;
+        if ((!this._entities || !this._entities.battery) && this.config?.device_id) this._entities = this._findEntities(hass, this.config.device_id);
+        // Timer management
+        const activity = this._stateVal("activity", "off");
+        if (activity === "shaving" && !this._timer) this._startTimer();
+        else if (activity !== "shaving" && this._timer) this._stopTimer();
+        this.requestUpdate();
     }
-    ha-card {
-      overflow: hidden;
-      font-family: var(--paper-font-body1_-_font-family, var(--ha-font-family-body, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif));
-      color: var(--primary-text-color, #fff);
-      container-type: inline-size;
+    get hass() {
+        return this._hass;
     }
-
-    /* HEADER */
-    .header {
-      padding: 16px 16px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    connectedCallback() {
+        super.connectedCallback();
     }
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      min-width: 0;
-      overflow: hidden;
-    }
-    .device-name {
-      font-size: 15px;
-      font-weight: 700;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .model-mode {
-      font-size: 11px;
-      color: var(--ps-text-dimmest);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-    .conn-icons {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .conn-icon {
-      width: 16px;
-      height: 16px;
-      opacity: 0.7;
-      transition: opacity 0.3s;
-    }
-    .conn-icon.disconnected {
-      opacity: 0.25;
-    }
-
-    /* MINI TILES ROW */
-    .tiles-row {
-      display: flex;
-      gap: 6px;
-      padding: 0 16px 14px;
-      justify-content: center;
-    }
-    .mini-tile {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      background: var(--ps-elevated);
-      border-radius: 12px;
-      padding: 6px 8px 6px 4px;
-      flex: 1;
-      min-width: 0;
-      max-width: 140px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .mini-tile:hover {
-      background: color-mix(in srgb, var(--primary-text-color, #fff) 10%, var(--ps-card-bg));
-    }
-    .mini-ring-wrap {
-      position: relative;
-      width: 36px;
-      height: 36px;
-      flex-shrink: 0;
-    }
-    .mini-ring-svg { width: 36px; height: 36px; }
-    .mini-ring-icon {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 14px;
-      height: 14px;
-    }
-    .mini-tile-info {
-      display: flex;
-      flex-direction: column;
-    }
-    .mini-tile-label {
-      font-size: 9px;
-      color: var(--ps-text-dimmest);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      line-height: 1;
-      margin-bottom: 3px;
-    }
-    .mini-tile-value {
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1.2;
-      font-variant-numeric: tabular-nums;
-    }
-
-    /* GAUGE */
-    .gauge-section {
-      padding: 4px 0 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .gauge-svg { display: block; max-width: 100%; height: auto; }
-    .gauge-status {
-      font-size: 13px;
-      color: var(--ps-text-dimmest);
-      margin-top: -2px;
-      margin-bottom: 8px;
-      text-align: center;
-      transition: color 0.3s;
-    }
-
-    /* Pressure label below gauge */
-    .pressure-label {
-      font-size: 17px;
-      font-weight: 700;
-      text-align: center;
-      margin-top: -6px;
-      margin-bottom: 2px;
-      transition: color 0.3s;
-    }
-    .pressure-value {
-      font-size: 11px;
-      color: var(--ps-text-dimmest);
-      text-align: center;
-      margin-bottom: 8px;
-      font-variant-numeric: tabular-nums;
-    }
-
-    /* Gauge arcs */
-    .gauge-arc-fill {
-      transition: stroke-dashoffset 0.8s cubic-bezier(.4,0,.2,1), stroke 0.4s;
-    }
-    .zone-arc { stroke-linecap: butt; }
-    .zone-separator { stroke: var(--ps-card-bg); stroke-width: 3; }
-
-    /* Needle */
-    .needle-line {
-      stroke-linecap: round;
-      transition: x2 0.5s cubic-bezier(.4,0,.2,1), y2 0.5s cubic-bezier(.4,0,.2,1), stroke 0.3s;
-    }
-    .needle-glow {
-      filter: blur(4px); opacity: 0.5;
-      transition: x2 0.5s cubic-bezier(.4,0,.2,1), y2 0.5s cubic-bezier(.4,0,.2,1), stroke 0.3s;
-    }
-
-    /* Edge labels */
-    .gauge-edge-label { font-size: 10px; fill: var(--ps-text-dimmest); }
-
-    /* Shaving mini stats tiles */
-    .shave-stats {
-      display: flex;
-      gap: 6px;
-      padding: 8px 16px;
-      justify-content: center;
-    }
-    .shave-stat-tile {
-      flex: 1;
-      min-width: 0;
-      max-width: 120px;
-      background: var(--ps-elevated);
-      border-radius: 10px;
-      padding: 10px 4px;
-      text-align: center;
-    }
-    .shave-stat-val {
-      font-size: 15px;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-    }
-    .shave-stat-label {
-      font-size: 10px;
-      color: var(--ps-text-dimmest);
-      margin-top: 6px;
-    }
-
-    /* DIVIDER + SPACER */
-    .divider {
-      height: 1px;
-      background: var(--ps-border);
-      margin: 0 16px;
-    }
-
-    /* STAT ROWS */
-    .stats { padding: 6px 16px 10px; }
-    .stat-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 9px 0;
-      border-bottom: 1px solid var(--ps-border);
-    }
-    .stat-row:last-child { border-bottom: none; }
-    .stat-label {
-      font-size: 13px;
-      color: var(--ps-text-dim);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .stat-icon { width: 16px; height: 16px; opacity: 0.55; }
-    .stat-value {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--primary-text-color);
-      font-variant-numeric: tabular-nums;
-    }
-    .stat-unit {
-      font-size: 11px;
-      color: var(--ps-text-dimmer);
-      margin-left: 2px;
-      font-weight: 400;
-    }
-
-    /* UNAVAILABLE */
-    .unavailable {
-      padding: 20px;
-      text-align: center;
-      color: var(--ps-text-dim);
-      font-size: 14px;
-    }
-
-    /* NARROW CARD */
-    @container (max-width: 350px) {
-      .mini-tile-info { display: none; }
-      .mini-tile { padding: 4px; justify-content: center; }
-    }
-
-    /* ANIMATIONS */
-    @keyframes chargeGlow {
-      0%, 100% { stroke-opacity: 0.3; }
-      50% { stroke-opacity: 1; }
-    }
-    .charging-arc { animation: chargeGlow 2s ease-in-out infinite; }
-  `;
-}
-class $8b62e546fdd14731$export$4778d74453ecc150 extends HTMLElement {
-    // ---- Config form (HA visual editor) ----
-    static getConfigForm() {
-        return {
-            schema: [
-                {
-                    name: "device_id",
-                    required: true,
-                    selector: {
-                        device: {
-                            filter: {
-                                integration: "philips_shaver"
-                            },
-                            multiple: false
-                        }
-                    }
-                },
-                {
-                    name: "title",
-                    label: "Title (optional \u2014 defaults to 'Philips Shaver')",
-                    selector: {
-                        text: {}
-                    }
-                }
-            ]
-        };
-    }
-    static getStubConfig(hass) {
-        const entry = Object.values(hass.entities).find((e)=>e.platform === "philips_shaver" && e.translation_key === "battery");
-        return {
-            device_id: entry ? entry.device_id : ""
-        };
-    }
-    constructor(){
-        super();
-        this.attachShadow({
-            mode: "open"
-        });
-        this._hass = null;
-        this._config = null;
-        this._entities = null;
-        this._timer = null;
-        this._elapsed = 0;
-        this._lastActivity = null;
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        this._stopTimer();
     }
     setConfig(config) {
         if (!config.device_id) throw new Error("Please select a Philips Shaver device in the card configuration.");
-        this._config = config;
+        this.config = config;
         this._entities = null;
-        if (this._hass) this._findEntities();
+        if (this._hass) this._entities = this._findEntities(this._hass, config.device_id);
     }
     getCardSize() {
         return 6;
     }
-    set hass(hass) {
-        this._hass = hass;
-        if (!this._entities) this._findEntities();
-        this._render();
-    }
-    // ---------- Entity discovery via translation_key ----------
-    _findEntities() {
-        if (!this._hass || !this._config?.device_id) return;
-        const allEntities = this._hass.entities || {};
-        const devices = this._hass.devices || {};
-        const deviceId = this._config.device_id;
+    // ---------- Entity discovery ----------
+    _findEntities(hass, deviceId) {
+        const allEntities = hass.entities || {};
+        const devices = hass.devices || {};
         const found = {};
-        // Collect device IDs: the configured device + any sibling devices
-        // that share the same config entry (e.g. ESP Bridge sub-device).
         const deviceIds = new Set([
             deviceId
         ]);
@@ -523,24 +828,23 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends HTMLElement {
             if (!deviceIds.has(entity.device_id)) continue;
             const tKey = entity.translation_key;
             if (tKey && $8b62e546fdd14731$var$TRANSLATION_KEY_MAP[tKey]) found[$8b62e546fdd14731$var$TRANSLATION_KEY_MAP[tKey]] = entity.entity_id;
-            // Fallback: battery via device_class
-            const state = this._hass.states[entity.entity_id];
+            const state = hass.states[entity.entity_id];
             if (!found.battery && state?.attributes?.device_class === "battery") found.battery = entity.entity_id;
         }
-        this._entities = found;
+        return found;
     }
     // ---------- State helpers ----------
     _entity(key) {
         const id = this._entities?.[key];
         return id ? this._hass.states[id] : null;
     }
-    _state(key, fallback) {
+    _stateVal(key, fallback) {
         const e = this._entity(key);
         if (!e || e.state === "unavailable" || e.state === "unknown") return fallback !== undefined ? fallback : null;
         return e.state;
     }
     _numState(key, fallback = 0) {
-        const v = this._state(key);
+        const v = this._stateVal(key);
         if (v === null) return fallback;
         const n = parseFloat(v);
         return isNaN(n) ? fallback : n;
@@ -551,12 +855,7 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends HTMLElement {
         this._elapsed = this._numState("shaving_time", 0);
         this._timer = setInterval(()=>{
             this._elapsed++;
-            const timerEl = this.shadowRoot?.querySelector(".gauge-timer");
-            if (timerEl) {
-                const m = Math.floor(this._elapsed / 60);
-                const s = this._elapsed % 60;
-                timerEl.textContent = `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-            }
+            this.requestUpdate();
         }, 1000);
     }
     _stopTimer() {
@@ -565,229 +864,99 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends HTMLElement {
             this._timer = null;
         }
     }
-    disconnectedCallback() {
-        this._stopTimer();
-    }
     // ---------- More-info event ----------
     _fireMoreInfo(entityId) {
         if (!entityId) return;
-        const e = new Event("hass-more-info", {
+        this.dispatchEvent(new CustomEvent('hass-more-info', {
             bubbles: true,
-            composed: true
-        });
-        e.detail = {
-            entityId: entityId
-        };
-        this.dispatchEvent(e);
+            composed: true,
+            detail: {
+                entityId: entityId
+            }
+        }));
+    }
+    _navigateToDevice() {
+        const deviceId = this.config?.device_id;
+        if (!deviceId) return;
+        const path = `/config/devices/device/${deviceId}`;
+        history.pushState(null, "", path);
+        window.dispatchEvent(new CustomEvent("location-changed", {
+            detail: {
+                replace: false
+            }
+        }));
+    }
+    // ---------- SVG icon helper ----------
+    _svgIcon(name) {
+        return (0, $d33ef1320595a3ac$export$7ed1367e7fa1ad68)`<path d="${$8b62e546fdd14731$var$ICONS[name] || ''}"/>`;
     }
     // ---------- Main render ----------
-    _render() {
-        if (!this._hass || !this._config || !this._entities) return;
-        const activity = this._state("activity", "off");
-        const isShaving = activity === "shaving";
-        // Timer management
-        if (isShaving && !this._timer) this._startTimer();
-        else if (!isShaving && this._timer) this._stopTimer();
-        // Full re-render when activity mode changes or first render
-        const needsFull = this._lastActivity !== activity || !this.shadowRoot.querySelector(".card-content");
-        this._lastActivity = activity;
-        if (needsFull) {
-            const root = this.shadowRoot;
-            root.innerHTML = "";
-            const style = document.createElement("style");
-            style.textContent = $8b62e546fdd14731$var$cardStyles();
-            root.appendChild(style);
-            const card = document.createElement("ha-card");
-            card.innerHTML = `<div class="card-content">
+    render() {
+        const hass = this._hass;
+        const config = this.config;
+        if (!hass || !config || !this._entities) {
+            if (hass && config?.device_id) this._entities = this._findEntities(hass, config.device_id);
+            if (!this._entities) return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`<ha-card><div class="unavailable">Please select a device.</div></ha-card>`;
+        }
+        const activity = this._stateVal("activity", "off");
+        return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
+      <ha-card>
         ${this._renderHeader()}
-        ${this._renderMiniTiles()}
-        ${this._renderGauge()}
+        ${this._renderChips()}
+        <div class="visual-area">
+          ${this._renderGauge(activity)}
+        </div>
         <div class="divider"></div>
-        ${this._renderStats()}
-      </div>`;
-            root.appendChild(card);
-            this._bind(card);
-        } else this._updateDynamic();
-    }
-    // ---------- Event binding ----------
-    _bind(card) {
-        // Click on header → more-info for activity
-        const header = card.querySelector(".header-left");
-        if (header) {
-            header.style.cursor = "pointer";
-            header.addEventListener("click", ()=>this._fireMoreInfo(this._entities?.activity));
-        }
-        // Click on mini tiles → more-info
-        const batTile = card.querySelector('[data-mini="battery"]');
-        if (batTile) batTile.addEventListener("click", ()=>this._fireMoreInfo(this._entities?.battery));
-        const headTile = card.querySelector('[data-mini="head"]');
-        if (headTile) headTile.addEventListener("click", ()=>this._fireMoreInfo(this._entities?.head_remaining));
-        const cleanTile = card.querySelector('[data-mini="cleaning"]');
-        if (cleanTile) cleanTile.addEventListener("click", ()=>this._fireMoreInfo(this._entities?.cleaning_cycles_remaining));
-        // Click on connection icons → more-info (order: BT first, LAN second)
-        const connIcons = card.querySelectorAll(".conn-icon");
-        if (connIcons.length >= 2) {
-            const btEl = connIcons[0];
-            btEl.style.cursor = "pointer";
-            btEl.addEventListener("click", ()=>this._fireMoreInfo(this._entities?.shaver_ble_connected));
-            const lanEl = connIcons[1];
-            lanEl.style.cursor = "pointer";
-            lanEl.addEventListener("click", ()=>this._fireMoreInfo(this._entities?.esp_bridge_alive));
-        }
-    }
-    // ---------- Partial update ----------
-    _updateDynamic() {
-        const root = this.shadowRoot;
-        if (!root) return;
-        // Update mini tiles
-        const bat = this._numState("battery", 0);
-        const bc = $8b62e546fdd14731$var$batteryColor(bat);
-        this._updateMiniTile(root, "battery", bat / 100, bc, `${bat}%`);
-        const head = this._numState("head_remaining", 0);
-        const hc = $8b62e546fdd14731$var$headColor(head);
-        this._updateMiniTile(root, "head", head / 100, hc, `${Math.round(head)}%`);
-        const clean = this._numState("cleaning_cycles_remaining", 0);
-        const cc = $8b62e546fdd14731$var$cleaningColor(clean);
-        this._updateMiniTile(root, "cleaning", clean / 30, cc, clean.toFixed(0));
-        // Update connection icons
-        const espEntity = this._entity("esp_bridge_alive");
-        const espConnected = espEntity ? espEntity.state === "on" : false;
-        const bleEntity = this._entity("shaver_ble_connected");
-        const bleConnected = bleEntity ? bleEntity.state === "on" : false;
-        const connIcons = root.querySelectorAll(".conn-icon");
-        if (connIcons.length >= 2) {
-            const btEl = connIcons[0];
-            btEl.setAttribute("fill", bleConnected ? "#42a5f5" : "var(--ps-text-dimmest)");
-            btEl.setAttribute("class", bleConnected ? "conn-icon" : "conn-icon disconnected");
-            const lanEl = connIcons[1];
-            lanEl.innerHTML = $8b62e546fdd14731$var$ICONS[espConnected ? "lan_connect" : "lan_disconnect"];
-            lanEl.setAttribute("fill", espConnected ? "#42a5f5" : "var(--ps-text-dimmest)");
-            lanEl.setAttribute("class", espConnected ? "conn-icon" : "conn-icon disconnected");
-        }
-        // Update gauge
-        const activity = this._state("activity", "off");
-        if (activity === "shaving") {
-            const pressure = this._numState("pressure", 0);
-            const pState = this._state("pressure_state", "no_contact");
-            const stateColors = {
-                no_contact: "var(--disabled-text-color, #9e9e9e)",
-                too_low: "#42a5f5",
-                optimal: "#4caf50",
-                too_high: "#f44336"
-            };
-            const stateLabels = {
-                no_contact: "No Contact",
-                too_low: "Too Low",
-                optimal: "Optimal",
-                too_high: "Too High"
-            };
-            const nc = stateColors[pState] || stateColors.no_contact;
-            const needleFrac = Math.min(pressure / $8b62e546fdd14731$var$GAUGE.PRESSURE_MAX, 1);
-            const tip = $8b62e546fdd14731$var$fracToXY(needleFrac, $8b62e546fdd14731$var$GAUGE.R - 16);
-            const needleLine = root.querySelector(".needle-line");
-            if (needleLine) {
-                needleLine.setAttribute("x2", tip.x);
-                needleLine.setAttribute("y2", tip.y);
-                needleLine.setAttribute("stroke", nc);
-            }
-            const needleGlow = root.querySelector(".needle-glow");
-            if (needleGlow) {
-                needleGlow.setAttribute("x2", tip.x);
-                needleGlow.setAttribute("y2", tip.y);
-                needleGlow.setAttribute("stroke", nc);
-            }
-            const hubDot = root.querySelector(".gauge-hub-dot");
-            if (hubDot) hubDot.setAttribute("fill", nc);
-            const pLabel = root.querySelector(".pressure-label");
-            if (pLabel) {
-                pLabel.textContent = stateLabels[pState] || "\u2014";
-                pLabel.style.color = nc;
-            }
-            const pVal = root.querySelector(".pressure-value");
-            if (pVal) pVal.textContent = pressure > 0 ? pressure : "\u2014";
-            // Update shave stat tiles
-            this._updateStatTile(root, "shave-rpm", this._numState("motor_rpm", 0));
-            this._updateStatTile(root, "shave-ma", this._numState("motor_current", 0));
-            const motion = this._state("motion_type", "no_motion");
-            const motionLabels = {
-                no_motion: "\u2014",
-                small_circle: "Circles",
-                large_stroke: "Strokes"
-            };
-            this._updateStatTile(root, "shave-motion", motionLabels[motion] || "\u2014");
-        } else if (activity === "cleaning") {
-            const progress = this._numState("cleaning_progress", 0);
-            const cleanArc = root.querySelector(".gauge-clean-arc");
-            if (cleanArc) cleanArc.setAttribute("d", $8b62e546fdd14731$var$describeArc(0, progress / 100));
-            const cleanText = root.querySelector(".gauge-clean-text");
-            if (cleanText) cleanText.textContent = `${Math.round(progress)}%`;
-        } else {
-            const batArc = root.querySelector(".gauge-bat-arc");
-            if (batArc) {
-                batArc.setAttribute("d", $8b62e546fdd14731$var$describeArc(0, bat / 100));
-                batArc.setAttribute("stroke", bc);
-            }
-            const batText = root.querySelector(".gauge-bat-text");
-            if (batText) batText.textContent = `${bat}%`;
-        }
-    }
-    _updateMiniTile(root, key, frac, color, text) {
-        const tile = root.querySelector(`[data-mini="${key}"]`);
-        if (!tile) return;
-        const val = tile.querySelector(".mini-tile-value");
-        if (val) {
-            val.textContent = text;
-            val.style.color = color;
-        }
-        const arc = tile.querySelector(".mini-ring-fill");
-        if (arc) {
-            arc.setAttribute("d", $8b62e546fdd14731$var$ringArc(frac));
-            arc.setAttribute("stroke", color);
-        }
-        const icon = tile.querySelector(".mini-ring-icon");
-        if (icon) icon.setAttribute("fill", color);
-    }
-    _updateStatTile(root, key, value) {
-        const el = root.querySelector(`[data-shave="${key}"]`);
-        if (el) el.textContent = value;
+        ${this._renderStats(activity)}
+      </ha-card>
+    `;
     }
     // ---------- Header ----------
     _renderHeader() {
-        const model = this._state("model_number", "");
-        const name = this._config.title || "Philips Shaver";
-        // Connection status
+        const model = this._stateVal("model_number", "");
+        const name = this.config.title || "Philips Shaver";
+        const showModel = this.config.show_model !== false;
         const espEntity = this._entity("esp_bridge_alive");
         const espConnected = espEntity ? espEntity.state === "on" : false;
         const bleEntity = this._entity("shaver_ble_connected");
         const bleConnected = bleEntity ? bleEntity.state === "on" : false;
-        const lanIcon = espConnected ? "lan_connect" : "lan_disconnect";
-        const lanColor = espConnected ? "#42a5f5" : "var(--ps-text-dimmest)";
-        const lanClass = espConnected ? "conn-icon" : "conn-icon disconnected";
-        const btColor = bleConnected ? "#42a5f5" : "var(--ps-text-dimmest)";
-        const btClass = bleConnected ? "conn-icon" : "conn-icon disconnected";
-        return `
-      <div class="header">
-        <div class="header-left">
-          <span class="device-name">${name}</span>
-          <span class="model-mode">${model}</span>
+        return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
+      <div class="card-header">
+        <div class="header-title" @click="${()=>this._fireMoreInfo(this._entities?.activity)}">
+          <h2>${name}</h2>
+          ${showModel && model ? (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`<span class="header-sub">${model}</span>` : ''}
         </div>
-        <div class="header-right">
-          <div class="conn-icons">
-            <svg class="${btClass}" viewBox="0 0 24 24" fill="${btColor}">${$8b62e546fdd14731$var$ICONS.bluetooth}</svg>
-            <svg class="${lanClass}" viewBox="0 0 24 24" fill="${lanColor}">${$8b62e546fdd14731$var$ICONS[lanIcon]}</svg>
-          </div>
+        <div class="header-icons">
+          <svg class="conn-icon ${bleConnected ? '' : 'disconnected'}"
+               viewBox="0 0 24 24"
+               @click="${()=>this._fireMoreInfo(this._entities?.shaver_ble_connected)}">
+            <path d="${$8b62e546fdd14731$var$ICONS.bluetooth}"/>
+          </svg>
+          <svg class="conn-icon ${espConnected ? '' : 'disconnected'}"
+               viewBox="0 0 24 24"
+               @click="${()=>this._fireMoreInfo(this._entities?.esp_bridge_alive)}">
+            <path d="${espConnected ? $8b62e546fdd14731$var$ICONS.lan_connect : $8b62e546fdd14731$var$ICONS.lan_disconnect}"/>
+          </svg>
+          <svg class="more-info-btn" viewBox="0 0 24 24" fill="currentColor" stroke="none"
+               @click="${()=>this._navigateToDevice()}">
+            <circle cx="12" cy="5" r="1.5"/>
+            <circle cx="12" cy="12" r="1.5"/>
+            <circle cx="12" cy="19" r="1.5"/>
+          </svg>
         </div>
       </div>
     `;
     }
-    // ---------- Mini tiles row ----------
-    _renderMiniTiles() {
+    // ---------- Chips row ----------
+    _renderChips() {
         const bat = this._numState("battery", 0);
         const bc = $8b62e546fdd14731$var$batteryColor(bat);
         const head = this._numState("head_remaining", 0);
         const hc = $8b62e546fdd14731$var$headColor(head);
         const clean = this._numState("cleaning_cycles_remaining", 0);
         const cc = $8b62e546fdd14731$var$cleaningColor(clean);
+        const activity = this._stateVal("activity", "off");
+        const bg = $8b62e546fdd14731$var$ringBgArc();
         const tiles = [
             {
                 key: "battery",
@@ -795,7 +964,8 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends HTMLElement {
                 value: `${bat}%`,
                 frac: bat / 100,
                 color: bc,
-                icon: this._state("activity", "off") === "charging" ? $8b62e546fdd14731$var$ICONS.charge : $8b62e546fdd14731$var$ICONS.charges
+                icon: activity === "charging" ? $8b62e546fdd14731$var$ICONS.charge : $8b62e546fdd14731$var$ICONS.charges,
+                entity: this._entities?.battery
             },
             {
                 key: "head",
@@ -803,7 +973,8 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends HTMLElement {
                 value: `${Math.round(head)}%`,
                 frac: head / 100,
                 color: hc,
-                icon: $8b62e546fdd14731$var$ICONS.razor
+                icon: $8b62e546fdd14731$var$ICONS.razor,
+                entity: this._entities?.head_remaining
             },
             {
                 key: "cleaning",
@@ -811,33 +982,32 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends HTMLElement {
                 value: clean.toFixed(0),
                 frac: clean / 30,
                 color: cc,
-                icon: $8b62e546fdd14731$var$ICONS.droplet
+                icon: $8b62e546fdd14731$var$ICONS.droplet,
+                entity: this._entities?.cleaning_cycles_remaining
             }
         ];
-        const bg = $8b62e546fdd14731$var$ringBgArc();
-        return `
-      <div class="tiles-row">
-        ${tiles.map((t)=>`
-          <div class="mini-tile" data-mini="${t.key}">
-            <div class="mini-ring-wrap">
-              <svg class="mini-ring-svg" viewBox="0 0 36 36">
+        return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
+      <div class="chips-row">
+        ${tiles.map((t)=>(0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
+          <div class="chip" @click="${()=>this._fireMoreInfo(t.entity)}">
+            <div class="chip-icon">
+              <svg class="chip-ring-svg" viewBox="0 0 36 36">
                 <path d="${bg}" fill="none" stroke="var(--ps-track)" stroke-width="${$8b62e546fdd14731$var$RING.SW}" stroke-linecap="round"/>
-                <path class="mini-ring-fill" d="${$8b62e546fdd14731$var$ringArc(t.frac)}" fill="none" stroke="${t.color}" stroke-width="${$8b62e546fdd14731$var$RING.SW}" stroke-linecap="round"/>
+                <path d="${$8b62e546fdd14731$var$ringArc(t.frac)}" fill="none" stroke="${t.color}" stroke-width="${$8b62e546fdd14731$var$RING.SW}" stroke-linecap="round"/>
               </svg>
-              <svg class="mini-ring-icon" viewBox="0 0 24 24" fill="${t.color}">${t.icon}</svg>
+              <svg class="chip-ring-icon" viewBox="0 0 24 24" fill="${t.color}">
+                <path d="${t.icon}"/>
+              </svg>
             </div>
-            <div class="mini-tile-info">
-              <span class="mini-tile-label">${t.label}</span>
-              <span class="mini-tile-value" style="color:${t.color}">${t.value}</span>
-            </div>
+            <span class="chip-label">${t.label}</span>
+            <span class="chip-value" style="color:${t.color}">${t.value}</span>
           </div>
-        `).join("")}
+        `)}
       </div>
     `;
     }
     // ---------- Gauge ----------
-    _renderGauge() {
-        const activity = this._state("activity", "off");
+    _renderGauge(activity) {
         if (activity === "shaving") return this._renderPressureGauge();
         if (activity === "cleaning") return this._renderCleaningGauge();
         return this._renderBatteryGauge(activity === "charging");
@@ -845,38 +1015,25 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends HTMLElement {
     _renderPressureGauge() {
         const { CX: cx, CY: cy, R: r, STROKE: st, PRESSURE_MAX: max } = $8b62e546fdd14731$var$GAUGE;
         const pressure = this._numState("pressure", 0);
-        const pState = this._state("pressure_state", "no_contact");
+        const pState = this._stateVal("pressure_state", "no_contact");
         const elapsed = this._elapsed || this._numState("shaving_time", 0);
         const tm = Math.floor(elapsed / 60);
         const ts = elapsed % 60;
         const timerStr = String(tm).padStart(2, "0") + ":" + String(ts).padStart(2, "0");
         const needleFrac = Math.min(pressure / max, 0.99);
-        const stateColors = {
-            no_contact: "var(--disabled-text-color, #9e9e9e)",
-            too_low: "#42a5f5",
-            optimal: "#4caf50",
-            too_high: "#f44336"
-        };
-        const stateLabels = {
-            no_contact: "No Contact",
-            too_low: "Too Low",
-            optimal: "Optimal",
-            too_high: "Too High"
-        };
-        const nc = stateColors[pState] || stateColors.no_contact;
+        const nc = $8b62e546fdd14731$var$PRESSURE_COLORS[pState] || $8b62e546fdd14731$var$PRESSURE_COLORS.no_contact;
         const { ZONE_BASE: base, ZONE_LOW: low, ZONE_HIGH: high } = $8b62e546fdd14731$var$GAUGE;
-        // Zone separator lines
-        const sepLines = [
+        const separators = [
             base,
             low,
             high
         ].map((f)=>{
             const inner = $8b62e546fdd14731$var$fracToXY(f, r - 12);
             const outer = $8b62e546fdd14731$var$fracToXY(f, r + 12);
-            return `<line x1="${inner.x}" y1="${inner.y}" x2="${outer.x}" y2="${outer.y}" class="zone-separator"/>`;
-        }).join("");
+            return (0, $d33ef1320595a3ac$export$7ed1367e7fa1ad68)`<line x1="${inner.x}" y1="${inner.y}" x2="${outer.x}" y2="${outer.y}" class="zone-separator"/>`;
+        });
         const tip = $8b62e546fdd14731$var$fracToXY(needleFrac, r - 16);
-        return `
+        return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
       <div class="gauge-section">
         <svg class="gauge-svg" width="${$8b62e546fdd14731$var$GAUGE_W}" height="186" viewBox="0 0 ${$8b62e546fdd14731$var$GAUGE_W} 186">
           <!-- Track -->
@@ -887,43 +1044,40 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends HTMLElement {
           <path d="${$8b62e546fdd14731$var$describeArc(low, high)}" fill="none" stroke="#4caf50" stroke-width="${st}" class="zone-arc" opacity="0.65"/>
           <path d="${$8b62e546fdd14731$var$describeArc(high, 1)}" fill="none" stroke="#ff9800" stroke-width="${st}" stroke-linecap="round" class="zone-arc" opacity="0.5"/>
           <!-- Zone separators -->
-          ${sepLines}
+          ${separators}
           <!-- Session timer -->
-          <text x="${cx}" y="${cy - 48}" text-anchor="middle" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit" letter-spacing="1.5" text-transform="uppercase">SESSION</text>
-          <text class="gauge-timer" x="${cx}" y="${cy - 12}" text-anchor="middle" font-size="38" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="'SF Mono','Menlo','Consolas',monospace" letter-spacing="1">${timerStr}</text>
+          <text x="${cx}" y="${cy - 48}" text-anchor="middle" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit" letter-spacing="1.5">SESSION</text>
+          <text x="${cx}" y="${cy - 12}" text-anchor="middle" font-size="38" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="'SF Mono','Menlo','Consolas',monospace" letter-spacing="1">${timerStr}</text>
           <!-- Needle -->
           <line x1="${cx}" y1="${cy + 10}" x2="${tip.x}" y2="${tip.y}" stroke="${nc}" stroke-width="6" class="needle-glow"/>
           <line x1="${cx}" y1="${cy + 10}" x2="${tip.x}" y2="${tip.y}" stroke="${nc}" stroke-width="3" class="needle-line"/>
           <!-- Hub -->
           <circle cx="${cx}" cy="${cy + 10}" r="8" fill="var(--ps-card-bg)" stroke="var(--ps-border)" stroke-width="2"/>
-          <circle class="gauge-hub-dot" cx="${cx}" cy="${cy + 10}" r="4" fill="${nc}"/>
+          <circle cx="${cx}" cy="${cy + 10}" r="4" fill="${nc}"/>
           <!-- Edge labels -->
           <text x="26" y="${cy + 28}" class="gauge-edge-label" text-anchor="start">Low</text>
           <text x="${$8b62e546fdd14731$var$GAUGE_W - 26}" y="${cy + 28}" class="gauge-edge-label" text-anchor="end">High</text>
         </svg>
-        <div class="pressure-label" style="color:${nc}">${stateLabels[pState] || "\u2014"}</div>
+        <div class="pressure-label" style="color:${nc}">${$8b62e546fdd14731$var$PRESSURE_LABELS[pState] || "\u2014"}</div>
         <div class="pressure-value">${pressure > 0 ? pressure : "\u2014"}</div>
       </div>
     `;
     }
     _renderBatteryGauge(isCharging) {
-        const { CX: cx, CY: cy, R: r, STROKE: st } = $8b62e546fdd14731$var$GAUGE;
+        const { CX: cx, CY: cy, STROKE: st } = $8b62e546fdd14731$var$GAUGE;
         const bat = this._numState("battery", 0);
         const bc = $8b62e546fdd14731$var$batteryColor(bat);
-        const arcClass = isCharging ? "gauge-bat-arc charging-arc" : "gauge-bat-arc";
-        return `
+        return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
       <div class="gauge-section">
         <svg class="gauge-svg" width="${$8b62e546fdd14731$var$GAUGE_W}" height="180" viewBox="0 0 ${$8b62e546fdd14731$var$GAUGE_W} 180">
           <path d="${$8b62e546fdd14731$var$describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${st}" stroke-linecap="round"/>
-          <path class="${arcClass}" d="${$8b62e546fdd14731$var$describeArc(0, bat / 100)}" fill="none" stroke="${bc}" stroke-width="${st}" stroke-linecap="round"/>
-          <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="52" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit" letter-spacing="-2">
-            <tspan class="gauge-bat-text">${bat}%</tspan>
-          </text>
-          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="${isCharging ? "#4caf50" : "var(--ps-text-dim)"}" font-family="inherit">
+          <path class="${isCharging ? 'charging-arc' : ''}" d="${$8b62e546fdd14731$var$describeArc(0, bat / 100)}" fill="none" stroke="${bc}" stroke-width="${st}" stroke-linecap="round"/>
+          <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="52" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit" letter-spacing="-2">${bat}%</text>
+          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="${isCharging ? '#4caf50' : 'var(--ps-text-dim)'}" font-family="inherit">
             ${isCharging ? "\u26A1 Charging" : "Battery"}
           </text>
         </svg>
-        <div class="gauge-status" style="color:${isCharging ? "#4caf50" : "var(--ps-text-dimmest)"}">
+        <div class="gauge-status" style="color:${isCharging ? '#4caf50' : 'var(--ps-text-dimmest)'}">
           ${isCharging ? "Plugged In" : "Standby"}
         </div>
       </div>
@@ -934,75 +1088,124 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends HTMLElement {
         const progress = this._numState("cleaning_progress", 0);
         const frac = Math.max(0, Math.min(1, progress / 100));
         const color = "#42a5f5";
-        return `
+        return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
       <div class="gauge-section">
         <svg class="gauge-svg" width="${$8b62e546fdd14731$var$GAUGE_W}" height="180" viewBox="0 0 ${$8b62e546fdd14731$var$GAUGE_W} 180">
           <path d="${$8b62e546fdd14731$var$describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${st}" stroke-linecap="round"/>
-          <path class="gauge-clean-arc charging-arc" d="${$8b62e546fdd14731$var$describeArc(0, frac)}" fill="none" stroke="${color}" stroke-width="${st}" stroke-linecap="round"/>
-          <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="52" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit" letter-spacing="-2">
-            <tspan class="gauge-clean-text">${Math.round(progress)}%</tspan>
-          </text>
-          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="var(--ps-text-dim)" font-family="inherit">
-            ${$8b62e546fdd14731$var$ICONS.droplet ? `<tspan>Cleaning</tspan>` : "Cleaning"}
-          </text>
+          <path class="charging-arc" d="${$8b62e546fdd14731$var$describeArc(0, frac)}" fill="none" stroke="${color}" stroke-width="${st}" stroke-linecap="round"/>
+          <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="52" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit" letter-spacing="-2">${Math.round(progress)}%</text>
+          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="var(--ps-text-dim)" font-family="inherit">Cleaning</text>
         </svg>
-        <div class="gauge-status" style="color:${color}">
-          In Progress
-        </div>
+        <div class="gauge-status" style="color:${color}">In Progress</div>
       </div>
     `;
     }
     // ---------- Stats ----------
-    _renderStats() {
-        const activity = this._state("activity", "off");
-        const isShaving = activity === "shaving";
-        const isCharging = activity === "charging";
-        if (isShaving) return this._renderShaveStats();
-        let rows = "";
-        if (isCharging) rows = this._statRow("charges", "Charge Cycles", this._numState("amount_of_charges", 0)) + this._statRow("clock", "Last Session", $8b62e546fdd14731$var$formatSession(this._numState("shaving_time", 0))) + this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0)) + this._statRow("clock", "Total Time", $8b62e546fdd14731$var$formatAge(this._numState("total_age", 0)));
+    _renderStats(activity) {
+        if (activity === "shaving") return this._renderShaveStats();
+        let rows;
+        if (activity === "charging") rows = (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
+        ${this._statRow("charges", "Charge Cycles", this._numState("amount_of_charges", 0))}
+        ${this._statRow("clock", "Last Session", $8b62e546fdd14731$var$formatSession(this._numState("shaving_time", 0)))}
+        ${this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0))}
+        ${this._statRow("clock", "Total Time", $8b62e546fdd14731$var$formatAge(this._numState("total_age", 0)))}
+      `;
         else if (activity === "cleaning") {
             const remaining = this._numState("cleaning_cycles_remaining", 0);
-            rows = this._statRow("droplet", "Cycles Remaining", remaining.toFixed(1)) + this._statRow("clock", "Last Session", $8b62e546fdd14731$var$formatSession(this._numState("shaving_time", 0))) + this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0));
+            rows = (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
+        ${this._statRow("droplet", "Cycles Remaining", remaining.toFixed(1))}
+        ${this._statRow("clock", "Last Session", $8b62e546fdd14731$var$formatSession(this._numState("shaving_time", 0)))}
+        ${this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0))}
+      `;
         } else {
             const daysUsed = this._numState("days_last_used", null);
             const daysText = daysUsed === null ? "\u2014" : daysUsed === 0 ? "Today" : daysUsed === 1 ? "Yesterday" : `${daysUsed}d ago`;
-            rows = this._statRow("clock", "Last Session", $8b62e546fdd14731$var$formatSession(this._numState("shaving_time", 0))) + this._statRow("calendar", "Last Used", daysText) + this._statRow("clock", "Total Time", $8b62e546fdd14731$var$formatAge(this._numState("total_age", 0))) + this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0));
+            rows = (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
+        ${this._statRow("clock", "Last Session", $8b62e546fdd14731$var$formatSession(this._numState("shaving_time", 0)))}
+        ${this._statRow("calendar", "Last Used", daysText)}
+        ${this._statRow("clock", "Total Time", $8b62e546fdd14731$var$formatAge(this._numState("total_age", 0)))}
+        ${this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0))}
+      `;
         }
-        return `<div class="stats">${rows}</div>`;
+        return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`<div class="stats">${rows}</div>`;
     }
     _renderShaveStats() {
         const rpm = this._numState("motor_rpm", 0);
         const ma = this._numState("motor_current", 0);
-        const motion = this._state("motion_type", "no_motion");
-        const motionLabels = {
-            no_motion: "\u2014",
-            small_circle: "Circles",
-            large_stroke: "Strokes"
-        };
-        return `
+        const motion = this._stateVal("motion_type", "no_motion");
+        return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
       <div class="shave-stats">
         <div class="shave-stat-tile">
-          <div class="shave-stat-val" data-shave="shave-rpm">${rpm}</div>
+          <div class="shave-stat-val">${rpm}</div>
           <div class="shave-stat-label">RPM</div>
         </div>
         <div class="shave-stat-tile">
-          <div class="shave-stat-val" data-shave="shave-ma">${ma}</div>
+          <div class="shave-stat-val">${ma}</div>
           <div class="shave-stat-label">mA</div>
         </div>
         <div class="shave-stat-tile">
-          <div class="shave-stat-val" data-shave="shave-motion">${motionLabels[motion] || "\u2014"}</div>
+          <div class="shave-stat-val">${$8b62e546fdd14731$var$MOTION_LABELS[motion] || "\u2014"}</div>
           <div class="shave-stat-label">Motion</div>
         </div>
       </div>
     `;
     }
     _statRow(icon, label, value, unit) {
-        return `
+        return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
       <div class="stat-row">
-        <span class="stat-label">${$8b62e546fdd14731$var$svgIcon(icon)}${label}</span>
-        <span class="stat-value">${value}${unit ? `<span class="stat-unit">${unit}</span>` : ""}</span>
+        <span class="stat-label">
+          <svg class="stat-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="${$8b62e546fdd14731$var$ICONS[icon] || ''}"/>
+          </svg>
+          ${label}
+        </span>
+        <span class="stat-value">${value}${unit ? (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`<span class="stat-unit">${unit}</span>` : ''}</span>
       </div>
     `;
+    }
+    // ---------- Styles ----------
+    static get styles() {
+        return (0, $06bdd16cbb4a41b3$export$8d80f9cac07cdb3)((0, (/*@__PURE__*/$parcel$interopDefault($43a89528e95f706e$exports))));
+    }
+    // ---------- Config form ----------
+    static getConfigForm() {
+        return {
+            schema: [
+                {
+                    name: "title",
+                    label: "Title (Optional)",
+                    selector: {
+                        text: {}
+                    }
+                },
+                {
+                    name: "show_model",
+                    label: "Show model number as subtitle",
+                    selector: {
+                        boolean: {}
+                    },
+                    default: true
+                },
+                {
+                    name: "device_id",
+                    required: true,
+                    selector: {
+                        device: {
+                            filter: {
+                                integration: "philips_shaver"
+                            },
+                            multiple: false
+                        }
+                    }
+                }
+            ]
+        };
+    }
+    static getStubConfig(hass) {
+        const entry = Object.values(hass.entities).find((e)=>e.platform === "philips_shaver" && e.translation_key === "battery");
+        return {
+            device_id: entry ? entry.device_id : ""
+        };
     }
 }
 
@@ -1015,6 +1218,6 @@ window.customCards.push({
     description: "Custom card for the Philips Shaver integration with pressure gauge, battery, and diagnostics.",
     preview: true
 });
-console.info("%c PHILIPS-SHAVER-CARD %c v0.1.0 ", "color:#fff;background:#1c1c1c;padding:2px 6px;border-radius:4px 0 0 4px;font-weight:700", "color:#1c1c1c;background:#ffab40;padding:2px 6px;border-radius:0 4px 4px 0;font-weight:700");
+console.info(`%c PHILIPS-SHAVER-CARD %c v${(0, $8b62e546fdd14731$export$d5e7ce6d07daf10f)} `, "color:#fff;background:#1c1c1c;padding:2px 6px;border-radius:4px 0 0 4px;font-weight:700", "color:#1c1c1c;background:#ffab40;padding:2px 6px;border-radius:0 4px 4px 0;font-weight:700");
 
 
