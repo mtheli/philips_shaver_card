@@ -501,11 +501,26 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends HTMLElement {
     _findEntities() {
         if (!this._hass || !this._config?.device_id) return;
         const allEntities = this._hass.entities || {};
+        const devices = this._hass.devices || {};
         const deviceId = this._config.device_id;
         const found = {};
+        // Collect device IDs: the configured device + any sibling devices
+        // that share the same config entry (e.g. ESP Bridge sub-device).
+        const deviceIds = new Set([
+            deviceId
+        ]);
+        const mainDevice = devices[deviceId];
+        if (mainDevice) {
+            const configEntries = mainDevice.config_entries || [];
+            for (const [id, dev] of Object.entries(devices)){
+                if (id === deviceId) continue;
+                const devEntries = dev.config_entries || [];
+                if (configEntries.some((ce)=>devEntries.includes(ce))) deviceIds.add(id);
+            }
+        }
         for(const entityId in allEntities){
             const entity = allEntities[entityId];
-            if (entity.device_id !== deviceId) continue;
+            if (!deviceIds.has(entity.device_id)) continue;
             const tKey = entity.translation_key;
             if (tKey && $8b62e546fdd14731$var$TRANSLATION_KEY_MAP[tKey]) found[$8b62e546fdd14731$var$TRANSLATION_KEY_MAP[tKey]] = entity.entity_id;
             // Fallback: battery via device_class
