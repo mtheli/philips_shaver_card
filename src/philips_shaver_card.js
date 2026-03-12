@@ -6,7 +6,7 @@
 import { LitElement, html, css, unsafeCSS, svg } from 'lit';
 import styles from 'bundle-text:./philips_shaver_card.css';
 
-export const CARD_VERSION = "0.2.0";
+export const CARD_VERSION = "0.3.0";
 
 // ---------- Entity discovery map: translation_key → local alias ----------
 const TRANSLATION_KEY_MAP = {
@@ -39,6 +39,8 @@ const TRANSLATION_KEY_MAP = {
   shaver_ble_connected: "shaver_ble_connected",
   shaving_mode: "shaving_mode",
   lightring_brightness: "lightring_brightness",
+  speed: "speed",
+  speed_verdict: "speed_verdict",
 };
 
 // ---------- Gauge constants ----------
@@ -48,6 +50,8 @@ const GAUGE = {
   ZONE_BASE: 500 / 6000,
   ZONE_LOW: 1500 / 6000,
   ZONE_HIGH: 4000 / 6000,
+  SPEED_MAX: 300,
+  SPEED_ZONE_OPTIMAL: 150 / 300,
 };
 const GAUGE_W = 280;
 
@@ -99,19 +103,24 @@ function formatSession(s) {
   return `${Math.floor(s / 60)}m ${s % 60}s`;
 }
 
+const DISABLED_COLOR = "var(--disabled-text-color, #9e9e9e)";
+
 function batteryColor(pct) {
+  if (pct <= 0) return DISABLED_COLOR;
   if (pct > 50) return "#4caf50";
   if (pct > 20) return "#ff9800";
   return "#f44336";
 }
 
 function headColor(pct) {
+  if (pct <= 0) return DISABLED_COLOR;
   if (pct > 30) return "#3f51b5";
   if (pct > 15) return "#ff9800";
   return "#f44336";
 }
 
 function cleaningColor(remaining) {
+  if (remaining <= 0) return DISABLED_COLOR;
   if (remaining > 15) return "#00bcd4";
   if (remaining > 5) return "#ff9800";
   return "#f44336";
@@ -149,6 +158,16 @@ const PRESSURE_LABELS = {
   too_low: "Too Low",
   optimal: "Optimal",
   too_high: "Too High",
+};
+const SPEED_COLORS = {
+  none: "var(--disabled-text-color, #9e9e9e)",
+  optimal: "#4caf50",
+  too_fast: "#ff9800",
+};
+const SPEED_LABELS = {
+  none: "No Movement",
+  optimal: "Optimal",
+  too_fast: "Too Fast",
 };
 const MOTION_LABELS = {
   no_motion: "\u2014",
@@ -331,7 +350,8 @@ export class PhilipsShaverCard extends LitElement {
 
   // ---------- Header ----------
   _renderHeader() {
-    const model = this._stateVal("model_number", "");
+    const device = this._hass.devices?.[this.config.device_id];
+    const model = device?.model || "";
     const name = this.config.title || "Philips Shaver";
     const showModel = this.config.show_model !== false;
 
@@ -352,11 +372,12 @@ export class PhilipsShaverCard extends LitElement {
                @click="${() => this._fireMoreInfo(this._entities?.shaver_ble_connected)}">
             <path d="${ICONS.bluetooth}"/>
           </svg>
+          ${espEntity ? html`
           <svg class="conn-icon ${espConnected ? '' : 'disconnected'}"
                viewBox="0 0 24 24"
                @click="${() => this._fireMoreInfo(this._entities?.esp_bridge_alive)}">
             <path d="${espConnected ? ICONS.lan_connect : ICONS.lan_disconnect}"/>
-          </svg>
+          </svg>` : ''}
           <svg class="more-info-btn" viewBox="0 0 24 24" fill="currentColor" stroke="none"
                @click="${() => this._navigateToDevice()}">
             <circle cx="12" cy="5" r="1.5"/>
@@ -383,8 +404,10 @@ export class PhilipsShaverCard extends LitElement {
     const tiles = [
       { key: "battery", label: "Battery", value: `${bat}%`, frac: bat / 100, color: bc, icon: activity === "charging" ? ICONS.charge : ICONS.charges, entity: this._entities?.battery },
       { key: "head", label: "Head", value: `${Math.round(head)}%`, frac: head / 100, color: hc, icon: ICONS.razor, entity: this._entities?.head_remaining },
-      { key: "cleaning", label: "Clean", value: clean.toFixed(0), frac: clean / 30, color: cc, icon: ICONS.droplet, entity: this._entities?.cleaning_cycles_remaining },
     ];
+    if (this._entities?.cleaning_cycles_remaining) {
+      tiles.push({ key: "cleaning", label: "Clean", value: clean.toFixed(0), frac: clean / 30, color: cc, icon: ICONS.droplet, entity: this._entities.cleaning_cycles_remaining });
+    }
 
     return html`
       <div class="chips-row">
@@ -407,9 +430,16 @@ export class PhilipsShaverCard extends LitElement {
     `;
   }
 
+  // ---------- Device type ----------
+  get _isOneBlade() {
+    return !!this._entities?.speed;
+  }
+
   // ---------- Gauge ----------
   _renderGauge(activity) {
-    if (activity === "shaving") return this._renderPressureGauge();
+    if (activity === "shaving") {
+      return this._isOneBlade ? this._renderSpeedGauge() : this._renderPressureGauge();
+    }
     if (activity === "cleaning") return this._renderCleaningGauge();
     return this._renderBatteryGauge(activity === "charging");
   }
@@ -463,6 +493,55 @@ export class PhilipsShaverCard extends LitElement {
         </svg>
         <div class="pressure-label" style="color:${nc}">${PRESSURE_LABELS[pState] || "\u2014"}</div>
         <div class="pressure-value">${pressure > 0 ? pressure : "\u2014"}</div>
+      </div>
+    `;
+  }
+
+  _renderSpeedGauge() {
+    const { CX: cx, CY: cy, R: r, STROKE: st, SPEED_MAX: max, SPEED_ZONE_OPTIMAL: zoneOpt } = GAUGE;
+    const speed = this._numState("speed", 0);
+    const sState = this._stateVal("speed_verdict", "none");
+    const elapsed = this._elapsed || this._numState("shaving_time", 0);
+    const tm = Math.floor(elapsed / 60);
+    const ts = elapsed % 60;
+    const timerStr = String(tm).padStart(2, "0") + ":" + String(ts).padStart(2, "0");
+
+    const needleFrac = Math.min(speed / max, 0.99);
+    const nc = SPEED_COLORS[sState] || SPEED_COLORS.none;
+
+    const separator = (() => {
+      const inner = fracToXY(zoneOpt, r - 12);
+      const outer = fracToXY(zoneOpt, r + 12);
+      return svg`<line x1="${inner.x}" y1="${inner.y}" x2="${outer.x}" y2="${outer.y}" class="zone-separator"/>`;
+    })();
+
+    const tip = fracToXY(needleFrac, r - 16);
+
+    return html`
+      <div class="gauge-section">
+        <svg class="gauge-svg" width="${GAUGE_W}" height="186" viewBox="0 0 ${GAUGE_W} 186">
+          <!-- Track -->
+          <path d="${describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${st}" stroke-linecap="butt"/>
+          <!-- Zones -->
+          <path d="${describeArc(0, zoneOpt)}" fill="none" stroke="#4caf50" stroke-width="${st}" stroke-linecap="round" class="zone-arc" opacity="0.65"/>
+          <path d="${describeArc(zoneOpt, 1)}" fill="none" stroke="#ff9800" stroke-width="${st}" stroke-linecap="round" class="zone-arc" opacity="0.5"/>
+          <!-- Zone separator -->
+          ${separator}
+          <!-- Session timer -->
+          <text x="${cx}" y="${cy - 48}" text-anchor="middle" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit" letter-spacing="1.5">SESSION</text>
+          <text x="${cx}" y="${cy - 12}" text-anchor="middle" font-size="38" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="'SF Mono','Menlo','Consolas',monospace" letter-spacing="1">${timerStr}</text>
+          <!-- Needle -->
+          <line x1="${cx}" y1="${cy + 10}" x2="${tip.x}" y2="${tip.y}" stroke="${nc}" stroke-width="6" class="needle-glow"/>
+          <line x1="${cx}" y1="${cy + 10}" x2="${tip.x}" y2="${tip.y}" stroke="${nc}" stroke-width="3" class="needle-line"/>
+          <!-- Hub -->
+          <circle cx="${cx}" cy="${cy + 10}" r="8" fill="var(--ps-card-bg)" stroke="var(--ps-border)" stroke-width="2"/>
+          <circle cx="${cx}" cy="${cy + 10}" r="4" fill="${nc}"/>
+          <!-- Edge labels -->
+          <text x="26" y="${cy + 28}" class="gauge-edge-label" text-anchor="start">Slow</text>
+          <text x="${GAUGE_W - 26}" y="${cy + 28}" class="gauge-edge-label" text-anchor="end">Fast</text>
+        </svg>
+        <div class="pressure-label" style="color:${nc}">${SPEED_LABELS[sState] || "\u2014"}</div>
+        <div class="pressure-value">${speed > 0 ? speed : "\u2014"}</div>
       </div>
     `;
   }
@@ -544,8 +623,23 @@ export class PhilipsShaverCard extends LitElement {
   _renderShaveStats() {
     const rpm = this._numState("motor_rpm", 0);
     const ma = this._numState("motor_current", 0);
-    const motion = this._stateVal("motion_type", "no_motion");
 
+    if (this._isOneBlade) {
+      return html`
+        <div class="shave-stats">
+          <div class="shave-stat-tile">
+            <div class="shave-stat-val">${ma}</div>
+            <div class="shave-stat-label">mA</div>
+          </div>
+          <div class="shave-stat-tile">
+            <div class="shave-stat-val">${this._numState("speed", 0)}</div>
+            <div class="shave-stat-label">Speed</div>
+          </div>
+        </div>
+      `;
+    }
+
+    const motion = this._stateVal("motion_type", "no_motion");
     return html`
       <div class="shave-stats">
         <div class="shave-stat-tile">
@@ -603,7 +697,8 @@ export class PhilipsShaverCard extends LitElement {
           required: true,
           selector: {
             device: {
-              filter: { integration: "philips_shaver" },
+              filter: [{ integration: "philips_shaver" }],
+              entity: [{ domain: "sensor", device_class: "battery" }],
               multiple: false,
             },
           },

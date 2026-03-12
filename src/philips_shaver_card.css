@@ -83,7 +83,7 @@ ha-card {
 /* ── CHIPS ROW ── */
 .chips-row {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
     gap: 8px;
     padding: 12px 14px;
 }
@@ -195,7 +195,6 @@ ha-card {
 .shave-stat-tile {
     flex: 1;
     min-width: 0;
-    max-width: 120px;
     background: var(--ps-elevated);
     border: 1px solid var(--divider-color, rgba(255,255,255,0.06));
     border-radius: 10px;

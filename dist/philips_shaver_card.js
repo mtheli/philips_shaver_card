@@ -623,10 +623,10 @@ const $528e4332d1e3099e$export$f5c524615a7708d6 = {
 
 
 var $43a89528e95f706e$exports = {};
-$43a89528e95f706e$exports = "ha-card {\n  min-height: 500px;\n  font-family: var(--paper-font-body1_-_font-family, var(--ha-font-family-body, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif));\n  color: var(--primary-text-color, #fff);\n  overflow: hidden;\n  container-type: inline-size;\n}\n\n:host {\n  --ps-text-dim: var(--secondary-text-color, #ffffff80);\n  --ps-text-dimmer: var(--disabled-text-color, #ffffff59);\n  --ps-text-dimmest: var(--disabled-text-color, #ffffff40);\n  --ps-border: var(--divider-color, #ffffff0a);\n  --ps-track: var(--divider-color, #ffffff0f);\n  --ps-card-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));\n  --ps-elevated: color-mix(in srgb, var(--primary-text-color, #fff) 6%, var(--ps-card-bg));\n}\n\n.card-header {\n  border-bottom: 1px solid var(--divider-color, #e5e7eb);\n  justify-content: space-between;\n  align-items: center;\n  padding: 16px 18px 12px;\n  display: flex;\n}\n\n.header-title {\n  cursor: pointer;\n  align-items: baseline;\n  gap: 7px;\n  min-width: 0;\n  display: flex;\n  overflow: hidden;\n}\n\n.header-title h2 {\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  letter-spacing: -.01em;\n  margin: 0;\n  font-size: 15px;\n  font-weight: 700;\n  overflow: hidden;\n}\n\n.header-sub {\n  color: var(--secondary-text-color);\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  font-size: 12px;\n  font-weight: 400;\n  overflow: hidden;\n}\n\n.header-icons {\n  flex-shrink: 0;\n  align-items: center;\n  gap: 10px;\n  display: flex;\n}\n\n.conn-icon {\n  width: 18px;\n  height: 18px;\n  color: var(--primary-color, #3b82f6);\n  fill: currentColor;\n  cursor: pointer;\n  opacity: 1;\n  transition: color .4s, opacity .4s;\n}\n\n.conn-icon.disconnected {\n  color: var(--disabled-text-color, #9ca3af);\n  opacity: .3;\n}\n\n.more-info-btn {\n  cursor: pointer;\n  opacity: .5;\n  width: 18px;\n  height: 18px;\n  transition: opacity .2s;\n  color: var(--secondary-text-color) !important;\n}\n\n.more-info-btn:hover {\n  opacity: 1;\n}\n\n.chips-row {\n  grid-template-columns: 1fr 1fr 1fr;\n  gap: 8px;\n  padding: 12px 14px;\n  display: grid;\n}\n\n.chip {\n  background: var(--card-background-color, #f9fafb);\n  border: 1px solid var(--divider-color, #e5e7eb);\n  cursor: pointer;\n  border-radius: 10px;\n  grid-template-rows: auto auto;\n  grid-template-columns: auto 1fr;\n  align-items: center;\n  column-gap: 8px;\n  min-width: 0;\n  padding: 8px 10px;\n  display: grid;\n}\n\n.chip-icon {\n  flex-shrink: 0;\n  grid-row: 1 / 3;\n  width: 36px;\n  height: 36px;\n  position: relative;\n}\n\n.chip-ring-svg {\n  width: 36px;\n  height: 36px;\n}\n\n.chip-ring-icon {\n  width: 14px;\n  height: 14px;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n}\n\n.chip-label {\n  color: var(--secondary-text-color, #6b7280);\n  text-transform: uppercase;\n  letter-spacing: .06em;\n  font-size: 9px;\n  font-weight: 600;\n  line-height: 1;\n}\n\n.chip-value {\n  font-variant-numeric: tabular-nums;\n  font-size: 15px;\n  font-weight: 700;\n  line-height: 1;\n}\n\n.visual-area {\n  flex-direction: column;\n  align-items: center;\n  padding: 4px 14px 0;\n  display: flex;\n}\n\n.gauge-svg {\n  max-width: 100%;\n  height: auto;\n  display: block;\n}\n\n.gauge-status {\n  color: var(--ps-text-dimmest);\n  text-align: center;\n  margin-top: -2px;\n  margin-bottom: 8px;\n  font-size: 13px;\n  transition: color .3s;\n}\n\n.pressure-label {\n  text-align: center;\n  margin-top: -6px;\n  margin-bottom: 2px;\n  font-size: 17px;\n  font-weight: 700;\n  transition: color .3s;\n}\n\n.pressure-value {\n  color: var(--ps-text-dimmest);\n  text-align: center;\n  font-variant-numeric: tabular-nums;\n  margin-bottom: 8px;\n  font-size: 11px;\n}\n\n.gauge-arc-fill {\n  transition: stroke-dashoffset .8s cubic-bezier(.4, 0, .2, 1), stroke .4s;\n}\n\n.zone-arc {\n  stroke-linecap: butt;\n}\n\n.zone-separator {\n  stroke: var(--ps-card-bg);\n  stroke-width: 3px;\n}\n\n.needle-line {\n  stroke-linecap: round;\n  transition: x2 .5s cubic-bezier(.4, 0, .2, 1), y2 .5s cubic-bezier(.4, 0, .2, 1), stroke .3s;\n}\n\n.needle-glow {\n  filter: blur(4px);\n  opacity: .5;\n  transition: x2 .5s cubic-bezier(.4, 0, .2, 1), y2 .5s cubic-bezier(.4, 0, .2, 1), stroke .3s;\n}\n\n.gauge-edge-label {\n  fill: var(--ps-text-dimmest);\n  font-size: 10px;\n}\n\n.shave-stats {\n  justify-content: center;\n  gap: 6px;\n  padding: 8px 14px;\n  display: flex;\n}\n\n.shave-stat-tile {\n  background: var(--ps-elevated);\n  border: 1px solid var(--divider-color, #ffffff0f);\n  text-align: center;\n  border-radius: 10px;\n  flex: 1;\n  min-width: 0;\n  max-width: 120px;\n  padding: 10px 4px;\n}\n\n.shave-stat-val {\n  font-variant-numeric: tabular-nums;\n  font-size: 15px;\n  font-weight: 700;\n}\n\n.shave-stat-label {\n  color: var(--ps-text-dimmest);\n  margin-top: 6px;\n  font-size: 10px;\n}\n\n.divider {\n  background: var(--ps-border);\n  height: 1px;\n  margin: 0 14px;\n}\n\n.stats {\n  padding: 6px 14px 10px;\n}\n\n.stat-row {\n  border-bottom: 1px solid var(--ps-border);\n  justify-content: space-between;\n  align-items: center;\n  padding: 9px 0;\n  display: flex;\n}\n\n.stat-row:last-child {\n  border-bottom: none;\n}\n\n.stat-label {\n  color: var(--ps-text-dim);\n  align-items: center;\n  gap: 10px;\n  font-size: 13px;\n  display: flex;\n}\n\n.stat-icon {\n  opacity: .55;\n  width: 16px;\n  height: 16px;\n}\n\n.stat-value {\n  color: var(--primary-text-color);\n  font-variant-numeric: tabular-nums;\n  font-size: 13px;\n  font-weight: 600;\n}\n\n.stat-unit {\n  color: var(--ps-text-dimmer);\n  margin-left: 2px;\n  font-size: 11px;\n  font-weight: 400;\n}\n\n.unavailable {\n  text-align: center;\n  color: var(--ps-text-dim);\n  padding: 20px;\n  font-size: 14px;\n}\n\n@container (width <= 350px) {\n  .chip-label, .chip-value {\n    display: none;\n  }\n\n  .chip {\n    grid-template-columns: auto;\n    justify-items: center;\n    padding: 6px;\n  }\n\n  .chip-icon {\n    grid-row: 1;\n  }\n}\n\n@keyframes chargeGlow {\n  0%, 100% {\n    stroke-opacity: .3;\n  }\n\n  50% {\n    stroke-opacity: 1;\n  }\n}\n\n.charging-arc {\n  animation: 2s ease-in-out infinite chargeGlow;\n}\n";
+$43a89528e95f706e$exports = "ha-card {\n  min-height: 500px;\n  font-family: var(--paper-font-body1_-_font-family, var(--ha-font-family-body, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif));\n  color: var(--primary-text-color, #fff);\n  overflow: hidden;\n  container-type: inline-size;\n}\n\n:host {\n  --ps-text-dim: var(--secondary-text-color, #ffffff80);\n  --ps-text-dimmer: var(--disabled-text-color, #ffffff59);\n  --ps-text-dimmest: var(--disabled-text-color, #ffffff40);\n  --ps-border: var(--divider-color, #ffffff0a);\n  --ps-track: var(--divider-color, #ffffff0f);\n  --ps-card-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));\n  --ps-elevated: color-mix(in srgb, var(--primary-text-color, #fff) 6%, var(--ps-card-bg));\n}\n\n.card-header {\n  border-bottom: 1px solid var(--divider-color, #e5e7eb);\n  justify-content: space-between;\n  align-items: center;\n  padding: 16px 18px 12px;\n  display: flex;\n}\n\n.header-title {\n  cursor: pointer;\n  align-items: baseline;\n  gap: 7px;\n  min-width: 0;\n  display: flex;\n  overflow: hidden;\n}\n\n.header-title h2 {\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  letter-spacing: -.01em;\n  margin: 0;\n  font-size: 15px;\n  font-weight: 700;\n  overflow: hidden;\n}\n\n.header-sub {\n  color: var(--secondary-text-color);\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  font-size: 12px;\n  font-weight: 400;\n  overflow: hidden;\n}\n\n.header-icons {\n  flex-shrink: 0;\n  align-items: center;\n  gap: 10px;\n  display: flex;\n}\n\n.conn-icon {\n  width: 18px;\n  height: 18px;\n  color: var(--primary-color, #3b82f6);\n  fill: currentColor;\n  cursor: pointer;\n  opacity: 1;\n  transition: color .4s, opacity .4s;\n}\n\n.conn-icon.disconnected {\n  color: var(--disabled-text-color, #9ca3af);\n  opacity: .3;\n}\n\n.more-info-btn {\n  cursor: pointer;\n  opacity: .5;\n  width: 18px;\n  height: 18px;\n  transition: opacity .2s;\n  color: var(--secondary-text-color) !important;\n}\n\n.more-info-btn:hover {\n  opacity: 1;\n}\n\n.chips-row {\n  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));\n  gap: 8px;\n  padding: 12px 14px;\n  display: grid;\n}\n\n.chip {\n  background: var(--card-background-color, #f9fafb);\n  border: 1px solid var(--divider-color, #e5e7eb);\n  cursor: pointer;\n  border-radius: 10px;\n  grid-template-rows: auto auto;\n  grid-template-columns: auto 1fr;\n  align-items: center;\n  column-gap: 8px;\n  min-width: 0;\n  padding: 8px 10px;\n  display: grid;\n}\n\n.chip-icon {\n  flex-shrink: 0;\n  grid-row: 1 / 3;\n  width: 36px;\n  height: 36px;\n  position: relative;\n}\n\n.chip-ring-svg {\n  width: 36px;\n  height: 36px;\n}\n\n.chip-ring-icon {\n  width: 14px;\n  height: 14px;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n}\n\n.chip-label {\n  color: var(--secondary-text-color, #6b7280);\n  text-transform: uppercase;\n  letter-spacing: .06em;\n  font-size: 9px;\n  font-weight: 600;\n  line-height: 1;\n}\n\n.chip-value {\n  font-variant-numeric: tabular-nums;\n  font-size: 15px;\n  font-weight: 700;\n  line-height: 1;\n}\n\n.visual-area {\n  flex-direction: column;\n  align-items: center;\n  padding: 4px 14px 0;\n  display: flex;\n}\n\n.gauge-svg {\n  max-width: 100%;\n  height: auto;\n  display: block;\n}\n\n.gauge-status {\n  color: var(--ps-text-dimmest);\n  text-align: center;\n  margin-top: -2px;\n  margin-bottom: 8px;\n  font-size: 13px;\n  transition: color .3s;\n}\n\n.pressure-label {\n  text-align: center;\n  margin-top: -6px;\n  margin-bottom: 2px;\n  font-size: 17px;\n  font-weight: 700;\n  transition: color .3s;\n}\n\n.pressure-value {\n  color: var(--ps-text-dimmest);\n  text-align: center;\n  font-variant-numeric: tabular-nums;\n  margin-bottom: 8px;\n  font-size: 11px;\n}\n\n.gauge-arc-fill {\n  transition: stroke-dashoffset .8s cubic-bezier(.4, 0, .2, 1), stroke .4s;\n}\n\n.zone-arc {\n  stroke-linecap: butt;\n}\n\n.zone-separator {\n  stroke: var(--ps-card-bg);\n  stroke-width: 3px;\n}\n\n.needle-line {\n  stroke-linecap: round;\n  transition: x2 .5s cubic-bezier(.4, 0, .2, 1), y2 .5s cubic-bezier(.4, 0, .2, 1), stroke .3s;\n}\n\n.needle-glow {\n  filter: blur(4px);\n  opacity: .5;\n  transition: x2 .5s cubic-bezier(.4, 0, .2, 1), y2 .5s cubic-bezier(.4, 0, .2, 1), stroke .3s;\n}\n\n.gauge-edge-label {\n  fill: var(--ps-text-dimmest);\n  font-size: 10px;\n}\n\n.shave-stats {\n  justify-content: center;\n  gap: 6px;\n  padding: 8px 14px;\n  display: flex;\n}\n\n.shave-stat-tile {\n  background: var(--ps-elevated);\n  border: 1px solid var(--divider-color, #ffffff0f);\n  text-align: center;\n  border-radius: 10px;\n  flex: 1;\n  min-width: 0;\n  padding: 10px 4px;\n}\n\n.shave-stat-val {\n  font-variant-numeric: tabular-nums;\n  font-size: 15px;\n  font-weight: 700;\n}\n\n.shave-stat-label {\n  color: var(--ps-text-dimmest);\n  margin-top: 6px;\n  font-size: 10px;\n}\n\n.divider {\n  background: var(--ps-border);\n  height: 1px;\n  margin: 0 14px;\n}\n\n.stats {\n  padding: 6px 14px 10px;\n}\n\n.stat-row {\n  border-bottom: 1px solid var(--ps-border);\n  justify-content: space-between;\n  align-items: center;\n  padding: 9px 0;\n  display: flex;\n}\n\n.stat-row:last-child {\n  border-bottom: none;\n}\n\n.stat-label {\n  color: var(--ps-text-dim);\n  align-items: center;\n  gap: 10px;\n  font-size: 13px;\n  display: flex;\n}\n\n.stat-icon {\n  opacity: .55;\n  width: 16px;\n  height: 16px;\n}\n\n.stat-value {\n  color: var(--primary-text-color);\n  font-variant-numeric: tabular-nums;\n  font-size: 13px;\n  font-weight: 600;\n}\n\n.stat-unit {\n  color: var(--ps-text-dimmer);\n  margin-left: 2px;\n  font-size: 11px;\n  font-weight: 400;\n}\n\n.unavailable {\n  text-align: center;\n  color: var(--ps-text-dim);\n  padding: 20px;\n  font-size: 14px;\n}\n\n@container (width <= 350px) {\n  .chip-label, .chip-value {\n    display: none;\n  }\n\n  .chip {\n    grid-template-columns: auto;\n    justify-items: center;\n    padding: 6px;\n  }\n\n  .chip-icon {\n    grid-row: 1;\n  }\n}\n\n@keyframes chargeGlow {\n  0%, 100% {\n    stroke-opacity: .3;\n  }\n\n  50% {\n    stroke-opacity: 1;\n  }\n}\n\n.charging-arc {\n  animation: 2s ease-in-out infinite chargeGlow;\n}\n";
 
 
-const $8b62e546fdd14731$export$d5e7ce6d07daf10f = "0.2.0";
+const $8b62e546fdd14731$export$d5e7ce6d07daf10f = "0.3.0";
 // ---------- Entity discovery map: translation_key → local alias ----------
 const $8b62e546fdd14731$var$TRANSLATION_KEY_MAP = {
     battery: "battery",
@@ -657,7 +657,9 @@ const $8b62e546fdd14731$var$TRANSLATION_KEY_MAP = {
     esp_bridge_alive: "esp_bridge_alive",
     shaver_ble_connected: "shaver_ble_connected",
     shaving_mode: "shaving_mode",
-    lightring_brightness: "lightring_brightness"
+    lightring_brightness: "lightring_brightness",
+    speed: "speed",
+    speed_verdict: "speed_verdict"
 };
 // ---------- Gauge constants ----------
 const $8b62e546fdd14731$var$GAUGE = {
@@ -668,7 +670,9 @@ const $8b62e546fdd14731$var$GAUGE = {
     PRESSURE_MAX: 6000,
     ZONE_BASE: 500 / 6000,
     ZONE_LOW: 0.25,
-    ZONE_HIGH: 4000 / 6000
+    ZONE_HIGH: 4000 / 6000,
+    SPEED_MAX: 300,
+    SPEED_ZONE_OPTIMAL: 0.5
 };
 const $8b62e546fdd14731$var$GAUGE_W = 280;
 // ---------- SVG arc helpers (semicircle, CW in SVG) ----------
@@ -725,17 +729,21 @@ function $8b62e546fdd14731$var$formatAge(s) {
 function $8b62e546fdd14731$var$formatSession(s) {
     return `${Math.floor(s / 60)}m ${s % 60}s`;
 }
+const $8b62e546fdd14731$var$DISABLED_COLOR = "var(--disabled-text-color, #9e9e9e)";
 function $8b62e546fdd14731$var$batteryColor(pct) {
+    if (pct <= 0) return $8b62e546fdd14731$var$DISABLED_COLOR;
     if (pct > 50) return "#4caf50";
     if (pct > 20) return "#ff9800";
     return "#f44336";
 }
 function $8b62e546fdd14731$var$headColor(pct) {
+    if (pct <= 0) return $8b62e546fdd14731$var$DISABLED_COLOR;
     if (pct > 30) return "#3f51b5";
     if (pct > 15) return "#ff9800";
     return "#f44336";
 }
 function $8b62e546fdd14731$var$cleaningColor(remaining) {
+    if (remaining <= 0) return $8b62e546fdd14731$var$DISABLED_COLOR;
     if (remaining > 15) return "#00bcd4";
     if (remaining > 5) return "#ff9800";
     return "#f44336";
@@ -771,6 +779,16 @@ const $8b62e546fdd14731$var$PRESSURE_LABELS = {
     too_low: "Too Low",
     optimal: "Optimal",
     too_high: "Too High"
+};
+const $8b62e546fdd14731$var$SPEED_COLORS = {
+    none: "var(--disabled-text-color, #9e9e9e)",
+    optimal: "#4caf50",
+    too_fast: "#ff9800"
+};
+const $8b62e546fdd14731$var$SPEED_LABELS = {
+    none: "No Movement",
+    optimal: "Optimal",
+    too_fast: "Too Fast"
 };
 const $8b62e546fdd14731$var$MOTION_LABELS = {
     no_motion: "\u2014",
@@ -913,7 +931,8 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
     }
     // ---------- Header ----------
     _renderHeader() {
-        const model = this._stateVal("model_number", "");
+        const device = this._hass.devices?.[this.config.device_id];
+        const model = device?.model || "";
         const name = this.config.title || "Philips Shaver";
         const showModel = this.config.show_model !== false;
         const espEntity = this._entity("esp_bridge_alive");
@@ -932,11 +951,12 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
                @click="${()=>this._fireMoreInfo(this._entities?.shaver_ble_connected)}">
             <path d="${$8b62e546fdd14731$var$ICONS.bluetooth}"/>
           </svg>
+          ${espEntity ? (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
           <svg class="conn-icon ${espConnected ? '' : 'disconnected'}"
                viewBox="0 0 24 24"
                @click="${()=>this._fireMoreInfo(this._entities?.esp_bridge_alive)}">
             <path d="${espConnected ? $8b62e546fdd14731$var$ICONS.lan_connect : $8b62e546fdd14731$var$ICONS.lan_disconnect}"/>
-          </svg>
+          </svg>` : ''}
           <svg class="more-info-btn" viewBox="0 0 24 24" fill="currentColor" stroke="none"
                @click="${()=>this._navigateToDevice()}">
             <circle cx="12" cy="5" r="1.5"/>
@@ -975,17 +995,17 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
                 color: hc,
                 icon: $8b62e546fdd14731$var$ICONS.razor,
                 entity: this._entities?.head_remaining
-            },
-            {
-                key: "cleaning",
-                label: "Clean",
-                value: clean.toFixed(0),
-                frac: clean / 30,
-                color: cc,
-                icon: $8b62e546fdd14731$var$ICONS.droplet,
-                entity: this._entities?.cleaning_cycles_remaining
             }
         ];
+        if (this._entities?.cleaning_cycles_remaining) tiles.push({
+            key: "cleaning",
+            label: "Clean",
+            value: clean.toFixed(0),
+            frac: clean / 30,
+            color: cc,
+            icon: $8b62e546fdd14731$var$ICONS.droplet,
+            entity: this._entities.cleaning_cycles_remaining
+        });
         return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
       <div class="chips-row">
         ${tiles.map((t)=>(0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
@@ -1006,9 +1026,13 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
       </div>
     `;
     }
+    // ---------- Device type ----------
+    get _isOneBlade() {
+        return !!this._entities?.speed;
+    }
     // ---------- Gauge ----------
     _renderGauge(activity) {
-        if (activity === "shaving") return this._renderPressureGauge();
+        if (activity === "shaving") return this._isOneBlade ? this._renderSpeedGauge() : this._renderPressureGauge();
         if (activity === "cleaning") return this._renderCleaningGauge();
         return this._renderBatteryGauge(activity === "charging");
     }
@@ -1060,6 +1084,50 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
         </svg>
         <div class="pressure-label" style="color:${nc}">${$8b62e546fdd14731$var$PRESSURE_LABELS[pState] || "\u2014"}</div>
         <div class="pressure-value">${pressure > 0 ? pressure : "\u2014"}</div>
+      </div>
+    `;
+    }
+    _renderSpeedGauge() {
+        const { CX: cx, CY: cy, R: r, STROKE: st, SPEED_MAX: max, SPEED_ZONE_OPTIMAL: zoneOpt } = $8b62e546fdd14731$var$GAUGE;
+        const speed = this._numState("speed", 0);
+        const sState = this._stateVal("speed_verdict", "none");
+        const elapsed = this._elapsed || this._numState("shaving_time", 0);
+        const tm = Math.floor(elapsed / 60);
+        const ts = elapsed % 60;
+        const timerStr = String(tm).padStart(2, "0") + ":" + String(ts).padStart(2, "0");
+        const needleFrac = Math.min(speed / max, 0.99);
+        const nc = $8b62e546fdd14731$var$SPEED_COLORS[sState] || $8b62e546fdd14731$var$SPEED_COLORS.none;
+        const separator = (()=>{
+            const inner = $8b62e546fdd14731$var$fracToXY(zoneOpt, r - 12);
+            const outer = $8b62e546fdd14731$var$fracToXY(zoneOpt, r + 12);
+            return (0, $d33ef1320595a3ac$export$7ed1367e7fa1ad68)`<line x1="${inner.x}" y1="${inner.y}" x2="${outer.x}" y2="${outer.y}" class="zone-separator"/>`;
+        })();
+        const tip = $8b62e546fdd14731$var$fracToXY(needleFrac, r - 16);
+        return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
+      <div class="gauge-section">
+        <svg class="gauge-svg" width="${$8b62e546fdd14731$var$GAUGE_W}" height="186" viewBox="0 0 ${$8b62e546fdd14731$var$GAUGE_W} 186">
+          <!-- Track -->
+          <path d="${$8b62e546fdd14731$var$describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${st}" stroke-linecap="butt"/>
+          <!-- Zones -->
+          <path d="${$8b62e546fdd14731$var$describeArc(0, zoneOpt)}" fill="none" stroke="#4caf50" stroke-width="${st}" stroke-linecap="round" class="zone-arc" opacity="0.65"/>
+          <path d="${$8b62e546fdd14731$var$describeArc(zoneOpt, 1)}" fill="none" stroke="#ff9800" stroke-width="${st}" stroke-linecap="round" class="zone-arc" opacity="0.5"/>
+          <!-- Zone separator -->
+          ${separator}
+          <!-- Session timer -->
+          <text x="${cx}" y="${cy - 48}" text-anchor="middle" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit" letter-spacing="1.5">SESSION</text>
+          <text x="${cx}" y="${cy - 12}" text-anchor="middle" font-size="38" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="'SF Mono','Menlo','Consolas',monospace" letter-spacing="1">${timerStr}</text>
+          <!-- Needle -->
+          <line x1="${cx}" y1="${cy + 10}" x2="${tip.x}" y2="${tip.y}" stroke="${nc}" stroke-width="6" class="needle-glow"/>
+          <line x1="${cx}" y1="${cy + 10}" x2="${tip.x}" y2="${tip.y}" stroke="${nc}" stroke-width="3" class="needle-line"/>
+          <!-- Hub -->
+          <circle cx="${cx}" cy="${cy + 10}" r="8" fill="var(--ps-card-bg)" stroke="var(--ps-border)" stroke-width="2"/>
+          <circle cx="${cx}" cy="${cy + 10}" r="4" fill="${nc}"/>
+          <!-- Edge labels -->
+          <text x="26" y="${cy + 28}" class="gauge-edge-label" text-anchor="start">Slow</text>
+          <text x="${$8b62e546fdd14731$var$GAUGE_W - 26}" y="${cy + 28}" class="gauge-edge-label" text-anchor="end">Fast</text>
+        </svg>
+        <div class="pressure-label" style="color:${nc}">${$8b62e546fdd14731$var$SPEED_LABELS[sState] || "\u2014"}</div>
+        <div class="pressure-value">${speed > 0 ? speed : "\u2014"}</div>
       </div>
     `;
     }
@@ -1132,6 +1200,18 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
     _renderShaveStats() {
         const rpm = this._numState("motor_rpm", 0);
         const ma = this._numState("motor_current", 0);
+        if (this._isOneBlade) return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
+        <div class="shave-stats">
+          <div class="shave-stat-tile">
+            <div class="shave-stat-val">${ma}</div>
+            <div class="shave-stat-label">mA</div>
+          </div>
+          <div class="shave-stat-tile">
+            <div class="shave-stat-val">${this._numState("speed", 0)}</div>
+            <div class="shave-stat-label">Speed</div>
+          </div>
+        </div>
+      `;
         const motion = this._stateVal("motion_type", "no_motion");
         return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
       <div class="shave-stats">
@@ -1191,9 +1271,17 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
                     required: true,
                     selector: {
                         device: {
-                            filter: {
-                                integration: "philips_shaver"
-                            },
+                            filter: [
+                                {
+                                    integration: "philips_shaver"
+                                }
+                            ],
+                            entity: [
+                                {
+                                    domain: "sensor",
+                                    device_class: "battery"
+                                }
+                            ],
                             multiple: false
                         }
                     }
