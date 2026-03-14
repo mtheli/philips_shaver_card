@@ -441,7 +441,8 @@ export class PhilipsShaverCard extends LitElement {
       return this._isOneBlade ? this._renderSpeedGauge() : this._renderPressureGauge();
     }
     if (activity === "cleaning") return this._renderCleaningGauge();
-    return this._renderBatteryGauge(activity === "charging");
+    if (activity === "charging") return this._renderChargingBattery();
+    return this._renderBatteryGauge();
   }
 
   _renderPressureGauge() {
@@ -546,7 +547,7 @@ export class PhilipsShaverCard extends LitElement {
     `;
   }
 
-  _renderBatteryGauge(isCharging) {
+  _renderBatteryGauge() {
     const { CX: cx, CY: cy, STROKE: st } = GAUGE;
     const bat = this._numState("battery", 0);
     const bc = batteryColor(bat);
@@ -555,34 +556,112 @@ export class PhilipsShaverCard extends LitElement {
       <div class="gauge-section">
         <svg class="gauge-svg" width="${GAUGE_W}" height="180" viewBox="0 0 ${GAUGE_W} 180">
           <path d="${describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${st}" stroke-linecap="round"/>
-          <path class="${isCharging ? 'charging-arc' : ''}" d="${describeArc(0, bat / 100)}" fill="none" stroke="${bc}" stroke-width="${st}" stroke-linecap="round"/>
+          <path d="${describeArc(0, bat / 100)}" fill="none" stroke="${bc}" stroke-width="${st}" stroke-linecap="round"/>
           <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="52" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit" letter-spacing="-2">${bat}%</text>
-          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="${isCharging ? '#4caf50' : 'var(--ps-text-dim)'}" font-family="inherit">
-            ${isCharging ? "\u26A1 Charging" : "Battery"}
-          </text>
+          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="var(--ps-text-dim)" font-family="inherit">Battery</text>
         </svg>
-        <div class="gauge-status" style="color:${isCharging ? '#4caf50' : 'var(--ps-text-dimmest)'}">
-          ${isCharging ? "Plugged In" : "Standby"}
+        <div class="gauge-status" style="color:var(--ps-text-dimmest)">Standby</div>
+      </div>
+    `;
+  }
+
+  _renderChargingBattery() {
+    const bat = this._numState("battery", 0);
+    const fillW = Math.round((bat / 100) * 174);
+
+    const bubbles = [
+      { size: 3, top: 20, left: 15, dur: 2.5, delay: 0 },
+      { size: 5, top: 45, left: 30, dur: 3, delay: 0.8 },
+      { size: 2, top: 65, left: 50, dur: 2.2, delay: 1.5 },
+      { size: 4, top: 35, left: 10, dur: 3.5, delay: 2 },
+      { size: 3, top: 55, left: 40, dur: 2.8, delay: 0.4 },
+    ];
+
+    return html`
+      <div class="battery-wrap">
+        <div class="battery-container">
+          <div class="battery-cap"></div>
+          <div class="battery-body">
+            <div class="battery-liquid" style="width:${fillW}px">
+              <div class="battery-wave-surface">
+                <div class="battery-wave-inner">
+                  <svg viewBox="0 0 14 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:100%">
+                    <path d="M7,0 Q0,12.5 7,25 Q14,37.5 7,50 Q0,62.5 7,75 Q14,87.5 7,100 Q0,112.5 7,125 Q14,137.5 7,150 Q0,162.5 7,175 Q14,187.5 7,200 L14,200 L14,0 Z" fill="#4caf50" opacity="0.75"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="battery-bubbles">
+                ${bubbles.map(b => html`
+                  <div class="bubble" style="width:${b.size}px;height:${b.size}px;top:${b.top}%;left:${b.left}%;animation-duration:${b.dur}s;animation-delay:${b.delay}s"></div>
+                `)}
+              </div>
+            </div>
+            <div class="battery-bolt">
+              <svg viewBox="0 0 24 24" fill="#4caf50">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" opacity="0.8"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="battery-pct">${bat}%</div>
+        <div class="battery-sub">
+          <span class="charge-dot"></span>
+          <span class="charge-dot"></span>
+          <span class="charge-dot"></span>
+          <span style="margin-left:2px">Charging</span>
         </div>
       </div>
     `;
   }
 
   _renderCleaningGauge() {
-    const { CX: cx, CY: cy, STROKE: st } = GAUGE;
     const progress = this._numState("cleaning_progress", 0);
     const frac = Math.max(0, Math.min(1, progress / 100));
-    const color = "#42a5f5";
+
+    const cx = 80, cy = 80, r = 66, sw = 10;
+    const START = 135, range = 270;
+
+    const cleanRingArc = (f) => {
+      const startRad = (START * Math.PI) / 180;
+      const endRad = ((START + range * f) * Math.PI) / 180;
+      const x1 = cx + r * Math.cos(startRad), y1 = cy + r * Math.sin(startRad);
+      const x2 = cx + r * Math.cos(endRad), y2 = cy + r * Math.sin(endRad);
+      const large = (range * f > 180) ? 1 : 0;
+      return `M ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2}`;
+    };
+
+    const droplets = [
+      { size: 6, angle: 160, dur: 2, delay: 0 },
+      { size: 8, angle: 220, dur: 2.5, delay: 0.5 },
+      { size: 5, angle: 300, dur: 1.8, delay: 1.2 },
+      { size: 7, angle: 370, dur: 2.2, delay: 1.8 },
+      { size: 6, angle: 250, dur: 2.8, delay: 0.8 },
+    ];
 
     return html`
-      <div class="gauge-section">
-        <svg class="gauge-svg" width="${GAUGE_W}" height="180" viewBox="0 0 ${GAUGE_W} 180">
-          <path d="${describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${st}" stroke-linecap="round"/>
-          <path class="charging-arc" d="${describeArc(0, frac)}" fill="none" stroke="${color}" stroke-width="${st}" stroke-linecap="round"/>
-          <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="52" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit" letter-spacing="-2">${Math.round(progress)}%</text>
-          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="var(--ps-text-dim)" font-family="inherit">Cleaning</text>
-        </svg>
-        <div class="gauge-status" style="color:${color}">In Progress</div>
+      <div class="cleaning-wrap">
+        <div class="cleaning-gauge-ring">
+          <svg class="cleaning-ring-svg" viewBox="0 0 160 160">
+            <path d="${cleanRingArc(1)}" fill="none" stroke="var(--ps-track)" stroke-width="${sw}" stroke-linecap="round"/>
+            <path d="${cleanRingArc(frac)}" fill="none" stroke="#42a5f5" stroke-width="${sw}" stroke-linecap="round" class="cleaning-arc-fill"/>
+          </svg>
+          <div class="cleaning-center">
+            <div class="cleaning-pct">${Math.round(progress)}%</div>
+            <div class="cleaning-label">Cleaning</div>
+          </div>
+          <div class="cleaning-droplets">
+            ${droplets.map(d => {
+              const rad = (d.angle * Math.PI) / 180;
+              const dx = cx + (r + 16) * Math.cos(rad);
+              const dy = cy + (r + 16) * Math.sin(rad);
+              return html`<div class="droplet" style="width:${d.size}px;height:${d.size}px;left:${dx - d.size/2}px;top:${dy - d.size/2}px;animation-duration:${d.dur}s;animation-delay:${d.delay}s"></div>`;
+            })}
+          </div>
+        </div>
+        <div class="cleaning-status">
+          <div class="clean-spinner"></div>
+          In Progress
+        </div>
       </div>
     `;
   }

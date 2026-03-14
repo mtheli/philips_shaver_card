@@ -623,7 +623,7 @@ const $528e4332d1e3099e$export$f5c524615a7708d6 = {
 
 
 var $43a89528e95f706e$exports = {};
-$43a89528e95f706e$exports = "ha-card {\n  min-height: 500px;\n  font-family: var(--paper-font-body1_-_font-family, var(--ha-font-family-body, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif));\n  color: var(--primary-text-color, #fff);\n  overflow: hidden;\n  container-type: inline-size;\n}\n\n:host {\n  --ps-text-dim: var(--secondary-text-color, #ffffff80);\n  --ps-text-dimmer: var(--disabled-text-color, #ffffff59);\n  --ps-text-dimmest: var(--disabled-text-color, #ffffff40);\n  --ps-border: var(--divider-color, #ffffff0a);\n  --ps-track: var(--divider-color, #ffffff0f);\n  --ps-card-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));\n  --ps-elevated: color-mix(in srgb, var(--primary-text-color, #fff) 6%, var(--ps-card-bg));\n}\n\n.card-header {\n  border-bottom: 1px solid var(--divider-color, #e5e7eb);\n  justify-content: space-between;\n  align-items: center;\n  padding: 16px 18px 12px;\n  display: flex;\n}\n\n.header-title {\n  cursor: pointer;\n  align-items: baseline;\n  gap: 7px;\n  min-width: 0;\n  display: flex;\n  overflow: hidden;\n}\n\n.header-title h2 {\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  letter-spacing: -.01em;\n  margin: 0;\n  font-size: 15px;\n  font-weight: 700;\n  overflow: hidden;\n}\n\n.header-sub {\n  color: var(--secondary-text-color);\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  font-size: 12px;\n  font-weight: 400;\n  overflow: hidden;\n}\n\n.header-icons {\n  flex-shrink: 0;\n  align-items: center;\n  gap: 10px;\n  display: flex;\n}\n\n.conn-icon {\n  width: 18px;\n  height: 18px;\n  color: var(--primary-color, #3b82f6);\n  fill: currentColor;\n  cursor: pointer;\n  opacity: 1;\n  transition: color .4s, opacity .4s;\n}\n\n.conn-icon.disconnected {\n  color: var(--disabled-text-color, #9ca3af);\n  opacity: .3;\n}\n\n.more-info-btn {\n  cursor: pointer;\n  opacity: .5;\n  width: 18px;\n  height: 18px;\n  transition: opacity .2s;\n  color: var(--secondary-text-color) !important;\n}\n\n.more-info-btn:hover {\n  opacity: 1;\n}\n\n.chips-row {\n  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));\n  gap: 8px;\n  padding: 12px 14px;\n  display: grid;\n}\n\n.chip {\n  background: var(--card-background-color, #f9fafb);\n  border: 1px solid var(--divider-color, #e5e7eb);\n  cursor: pointer;\n  border-radius: 10px;\n  grid-template-rows: auto auto;\n  grid-template-columns: auto 1fr;\n  align-items: center;\n  column-gap: 8px;\n  min-width: 0;\n  padding: 8px 10px;\n  display: grid;\n}\n\n.chip-icon {\n  flex-shrink: 0;\n  grid-row: 1 / 3;\n  width: 36px;\n  height: 36px;\n  position: relative;\n}\n\n.chip-ring-svg {\n  width: 36px;\n  height: 36px;\n}\n\n.chip-ring-icon {\n  width: 14px;\n  height: 14px;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n}\n\n.chip-label {\n  color: var(--secondary-text-color, #6b7280);\n  text-transform: uppercase;\n  letter-spacing: .06em;\n  font-size: 9px;\n  font-weight: 600;\n  line-height: 1;\n}\n\n.chip-value {\n  font-variant-numeric: tabular-nums;\n  font-size: 15px;\n  font-weight: 700;\n  line-height: 1;\n}\n\n.visual-area {\n  flex-direction: column;\n  align-items: center;\n  padding: 4px 14px 0;\n  display: flex;\n}\n\n.gauge-svg {\n  max-width: 100%;\n  height: auto;\n  display: block;\n}\n\n.gauge-status {\n  color: var(--ps-text-dimmest);\n  text-align: center;\n  margin-top: -2px;\n  margin-bottom: 8px;\n  font-size: 13px;\n  transition: color .3s;\n}\n\n.pressure-label {\n  text-align: center;\n  margin-top: -6px;\n  margin-bottom: 2px;\n  font-size: 17px;\n  font-weight: 700;\n  transition: color .3s;\n}\n\n.pressure-value {\n  color: var(--ps-text-dimmest);\n  text-align: center;\n  font-variant-numeric: tabular-nums;\n  margin-bottom: 8px;\n  font-size: 11px;\n}\n\n.gauge-arc-fill {\n  transition: stroke-dashoffset .8s cubic-bezier(.4, 0, .2, 1), stroke .4s;\n}\n\n.zone-arc {\n  stroke-linecap: butt;\n}\n\n.zone-separator {\n  stroke: var(--ps-card-bg);\n  stroke-width: 3px;\n}\n\n.needle-line {\n  stroke-linecap: round;\n  transition: x2 .5s cubic-bezier(.4, 0, .2, 1), y2 .5s cubic-bezier(.4, 0, .2, 1), stroke .3s;\n}\n\n.needle-glow {\n  filter: blur(4px);\n  opacity: .5;\n  transition: x2 .5s cubic-bezier(.4, 0, .2, 1), y2 .5s cubic-bezier(.4, 0, .2, 1), stroke .3s;\n}\n\n.gauge-edge-label {\n  fill: var(--ps-text-dimmest);\n  font-size: 10px;\n}\n\n.shave-stats {\n  justify-content: center;\n  gap: 6px;\n  padding: 8px 14px;\n  display: flex;\n}\n\n.shave-stat-tile {\n  background: var(--ps-elevated);\n  border: 1px solid var(--divider-color, #ffffff0f);\n  text-align: center;\n  border-radius: 10px;\n  flex: 1;\n  min-width: 0;\n  padding: 10px 4px;\n}\n\n.shave-stat-val {\n  font-variant-numeric: tabular-nums;\n  font-size: 15px;\n  font-weight: 700;\n}\n\n.shave-stat-label {\n  color: var(--ps-text-dimmest);\n  margin-top: 6px;\n  font-size: 10px;\n}\n\n.divider {\n  background: var(--ps-border);\n  height: 1px;\n  margin: 0 14px;\n}\n\n.stats {\n  padding: 6px 14px 10px;\n}\n\n.stat-row {\n  border-bottom: 1px solid var(--ps-border);\n  justify-content: space-between;\n  align-items: center;\n  padding: 9px 0;\n  display: flex;\n}\n\n.stat-row:last-child {\n  border-bottom: none;\n}\n\n.stat-label {\n  color: var(--ps-text-dim);\n  align-items: center;\n  gap: 10px;\n  font-size: 13px;\n  display: flex;\n}\n\n.stat-icon {\n  opacity: .55;\n  width: 16px;\n  height: 16px;\n}\n\n.stat-value {\n  color: var(--primary-text-color);\n  font-variant-numeric: tabular-nums;\n  font-size: 13px;\n  font-weight: 600;\n}\n\n.stat-unit {\n  color: var(--ps-text-dimmer);\n  margin-left: 2px;\n  font-size: 11px;\n  font-weight: 400;\n}\n\n.unavailable {\n  text-align: center;\n  color: var(--ps-text-dim);\n  padding: 20px;\n  font-size: 14px;\n}\n\n@container (width <= 350px) {\n  .chip-label, .chip-value {\n    display: none;\n  }\n\n  .chip {\n    grid-template-columns: auto;\n    justify-items: center;\n    padding: 6px;\n  }\n\n  .chip-icon {\n    grid-row: 1;\n  }\n}\n\n@keyframes chargeGlow {\n  0%, 100% {\n    stroke-opacity: .3;\n  }\n\n  50% {\n    stroke-opacity: 1;\n  }\n}\n\n.charging-arc {\n  animation: 2s ease-in-out infinite chargeGlow;\n}\n";
+$43a89528e95f706e$exports = "ha-card {\n  min-height: 500px;\n  font-family: var(--paper-font-body1_-_font-family, var(--ha-font-family-body, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif));\n  color: var(--primary-text-color, #fff);\n  overflow: hidden;\n  container-type: inline-size;\n}\n\n:host {\n  --ps-text-dim: var(--secondary-text-color, #ffffff80);\n  --ps-text-dimmer: var(--disabled-text-color, #ffffff59);\n  --ps-text-dimmest: var(--disabled-text-color, #ffffff40);\n  --ps-border: var(--divider-color, #ffffff0a);\n  --ps-track: var(--divider-color, #ffffff0f);\n  --ps-card-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));\n  --ps-elevated: color-mix(in srgb, var(--primary-text-color, #fff) 6%, var(--ps-card-bg));\n}\n\n.card-header {\n  border-bottom: 1px solid var(--divider-color, #e5e7eb);\n  justify-content: space-between;\n  align-items: center;\n  padding: 16px 18px 12px;\n  display: flex;\n}\n\n.header-title {\n  cursor: pointer;\n  align-items: baseline;\n  gap: 7px;\n  min-width: 0;\n  display: flex;\n  overflow: hidden;\n}\n\n.header-title h2 {\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  letter-spacing: -.01em;\n  margin: 0;\n  font-size: 15px;\n  font-weight: 700;\n  overflow: hidden;\n}\n\n.header-sub {\n  color: var(--secondary-text-color);\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  font-size: 12px;\n  font-weight: 400;\n  overflow: hidden;\n}\n\n.header-icons {\n  flex-shrink: 0;\n  align-items: center;\n  gap: 10px;\n  display: flex;\n}\n\n.conn-icon {\n  width: 18px;\n  height: 18px;\n  color: var(--primary-color, #3b82f6);\n  fill: currentColor;\n  cursor: pointer;\n  opacity: 1;\n  transition: color .4s, opacity .4s;\n}\n\n.conn-icon.disconnected {\n  color: var(--disabled-text-color, #9ca3af);\n  opacity: .3;\n}\n\n.more-info-btn {\n  cursor: pointer;\n  opacity: .5;\n  width: 18px;\n  height: 18px;\n  transition: opacity .2s;\n  color: var(--secondary-text-color) !important;\n}\n\n.more-info-btn:hover {\n  opacity: 1;\n}\n\n.chips-row {\n  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));\n  gap: 8px;\n  padding: 12px 14px;\n  display: grid;\n}\n\n.chip {\n  background: var(--card-background-color, #f9fafb);\n  border: 1px solid var(--divider-color, #e5e7eb);\n  cursor: pointer;\n  border-radius: 10px;\n  grid-template-rows: auto auto;\n  grid-template-columns: auto 1fr;\n  align-items: center;\n  column-gap: 8px;\n  min-width: 0;\n  padding: 8px 10px;\n  display: grid;\n}\n\n.chip-icon {\n  flex-shrink: 0;\n  grid-row: 1 / 3;\n  width: 36px;\n  height: 36px;\n  position: relative;\n}\n\n.chip-ring-svg {\n  width: 36px;\n  height: 36px;\n}\n\n.chip-ring-icon {\n  width: 14px;\n  height: 14px;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n}\n\n.chip-label {\n  color: var(--secondary-text-color, #6b7280);\n  text-transform: uppercase;\n  letter-spacing: .06em;\n  font-size: 9px;\n  font-weight: 600;\n  line-height: 1;\n}\n\n.chip-value {\n  font-variant-numeric: tabular-nums;\n  font-size: 15px;\n  font-weight: 700;\n  line-height: 1;\n}\n\n.visual-area {\n  flex-direction: column;\n  align-items: center;\n  padding: 4px 14px 0;\n  display: flex;\n}\n\n.gauge-svg {\n  max-width: 100%;\n  height: auto;\n  display: block;\n}\n\n.gauge-status {\n  color: var(--ps-text-dimmest);\n  text-align: center;\n  margin-top: -2px;\n  margin-bottom: 8px;\n  font-size: 13px;\n  transition: color .3s;\n}\n\n.pressure-label {\n  text-align: center;\n  margin-top: -6px;\n  margin-bottom: 2px;\n  font-size: 17px;\n  font-weight: 700;\n  transition: color .3s;\n}\n\n.pressure-value {\n  color: var(--ps-text-dimmest);\n  text-align: center;\n  font-variant-numeric: tabular-nums;\n  margin-bottom: 8px;\n  font-size: 11px;\n}\n\n.gauge-arc-fill {\n  transition: stroke-dashoffset .8s cubic-bezier(.4, 0, .2, 1), stroke .4s;\n}\n\n.zone-arc {\n  stroke-linecap: butt;\n}\n\n.zone-separator {\n  stroke: var(--ps-card-bg);\n  stroke-width: 3px;\n}\n\n.needle-line {\n  stroke-linecap: round;\n  transition: x2 .5s cubic-bezier(.4, 0, .2, 1), y2 .5s cubic-bezier(.4, 0, .2, 1), stroke .3s;\n}\n\n.needle-glow {\n  filter: blur(4px);\n  opacity: .5;\n  transition: x2 .5s cubic-bezier(.4, 0, .2, 1), y2 .5s cubic-bezier(.4, 0, .2, 1), stroke .3s;\n}\n\n.gauge-edge-label {\n  fill: var(--ps-text-dimmest);\n  font-size: 10px;\n}\n\n.shave-stats {\n  justify-content: center;\n  gap: 6px;\n  padding: 8px 14px;\n  display: flex;\n}\n\n.shave-stat-tile {\n  background: var(--ps-elevated);\n  border: 1px solid var(--divider-color, #ffffff0f);\n  text-align: center;\n  border-radius: 10px;\n  flex: 1;\n  min-width: 0;\n  padding: 10px 4px;\n}\n\n.shave-stat-val {\n  font-variant-numeric: tabular-nums;\n  font-size: 15px;\n  font-weight: 700;\n}\n\n.shave-stat-label {\n  color: var(--ps-text-dimmest);\n  margin-top: 6px;\n  font-size: 10px;\n}\n\n.divider {\n  background: var(--ps-border);\n  height: 1px;\n  margin: 0 14px;\n}\n\n.stats {\n  padding: 6px 14px 10px;\n}\n\n.stat-row {\n  border-bottom: 1px solid var(--ps-border);\n  justify-content: space-between;\n  align-items: center;\n  padding: 9px 0;\n  display: flex;\n}\n\n.stat-row:last-child {\n  border-bottom: none;\n}\n\n.stat-label {\n  color: var(--ps-text-dim);\n  align-items: center;\n  gap: 10px;\n  font-size: 13px;\n  display: flex;\n}\n\n.stat-icon {\n  opacity: .55;\n  width: 16px;\n  height: 16px;\n}\n\n.stat-value {\n  color: var(--primary-text-color);\n  font-variant-numeric: tabular-nums;\n  font-size: 13px;\n  font-weight: 600;\n}\n\n.stat-unit {\n  color: var(--ps-text-dimmer);\n  margin-left: 2px;\n  font-size: 11px;\n  font-weight: 400;\n}\n\n.unavailable {\n  text-align: center;\n  color: var(--ps-text-dim);\n  padding: 20px;\n  font-size: 14px;\n}\n\n@container (width <= 350px) {\n  .chip-label, .chip-value {\n    display: none;\n  }\n\n  .chip {\n    grid-template-columns: auto;\n    justify-items: center;\n    padding: 6px;\n  }\n\n  .chip-icon {\n    grid-row: 1;\n  }\n}\n\n.cleaning-wrap {\n  flex-direction: column;\n  align-items: center;\n  padding: 10px 0 4px;\n  display: flex;\n  position: relative;\n}\n\n.cleaning-gauge-ring {\n  width: 160px;\n  height: 160px;\n  position: relative;\n}\n\n.cleaning-ring-svg {\n  width: 160px;\n  height: 160px;\n}\n\n.cleaning-arc-fill {\n  transition: stroke-dashoffset 1s;\n  animation: 2.5s ease-in-out infinite cleanPulse;\n}\n\n@keyframes cleanPulse {\n  0%, 100% {\n    opacity: .7;\n  }\n\n  50% {\n    opacity: 1;\n  }\n}\n\n.cleaning-center {\n  text-align: center;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n}\n\n.cleaning-pct {\n  font-variant-numeric: tabular-nums;\n  color: var(--primary-text-color);\n  font-size: 32px;\n  font-weight: 700;\n  line-height: 1;\n}\n\n.cleaning-label {\n  color: #42a5f5;\n  margin-top: 3px;\n  font-size: 11px;\n  font-weight: 500;\n}\n\n.cleaning-droplets {\n  pointer-events: none;\n  width: 160px;\n  height: 160px;\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n\n.droplet {\n  opacity: 0;\n  background: #42a5f5;\n  border-radius: 50% 50% 50% 0;\n  animation: linear infinite dropletFall;\n  position: absolute;\n  transform: rotate(-45deg);\n}\n\n@keyframes dropletFall {\n  0% {\n    opacity: 0;\n    transform: rotate(-45deg)translateY(0)scale(1);\n  }\n\n  15% {\n    opacity: .6;\n  }\n\n  85% {\n    opacity: .3;\n  }\n\n  100% {\n    opacity: 0;\n    transform: rotate(-45deg)translateY(70px)scale(.4);\n  }\n}\n\n.cleaning-status {\n  color: #42a5f5;\n  align-items: center;\n  gap: 6px;\n  margin-top: 6px;\n  font-size: 13px;\n  display: flex;\n}\n\n.clean-spinner {\n  border: 2px solid #42a5f5;\n  border-top-color: #0000;\n  border-radius: 50%;\n  width: 14px;\n  height: 14px;\n  animation: 1s linear infinite spinClean;\n}\n\n@keyframes spinClean {\n  100% {\n    transform: rotate(360deg);\n  }\n}\n\n.battery-wrap {\n  flex-direction: column;\n  align-items: center;\n  padding: 12px 0 4px;\n  display: flex;\n}\n\n.battery-container {\n  width: 200px;\n  height: 100px;\n  position: relative;\n}\n\n.battery-body {\n  border: 3px solid var(--secondary-text-color, #ffffff80);\n  background: var(--ps-elevated);\n  border-radius: 8px;\n  width: 180px;\n  height: 100px;\n  position: absolute;\n  top: 0;\n  left: 0;\n  overflow: hidden;\n}\n\n.battery-cap {\n  border: 3px solid var(--secondary-text-color, #ffffff80);\n  background: var(--ps-card-bg);\n  border-left: none;\n  border-radius: 0 5px 5px 0;\n  width: 14px;\n  height: 40px;\n  position: absolute;\n  top: 50%;\n  right: 0;\n  transform: translateY(-50%);\n}\n\n.battery-liquid {\n  opacity: .75;\n  background: #4caf50;\n  transition: width 1s;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n}\n\n.battery-wave-surface {\n  width: 14px;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  right: -7px;\n  overflow: hidden;\n}\n\n.battery-wave-inner {\n  width: 14px;\n  height: 200%;\n  animation: 2s linear infinite waveVert;\n}\n\n@keyframes waveVert {\n  0% {\n    transform: translateY(0);\n  }\n\n  100% {\n    transform: translateY(-50%);\n  }\n}\n\n.battery-bubbles {\n  pointer-events: none;\n  position: absolute;\n  inset: 0;\n  overflow: hidden;\n}\n\n.bubble {\n  background: #ffffff59;\n  border-radius: 50%;\n  animation: linear infinite bubbleRise;\n  position: absolute;\n}\n\n@keyframes bubbleRise {\n  0% {\n    opacity: .5;\n    transform: translateX(0)scale(1);\n  }\n\n  100% {\n    opacity: 0;\n    transform: translateX(60px)translateY(-10px)scale(.3);\n  }\n}\n\n.battery-bolt {\n  z-index: 2;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n}\n\n.battery-bolt svg {\n  filter: drop-shadow(0 1px 4px #00000026);\n  width: 36px;\n  height: 36px;\n  animation: 2s ease-in-out infinite boltPulse;\n}\n\n@keyframes boltPulse {\n  0%, 100% {\n    opacity: .7;\n    transform: scale(1);\n  }\n\n  50% {\n    opacity: 1;\n    transform: scale(1.08);\n  }\n}\n\n.battery-pct {\n  font-variant-numeric: tabular-nums;\n  color: var(--primary-text-color);\n  text-align: center;\n  margin-top: 10px;\n  font-size: 36px;\n  font-weight: 700;\n}\n\n.battery-sub {\n  color: #4caf50;\n  text-align: center;\n  justify-content: center;\n  align-items: center;\n  gap: 4px;\n  margin-top: 2px;\n  font-size: 12px;\n  display: flex;\n}\n\n.charge-dot {\n  background: #4caf50;\n  border-radius: 50%;\n  width: 5px;\n  height: 5px;\n  display: inline-block;\n}\n\n.charge-dot:first-child {\n  animation: 1.4s infinite chDot;\n}\n\n.charge-dot:nth-child(2) {\n  animation: 1.4s .2s infinite chDot;\n}\n\n.charge-dot:nth-child(3) {\n  animation: 1.4s .4s infinite chDot;\n}\n\n@keyframes chDot {\n  0%, 80%, 100% {\n    opacity: .2;\n    transform: scale(.7);\n  }\n\n  40% {\n    opacity: 1;\n    transform: scale(1.1);\n  }\n}\n\n@keyframes chargeGlow {\n  0%, 100% {\n    stroke-opacity: .3;\n  }\n\n  50% {\n    stroke-opacity: 1;\n  }\n}\n\n.charging-arc {\n  animation: 2s ease-in-out infinite chargeGlow;\n}\n";
 
 
 const $8b62e546fdd14731$export$d5e7ce6d07daf10f = "0.3.0";
@@ -1034,7 +1034,8 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
     _renderGauge(activity) {
         if (activity === "shaving") return this._isOneBlade ? this._renderSpeedGauge() : this._renderPressureGauge();
         if (activity === "cleaning") return this._renderCleaningGauge();
-        return this._renderBatteryGauge(activity === "charging");
+        if (activity === "charging") return this._renderChargingBattery();
+        return this._renderBatteryGauge();
     }
     _renderPressureGauge() {
         const { CX: cx, CY: cy, R: r, STROKE: st, PRESSURE_MAX: max } = $8b62e546fdd14731$var$GAUGE;
@@ -1131,7 +1132,7 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
       </div>
     `;
     }
-    _renderBatteryGauge(isCharging) {
+    _renderBatteryGauge() {
         const { CX: cx, CY: cy, STROKE: st } = $8b62e546fdd14731$var$GAUGE;
         const bat = this._numState("battery", 0);
         const bc = $8b62e546fdd14731$var$batteryColor(bat);
@@ -1139,32 +1140,159 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
       <div class="gauge-section">
         <svg class="gauge-svg" width="${$8b62e546fdd14731$var$GAUGE_W}" height="180" viewBox="0 0 ${$8b62e546fdd14731$var$GAUGE_W} 180">
           <path d="${$8b62e546fdd14731$var$describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${st}" stroke-linecap="round"/>
-          <path class="${isCharging ? 'charging-arc' : ''}" d="${$8b62e546fdd14731$var$describeArc(0, bat / 100)}" fill="none" stroke="${bc}" stroke-width="${st}" stroke-linecap="round"/>
+          <path d="${$8b62e546fdd14731$var$describeArc(0, bat / 100)}" fill="none" stroke="${bc}" stroke-width="${st}" stroke-linecap="round"/>
           <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="52" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit" letter-spacing="-2">${bat}%</text>
-          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="${isCharging ? '#4caf50' : 'var(--ps-text-dim)'}" font-family="inherit">
-            ${isCharging ? "\u26A1 Charging" : "Battery"}
-          </text>
+          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="var(--ps-text-dim)" font-family="inherit">Battery</text>
         </svg>
-        <div class="gauge-status" style="color:${isCharging ? '#4caf50' : 'var(--ps-text-dimmest)'}">
-          ${isCharging ? "Plugged In" : "Standby"}
+        <div class="gauge-status" style="color:var(--ps-text-dimmest)">Standby</div>
+      </div>
+    `;
+    }
+    _renderChargingBattery() {
+        const bat = this._numState("battery", 0);
+        const fillW = Math.round(bat / 100 * 174);
+        const bubbles = [
+            {
+                size: 3,
+                top: 20,
+                left: 15,
+                dur: 2.5,
+                delay: 0
+            },
+            {
+                size: 5,
+                top: 45,
+                left: 30,
+                dur: 3,
+                delay: 0.8
+            },
+            {
+                size: 2,
+                top: 65,
+                left: 50,
+                dur: 2.2,
+                delay: 1.5
+            },
+            {
+                size: 4,
+                top: 35,
+                left: 10,
+                dur: 3.5,
+                delay: 2
+            },
+            {
+                size: 3,
+                top: 55,
+                left: 40,
+                dur: 2.8,
+                delay: 0.4
+            }
+        ];
+        return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
+      <div class="battery-wrap">
+        <div class="battery-container">
+          <div class="battery-cap"></div>
+          <div class="battery-body">
+            <div class="battery-liquid" style="width:${fillW}px">
+              <div class="battery-wave-surface">
+                <div class="battery-wave-inner">
+                  <svg viewBox="0 0 14 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:100%">
+                    <path d="M7,0 Q0,12.5 7,25 Q14,37.5 7,50 Q0,62.5 7,75 Q14,87.5 7,100 Q0,112.5 7,125 Q14,137.5 7,150 Q0,162.5 7,175 Q14,187.5 7,200 L14,200 L14,0 Z" fill="#4caf50" opacity="0.75"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="battery-bubbles">
+                ${bubbles.map((b)=>(0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
+                  <div class="bubble" style="width:${b.size}px;height:${b.size}px;top:${b.top}%;left:${b.left}%;animation-duration:${b.dur}s;animation-delay:${b.delay}s"></div>
+                `)}
+              </div>
+            </div>
+            <div class="battery-bolt">
+              <svg viewBox="0 0 24 24" fill="#4caf50">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" opacity="0.8"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="battery-pct">${bat}%</div>
+        <div class="battery-sub">
+          <span class="charge-dot"></span>
+          <span class="charge-dot"></span>
+          <span class="charge-dot"></span>
+          <span style="margin-left:2px">Charging</span>
         </div>
       </div>
     `;
     }
     _renderCleaningGauge() {
-        const { CX: cx, CY: cy, STROKE: st } = $8b62e546fdd14731$var$GAUGE;
         const progress = this._numState("cleaning_progress", 0);
         const frac = Math.max(0, Math.min(1, progress / 100));
-        const color = "#42a5f5";
+        const cx = 80, cy = 80, r = 66, sw = 10;
+        const START = 135, range = 270;
+        const cleanRingArc = (f)=>{
+            const startRad = START * Math.PI / 180;
+            const endRad = (START + range * f) * Math.PI / 180;
+            const x1 = cx + r * Math.cos(startRad), y1 = cy + r * Math.sin(startRad);
+            const x2 = cx + r * Math.cos(endRad), y2 = cy + r * Math.sin(endRad);
+            const large = range * f > 180 ? 1 : 0;
+            return `M ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2}`;
+        };
+        const droplets = [
+            {
+                size: 6,
+                angle: 160,
+                dur: 2,
+                delay: 0
+            },
+            {
+                size: 8,
+                angle: 220,
+                dur: 2.5,
+                delay: 0.5
+            },
+            {
+                size: 5,
+                angle: 300,
+                dur: 1.8,
+                delay: 1.2
+            },
+            {
+                size: 7,
+                angle: 370,
+                dur: 2.2,
+                delay: 1.8
+            },
+            {
+                size: 6,
+                angle: 250,
+                dur: 2.8,
+                delay: 0.8
+            }
+        ];
         return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
-      <div class="gauge-section">
-        <svg class="gauge-svg" width="${$8b62e546fdd14731$var$GAUGE_W}" height="180" viewBox="0 0 ${$8b62e546fdd14731$var$GAUGE_W} 180">
-          <path d="${$8b62e546fdd14731$var$describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${st}" stroke-linecap="round"/>
-          <path class="charging-arc" d="${$8b62e546fdd14731$var$describeArc(0, frac)}" fill="none" stroke="${color}" stroke-width="${st}" stroke-linecap="round"/>
-          <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="52" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit" letter-spacing="-2">${Math.round(progress)}%</text>
-          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="var(--ps-text-dim)" font-family="inherit">Cleaning</text>
-        </svg>
-        <div class="gauge-status" style="color:${color}">In Progress</div>
+      <div class="cleaning-wrap">
+        <div class="cleaning-gauge-ring">
+          <svg class="cleaning-ring-svg" viewBox="0 0 160 160">
+            <path d="${cleanRingArc(1)}" fill="none" stroke="var(--ps-track)" stroke-width="${sw}" stroke-linecap="round"/>
+            <path d="${cleanRingArc(frac)}" fill="none" stroke="#42a5f5" stroke-width="${sw}" stroke-linecap="round" class="cleaning-arc-fill"/>
+          </svg>
+          <div class="cleaning-center">
+            <div class="cleaning-pct">${Math.round(progress)}%</div>
+            <div class="cleaning-label">Cleaning</div>
+          </div>
+          <div class="cleaning-droplets">
+            ${droplets.map((d)=>{
+            const rad = d.angle * Math.PI / 180;
+            const dx = cx + (r + 16) * Math.cos(rad);
+            const dy = cy + (r + 16) * Math.sin(rad);
+            return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`<div class="droplet" style="width:${d.size}px;height:${d.size}px;left:${dx - d.size / 2}px;top:${dy - d.size / 2}px;animation-duration:${d.dur}s;animation-delay:${d.delay}s"></div>`;
+        })}
+          </div>
+        </div>
+        <div class="cleaning-status">
+          <div class="clean-spinner"></div>
+          In Progress
+        </div>
       </div>
     `;
     }
