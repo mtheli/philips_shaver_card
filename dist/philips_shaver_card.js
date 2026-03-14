@@ -626,7 +626,26 @@ var $43a89528e95f706e$exports = {};
 $43a89528e95f706e$exports = "ha-card {\n  min-height: 500px;\n  font-family: var(--paper-font-body1_-_font-family, var(--ha-font-family-body, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif));\n  color: var(--primary-text-color, #fff);\n  overflow: hidden;\n  container-type: inline-size;\n}\n\n:host {\n  --ps-text-dim: var(--secondary-text-color, #ffffff80);\n  --ps-text-dimmer: var(--disabled-text-color, #ffffff59);\n  --ps-text-dimmest: var(--disabled-text-color, #ffffff40);\n  --ps-border: var(--divider-color, #ffffff0a);\n  --ps-track: var(--divider-color, #ffffff0f);\n  --ps-card-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));\n  --ps-elevated: color-mix(in srgb, var(--primary-text-color, #fff) 6%, var(--ps-card-bg));\n}\n\n.card-header {\n  border-bottom: 1px solid var(--divider-color, #e5e7eb);\n  justify-content: space-between;\n  align-items: center;\n  padding: 16px 18px 12px;\n  display: flex;\n}\n\n.header-title {\n  cursor: pointer;\n  align-items: baseline;\n  gap: 7px;\n  min-width: 0;\n  display: flex;\n  overflow: hidden;\n}\n\n.header-title h2 {\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  letter-spacing: -.01em;\n  margin: 0;\n  font-size: 15px;\n  font-weight: 700;\n  overflow: hidden;\n}\n\n.header-sub {\n  color: var(--secondary-text-color);\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  font-size: 12px;\n  font-weight: 400;\n  overflow: hidden;\n}\n\n.header-icons {\n  flex-shrink: 0;\n  align-items: center;\n  gap: 10px;\n  display: flex;\n}\n\n.conn-icon {\n  width: 18px;\n  height: 18px;\n  color: var(--primary-color, #3b82f6);\n  fill: currentColor;\n  cursor: pointer;\n  opacity: 1;\n  transition: color .4s, opacity .4s;\n}\n\n.conn-icon.disconnected {\n  color: var(--disabled-text-color, #9ca3af);\n  opacity: .3;\n}\n\n.more-info-btn {\n  cursor: pointer;\n  opacity: .5;\n  width: 18px;\n  height: 18px;\n  transition: opacity .2s;\n  color: var(--secondary-text-color) !important;\n}\n\n.more-info-btn:hover {\n  opacity: 1;\n}\n\n.chips-row {\n  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));\n  gap: 8px;\n  padding: 12px 14px;\n  display: grid;\n}\n\n.chip {\n  background: var(--card-background-color, #f9fafb);\n  border: 1px solid var(--divider-color, #e5e7eb);\n  cursor: pointer;\n  border-radius: 10px;\n  grid-template-rows: auto auto;\n  grid-template-columns: auto 1fr;\n  align-items: center;\n  column-gap: 8px;\n  min-width: 0;\n  padding: 8px 10px;\n  display: grid;\n}\n\n.chip-icon {\n  flex-shrink: 0;\n  grid-row: 1 / 3;\n  width: 36px;\n  height: 36px;\n  position: relative;\n}\n\n.chip-ring-svg {\n  width: 36px;\n  height: 36px;\n}\n\n.chip-ring-icon {\n  width: 14px;\n  height: 14px;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n}\n\n.chip-label {\n  color: var(--secondary-text-color, #6b7280);\n  text-transform: uppercase;\n  letter-spacing: .06em;\n  font-size: 9px;\n  font-weight: 600;\n  line-height: 1;\n}\n\n.chip-value {\n  font-variant-numeric: tabular-nums;\n  font-size: 15px;\n  font-weight: 700;\n  line-height: 1;\n}\n\n.visual-area {\n  flex-direction: column;\n  align-items: center;\n  padding: 4px 14px 0;\n  display: flex;\n}\n\n.gauge-svg {\n  max-width: 100%;\n  height: auto;\n  display: block;\n}\n\n.gauge-status {\n  color: var(--ps-text-dimmest);\n  text-align: center;\n  margin-top: -2px;\n  margin-bottom: 8px;\n  font-size: 13px;\n  transition: color .3s;\n}\n\n.pressure-label {\n  text-align: center;\n  margin-top: -6px;\n  margin-bottom: 2px;\n  font-size: 17px;\n  font-weight: 700;\n  transition: color .3s;\n}\n\n.pressure-value {\n  color: var(--ps-text-dimmest);\n  text-align: center;\n  font-variant-numeric: tabular-nums;\n  margin-bottom: 8px;\n  font-size: 11px;\n}\n\n.gauge-arc-fill {\n  transition: stroke-dashoffset .8s cubic-bezier(.4, 0, .2, 1), stroke .4s;\n}\n\n.zone-arc {\n  stroke-linecap: butt;\n}\n\n.zone-separator {\n  stroke: var(--ps-card-bg);\n  stroke-width: 3px;\n}\n\n.needle-line {\n  stroke-linecap: round;\n  transition: x2 .5s cubic-bezier(.4, 0, .2, 1), y2 .5s cubic-bezier(.4, 0, .2, 1), stroke .3s;\n}\n\n.needle-glow {\n  filter: blur(4px);\n  opacity: .5;\n  transition: x2 .5s cubic-bezier(.4, 0, .2, 1), y2 .5s cubic-bezier(.4, 0, .2, 1), stroke .3s;\n}\n\n.gauge-edge-label {\n  fill: var(--ps-text-dimmest);\n  font-size: 10px;\n}\n\n.shave-stats {\n  justify-content: center;\n  gap: 6px;\n  padding: 8px 14px;\n  display: flex;\n}\n\n.shave-stat-tile {\n  background: var(--ps-elevated);\n  border: 1px solid var(--divider-color, #ffffff0f);\n  text-align: center;\n  border-radius: 10px;\n  flex: 1;\n  min-width: 0;\n  padding: 10px 4px;\n}\n\n.shave-stat-val {\n  font-variant-numeric: tabular-nums;\n  font-size: 15px;\n  font-weight: 700;\n}\n\n.shave-stat-label {\n  color: var(--ps-text-dimmest);\n  margin-top: 6px;\n  font-size: 10px;\n}\n\n.divider {\n  background: var(--ps-border);\n  height: 1px;\n  margin: 0 14px;\n}\n\n.stats {\n  padding: 6px 14px 10px;\n}\n\n.stat-row {\n  border-bottom: 1px solid var(--ps-border);\n  justify-content: space-between;\n  align-items: center;\n  padding: 9px 0;\n  display: flex;\n}\n\n.stat-row:last-child {\n  border-bottom: none;\n}\n\n.stat-label {\n  color: var(--ps-text-dim);\n  align-items: center;\n  gap: 10px;\n  font-size: 13px;\n  display: flex;\n}\n\n.stat-icon {\n  opacity: .55;\n  width: 16px;\n  height: 16px;\n}\n\n.stat-value {\n  color: var(--primary-text-color);\n  font-variant-numeric: tabular-nums;\n  font-size: 13px;\n  font-weight: 600;\n}\n\n.stat-unit {\n  color: var(--ps-text-dimmer);\n  margin-left: 2px;\n  font-size: 11px;\n  font-weight: 400;\n}\n\n.unavailable {\n  text-align: center;\n  color: var(--ps-text-dim);\n  padding: 20px;\n  font-size: 14px;\n}\n\n@container (width <= 350px) {\n  .chip-label, .chip-value {\n    display: none;\n  }\n\n  .chip {\n    grid-template-columns: auto;\n    justify-items: center;\n    padding: 6px;\n  }\n\n  .chip-icon {\n    grid-row: 1;\n  }\n}\n\n.cleaning-wrap {\n  flex-direction: column;\n  align-items: center;\n  padding: 10px 0 4px;\n  display: flex;\n  position: relative;\n}\n\n.cleaning-gauge-ring {\n  width: 160px;\n  height: 160px;\n  position: relative;\n}\n\n.cleaning-ring-svg {\n  width: 160px;\n  height: 160px;\n}\n\n.cleaning-arc-fill {\n  transition: stroke-dashoffset 1s;\n  animation: 2.5s ease-in-out infinite cleanPulse;\n}\n\n@keyframes cleanPulse {\n  0%, 100% {\n    opacity: .7;\n  }\n\n  50% {\n    opacity: 1;\n  }\n}\n\n.cleaning-center {\n  text-align: center;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n}\n\n.cleaning-pct {\n  font-variant-numeric: tabular-nums;\n  color: var(--primary-text-color);\n  font-size: 32px;\n  font-weight: 700;\n  line-height: 1;\n}\n\n.cleaning-label {\n  color: #42a5f5;\n  margin-top: 3px;\n  font-size: 11px;\n  font-weight: 500;\n}\n\n.cleaning-droplets {\n  pointer-events: none;\n  width: 160px;\n  height: 160px;\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n\n.droplet {\n  opacity: 0;\n  background: #42a5f5;\n  border-radius: 50% 50% 50% 0;\n  animation: linear infinite dropletFall;\n  position: absolute;\n  transform: rotate(-45deg);\n}\n\n@keyframes dropletFall {\n  0% {\n    opacity: 0;\n    transform: rotate(-45deg)translateY(0)scale(1);\n  }\n\n  15% {\n    opacity: .6;\n  }\n\n  85% {\n    opacity: .3;\n  }\n\n  100% {\n    opacity: 0;\n    transform: rotate(-45deg)translateY(70px)scale(.4);\n  }\n}\n\n.cleaning-status {\n  color: #42a5f5;\n  align-items: center;\n  gap: 6px;\n  margin-top: 6px;\n  font-size: 13px;\n  display: flex;\n}\n\n.clean-spinner {\n  border: 2px solid #42a5f5;\n  border-top-color: #0000;\n  border-radius: 50%;\n  width: 14px;\n  height: 14px;\n  animation: 1s linear infinite spinClean;\n}\n\n@keyframes spinClean {\n  100% {\n    transform: rotate(360deg);\n  }\n}\n\n.battery-wrap {\n  flex-direction: column;\n  align-items: center;\n  padding: 12px 0 4px;\n  display: flex;\n}\n\n.battery-container {\n  width: 200px;\n  height: 100px;\n  position: relative;\n}\n\n.battery-body {\n  border: 3px solid var(--secondary-text-color, #ffffff80);\n  background: var(--ps-elevated);\n  border-radius: 8px;\n  width: 180px;\n  height: 100px;\n  position: absolute;\n  top: 0;\n  left: 0;\n  overflow: hidden;\n}\n\n.battery-cap {\n  border: 3px solid var(--secondary-text-color, #ffffff80);\n  background: var(--ps-card-bg);\n  border-left: none;\n  border-radius: 0 5px 5px 0;\n  width: 14px;\n  height: 40px;\n  position: absolute;\n  top: 50%;\n  right: 0;\n  transform: translateY(-50%);\n}\n\n.battery-liquid {\n  opacity: .75;\n  background: #4caf50;\n  transition: width 1s;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n}\n\n.battery-wave-surface {\n  width: 14px;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  right: -7px;\n  overflow: hidden;\n}\n\n.battery-wave-inner {\n  width: 14px;\n  height: 200%;\n  animation: 2s linear infinite waveVert;\n}\n\n@keyframes waveVert {\n  0% {\n    transform: translateY(0);\n  }\n\n  100% {\n    transform: translateY(-50%);\n  }\n}\n\n.battery-bubbles {\n  pointer-events: none;\n  position: absolute;\n  inset: 0;\n  overflow: hidden;\n}\n\n.bubble {\n  background: #ffffff59;\n  border-radius: 50%;\n  animation: linear infinite bubbleRise;\n  position: absolute;\n}\n\n@keyframes bubbleRise {\n  0% {\n    opacity: .5;\n    transform: translateX(0)scale(1);\n  }\n\n  100% {\n    opacity: 0;\n    transform: translateX(60px)translateY(-10px)scale(.3);\n  }\n}\n\n.battery-bolt {\n  z-index: 2;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n}\n\n.battery-bolt svg {\n  filter: drop-shadow(0 1px 4px #00000026);\n  width: 36px;\n  height: 36px;\n  animation: 2s ease-in-out infinite boltPulse;\n}\n\n@keyframes boltPulse {\n  0%, 100% {\n    opacity: .7;\n    transform: scale(1);\n  }\n\n  50% {\n    opacity: 1;\n    transform: scale(1.08);\n  }\n}\n\n.battery-pct {\n  font-variant-numeric: tabular-nums;\n  color: var(--primary-text-color);\n  text-align: center;\n  margin-top: 10px;\n  font-size: 36px;\n  font-weight: 700;\n}\n\n.battery-sub {\n  color: #4caf50;\n  text-align: center;\n  justify-content: center;\n  align-items: center;\n  gap: 4px;\n  margin-top: 2px;\n  font-size: 12px;\n  display: flex;\n}\n\n.charge-dot {\n  background: #4caf50;\n  border-radius: 50%;\n  width: 5px;\n  height: 5px;\n  display: inline-block;\n}\n\n.charge-dot:first-child {\n  animation: 1.4s infinite chDot;\n}\n\n.charge-dot:nth-child(2) {\n  animation: 1.4s .2s infinite chDot;\n}\n\n.charge-dot:nth-child(3) {\n  animation: 1.4s .4s infinite chDot;\n}\n\n@keyframes chDot {\n  0%, 80%, 100% {\n    opacity: .2;\n    transform: scale(.7);\n  }\n\n  40% {\n    opacity: 1;\n    transform: scale(1.1);\n  }\n}\n\n@keyframes chargeGlow {\n  0%, 100% {\n    stroke-opacity: .3;\n  }\n\n  50% {\n    stroke-opacity: 1;\n  }\n}\n\n.charging-arc {\n  animation: 2s ease-in-out infinite chargeGlow;\n}\n";
 
 
-const $8b62e546fdd14731$export$d5e7ce6d07daf10f = "0.3.0";
+var $76eee68ef692a3c3$exports = {};
+$76eee68ef692a3c3$exports = JSON.parse("{\"chip_battery\":\"Battery\",\"chip_head\":\"Head\",\"chip_clean\":\"Clean\",\"gauge_session\":\"SESSION\",\"gauge_battery\":\"Battery\",\"gauge_standby\":\"Standby\",\"gauge_charging\":\"Charging\",\"gauge_cleaning\":\"Cleaning\",\"gauge_in_progress\":\"In Progress\",\"gauge_low\":\"Low\",\"gauge_high\":\"High\",\"gauge_slow\":\"Slow\",\"gauge_fast\":\"Fast\",\"pressure_no_contact\":\"No Contact\",\"pressure_too_low\":\"Too Low\",\"pressure_optimal\":\"Optimal\",\"pressure_too_high\":\"Too High\",\"speed_none\":\"No Movement\",\"speed_optimal\":\"Optimal\",\"speed_too_fast\":\"Too Fast\",\"motion_small_circle\":\"Circles\",\"motion_large_stroke\":\"Strokes\",\"stat_charge_cycles\":\"Charge Cycles\",\"stat_last_session\":\"Last Session\",\"stat_last_used\":\"Last Used\",\"stat_total_time\":\"Total Time\",\"stat_total_uses\":\"Total Uses\",\"stat_cycles_remaining\":\"Cycles Remaining\",\"shave_rpm\":\"RPM\",\"shave_ma\":\"mA\",\"shave_speed\":\"Speed\",\"shave_motion\":\"Motion\",\"time_today\":\"Today\",\"time_yesterday\":\"Yesterday\",\"time_days_ago\":\"{n}d ago\",\"config_title\":\"Title (Optional)\",\"config_show_model\":\"Show model number as subtitle\",\"config_select_device\":\"Please select a Philips Shaver device in the card configuration.\",\"config_no_device\":\"Please select a device.\",\"default_title\":\"Philips Shaver\"}");
+
+
+var $238d401f28c1db46$exports = {};
+$238d401f28c1db46$exports = JSON.parse('{"chip_battery":"Akku","chip_head":"Scherkopf","chip_clean":"Reinigung","gauge_session":"SITZUNG","gauge_battery":"Akku","gauge_standby":"Bereit","gauge_charging":"Laden","gauge_cleaning":"Reinigung","gauge_in_progress":"L\xe4uft","gauge_low":"Niedrig","gauge_high":"Hoch","gauge_slow":"Langsam","gauge_fast":"Schnell","pressure_no_contact":"Kein Kontakt","pressure_too_low":"Zu niedrig","pressure_optimal":"Optimal","pressure_too_high":"Zu hoch","speed_none":"Keine Bewegung","speed_optimal":"Optimal","speed_too_fast":"Zu schnell","motion_small_circle":"Kreise","motion_large_stroke":"Z\xfcge","stat_charge_cycles":"Ladezyklen","stat_last_session":"Letzte Sitzung","stat_last_used":"Zuletzt benutzt","stat_total_time":"Gesamtzeit","stat_total_uses":"Nutzungen","stat_cycles_remaining":"Zyklen \xfcbrig","shave_rpm":"U/min","shave_ma":"mA","shave_speed":"Tempo","shave_motion":"Bewegung","time_today":"Heute","time_yesterday":"Gestern","time_days_ago":"vor {n} T.","config_title":"Titel (Optional)","config_show_model":"Modellnummer als Untertitel anzeigen","config_select_device":"Bitte w\xe4hle einen Philips Shaver in der Kartenkonfiguration.","config_no_device":"Bitte w\xe4hle ein Ger\xe4t.","default_title":"Philips Shaver"}');
+
+
+const $d8078e452c66bdbe$var$LOCALES = {
+    en: (/*@__PURE__*/$parcel$interopDefault($76eee68ef692a3c3$exports)),
+    de: (/*@__PURE__*/$parcel$interopDefault($238d401f28c1db46$exports))
+};
+function $d8078e452c66bdbe$export$625550452a3fa3ec(hass, key) {
+    const lang = hass?.language || 'en';
+    const locale = $d8078e452c66bdbe$var$LOCALES[lang] || $d8078e452c66bdbe$var$LOCALES.en;
+    return locale[key] || $d8078e452c66bdbe$var$LOCALES.en[key] || key;
+}
+
+
+const $8b62e546fdd14731$export$d5e7ce6d07daf10f = "0.4.0";
 // ---------- Entity discovery map: translation_key → local alias ----------
 const $8b62e546fdd14731$var$TRANSLATION_KEY_MAP = {
     battery: "battery",
@@ -774,28 +793,16 @@ const $8b62e546fdd14731$var$PRESSURE_COLORS = {
     optimal: "#4caf50",
     too_high: "#f44336"
 };
-const $8b62e546fdd14731$var$PRESSURE_LABELS = {
-    no_contact: "No Contact",
-    too_low: "Too Low",
-    optimal: "Optimal",
-    too_high: "Too High"
-};
 const $8b62e546fdd14731$var$SPEED_COLORS = {
     none: "var(--disabled-text-color, #9e9e9e)",
     optimal: "#4caf50",
     too_fast: "#ff9800"
 };
-const $8b62e546fdd14731$var$SPEED_LABELS = {
-    none: "No Movement",
-    optimal: "Optimal",
-    too_fast: "Too Fast"
-};
-const $8b62e546fdd14731$var$MOTION_LABELS = {
-    no_motion: "\u2014",
-    small_circle: "Circles",
-    large_stroke: "Strokes"
-};
 class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$export$3f2f9f5909897157) {
+    // ---------- Translation helper ----------
+    _t(key) {
+        return (0, $d8078e452c66bdbe$export$625550452a3fa3ec)(this._hass, key);
+    }
     set hass(hass) {
         this._hass = hass;
         if ((!this._entities || !this._entities.battery) && this.config?.device_id) this._entities = this._findEntities(hass, this.config.device_id);
@@ -816,7 +823,7 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
         this._stopTimer();
     }
     setConfig(config) {
-        if (!config.device_id) throw new Error("Please select a Philips Shaver device in the card configuration.");
+        if (!config.device_id) throw new Error((0, $d8078e452c66bdbe$export$625550452a3fa3ec)(null, "config_select_device"));
         this.config = config;
         this._entities = null;
         if (this._hass) this._entities = this._findEntities(this._hass, config.device_id);
@@ -914,7 +921,7 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
         const config = this.config;
         if (!hass || !config || !this._entities) {
             if (hass && config?.device_id) this._entities = this._findEntities(hass, config.device_id);
-            if (!this._entities) return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`<ha-card><div class="unavailable">Please select a device.</div></ha-card>`;
+            if (!this._entities) return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`<ha-card><div class="unavailable">${this._t("config_no_device")}</div></ha-card>`;
         }
         const activity = this._stateVal("activity", "off");
         return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
@@ -933,7 +940,7 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
     _renderHeader() {
         const device = this._hass.devices?.[this.config.device_id];
         const model = device?.model || "";
-        const name = this.config.title || "Philips Shaver";
+        const name = this.config.title || this._t("default_title");
         const showModel = this.config.show_model !== false;
         const espEntity = this._entity("esp_bridge_alive");
         const espConnected = espEntity ? espEntity.state === "on" : false;
@@ -980,7 +987,7 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
         const tiles = [
             {
                 key: "battery",
-                label: "Battery",
+                label: this._t("chip_battery"),
                 value: `${bat}%`,
                 frac: bat / 100,
                 color: bc,
@@ -989,7 +996,7 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
             },
             {
                 key: "head",
-                label: "Head",
+                label: this._t("chip_head"),
                 value: `${Math.round(head)}%`,
                 frac: head / 100,
                 color: hc,
@@ -999,7 +1006,7 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
         ];
         if (this._entities?.cleaning_cycles_remaining) tiles.push({
             key: "cleaning",
-            label: "Clean",
+            label: this._t("chip_clean"),
             value: clean.toFixed(0),
             frac: clean / 30,
             color: cc,
@@ -1071,7 +1078,7 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
           <!-- Zone separators -->
           ${separators}
           <!-- Session timer -->
-          <text x="${cx}" y="${cy - 48}" text-anchor="middle" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit" letter-spacing="1.5">SESSION</text>
+          <text x="${cx}" y="${cy - 48}" text-anchor="middle" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit" letter-spacing="1.5">${this._t("gauge_session")}</text>
           <text x="${cx}" y="${cy - 12}" text-anchor="middle" font-size="38" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="'SF Mono','Menlo','Consolas',monospace" letter-spacing="1">${timerStr}</text>
           <!-- Needle -->
           <line x1="${cx}" y1="${cy + 10}" x2="${tip.x}" y2="${tip.y}" stroke="${nc}" stroke-width="6" class="needle-glow"/>
@@ -1080,10 +1087,10 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
           <circle cx="${cx}" cy="${cy + 10}" r="8" fill="var(--ps-card-bg)" stroke="var(--ps-border)" stroke-width="2"/>
           <circle cx="${cx}" cy="${cy + 10}" r="4" fill="${nc}"/>
           <!-- Edge labels -->
-          <text x="26" y="${cy + 28}" class="gauge-edge-label" text-anchor="start">Low</text>
-          <text x="${$8b62e546fdd14731$var$GAUGE_W - 26}" y="${cy + 28}" class="gauge-edge-label" text-anchor="end">High</text>
+          <text x="26" y="${cy + 28}" class="gauge-edge-label" text-anchor="start">${this._t("gauge_low")}</text>
+          <text x="${$8b62e546fdd14731$var$GAUGE_W - 26}" y="${cy + 28}" class="gauge-edge-label" text-anchor="end">${this._t("gauge_high")}</text>
         </svg>
-        <div class="pressure-label" style="color:${nc}">${$8b62e546fdd14731$var$PRESSURE_LABELS[pState] || "\u2014"}</div>
+        <div class="pressure-label" style="color:${nc}">${this._t("pressure_" + pState) || "\u2014"}</div>
         <div class="pressure-value">${pressure > 0 ? pressure : "\u2014"}</div>
       </div>
     `;
@@ -1115,7 +1122,7 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
           <!-- Zone separator -->
           ${separator}
           <!-- Session timer -->
-          <text x="${cx}" y="${cy - 48}" text-anchor="middle" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit" letter-spacing="1.5">SESSION</text>
+          <text x="${cx}" y="${cy - 48}" text-anchor="middle" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit" letter-spacing="1.5">${this._t("gauge_session")}</text>
           <text x="${cx}" y="${cy - 12}" text-anchor="middle" font-size="38" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="'SF Mono','Menlo','Consolas',monospace" letter-spacing="1">${timerStr}</text>
           <!-- Needle -->
           <line x1="${cx}" y1="${cy + 10}" x2="${tip.x}" y2="${tip.y}" stroke="${nc}" stroke-width="6" class="needle-glow"/>
@@ -1124,10 +1131,10 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
           <circle cx="${cx}" cy="${cy + 10}" r="8" fill="var(--ps-card-bg)" stroke="var(--ps-border)" stroke-width="2"/>
           <circle cx="${cx}" cy="${cy + 10}" r="4" fill="${nc}"/>
           <!-- Edge labels -->
-          <text x="26" y="${cy + 28}" class="gauge-edge-label" text-anchor="start">Slow</text>
-          <text x="${$8b62e546fdd14731$var$GAUGE_W - 26}" y="${cy + 28}" class="gauge-edge-label" text-anchor="end">Fast</text>
+          <text x="26" y="${cy + 28}" class="gauge-edge-label" text-anchor="start">${this._t("gauge_slow")}</text>
+          <text x="${$8b62e546fdd14731$var$GAUGE_W - 26}" y="${cy + 28}" class="gauge-edge-label" text-anchor="end">${this._t("gauge_fast")}</text>
         </svg>
-        <div class="pressure-label" style="color:${nc}">${$8b62e546fdd14731$var$SPEED_LABELS[sState] || "\u2014"}</div>
+        <div class="pressure-label" style="color:${nc}">${this._t("speed_" + sState) || "\u2014"}</div>
         <div class="pressure-value">${speed > 0 ? speed : "\u2014"}</div>
       </div>
     `;
@@ -1142,9 +1149,9 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
           <path d="${$8b62e546fdd14731$var$describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${st}" stroke-linecap="round"/>
           <path d="${$8b62e546fdd14731$var$describeArc(0, bat / 100)}" fill="none" stroke="${bc}" stroke-width="${st}" stroke-linecap="round"/>
           <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="52" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit" letter-spacing="-2">${bat}%</text>
-          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="var(--ps-text-dim)" font-family="inherit">Battery</text>
+          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="var(--ps-text-dim)" font-family="inherit">${this._t("gauge_battery")}</text>
         </svg>
-        <div class="gauge-status" style="color:var(--ps-text-dimmest)">Standby</div>
+        <div class="gauge-status" style="color:var(--ps-text-dimmest)">${this._t("gauge_standby")}</div>
       </div>
     `;
     }
@@ -1219,7 +1226,7 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
           <span class="charge-dot"></span>
           <span class="charge-dot"></span>
           <span class="charge-dot"></span>
-          <span style="margin-left:2px">Charging</span>
+          <span style="margin-left:2px">${this._t("gauge_charging")}</span>
         </div>
       </div>
     `;
@@ -1278,7 +1285,7 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
           </svg>
           <div class="cleaning-center">
             <div class="cleaning-pct">${Math.round(progress)}%</div>
-            <div class="cleaning-label">Cleaning</div>
+            <div class="cleaning-label">${this._t("gauge_cleaning")}</div>
           </div>
           <div class="cleaning-droplets">
             ${droplets.map((d)=>{
@@ -1291,7 +1298,7 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
         </div>
         <div class="cleaning-status">
           <div class="clean-spinner"></div>
-          In Progress
+          ${this._t("gauge_in_progress")}
         </div>
       </div>
     `;
@@ -1301,26 +1308,30 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
         if (activity === "shaving") return this._renderShaveStats();
         let rows;
         if (activity === "charging") rows = (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
-        ${this._statRow("charges", "Charge Cycles", this._numState("amount_of_charges", 0))}
-        ${this._statRow("clock", "Last Session", $8b62e546fdd14731$var$formatSession(this._numState("shaving_time", 0)))}
-        ${this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0))}
-        ${this._statRow("clock", "Total Time", $8b62e546fdd14731$var$formatAge(this._numState("total_age", 0)))}
+        ${this._statRow("charges", this._t("stat_charge_cycles"), this._numState("amount_of_charges", 0))}
+        ${this._statRow("clock", this._t("stat_last_session"), $8b62e546fdd14731$var$formatSession(this._numState("shaving_time", 0)))}
+        ${this._statRow("counter", this._t("stat_total_uses"), this._numState("amount_of_operational_turns", 0))}
+        ${this._statRow("clock", this._t("stat_total_time"), $8b62e546fdd14731$var$formatAge(this._numState("total_age", 0)))}
       `;
         else if (activity === "cleaning") {
             const remaining = this._numState("cleaning_cycles_remaining", 0);
             rows = (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
-        ${this._statRow("droplet", "Cycles Remaining", remaining.toFixed(1))}
-        ${this._statRow("clock", "Last Session", $8b62e546fdd14731$var$formatSession(this._numState("shaving_time", 0)))}
-        ${this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0))}
+        ${this._statRow("droplet", this._t("stat_cycles_remaining"), remaining.toFixed(1))}
+        ${this._statRow("clock", this._t("stat_last_session"), $8b62e546fdd14731$var$formatSession(this._numState("shaving_time", 0)))}
+        ${this._statRow("counter", this._t("stat_total_uses"), this._numState("amount_of_operational_turns", 0))}
       `;
         } else {
             const daysUsed = this._numState("days_last_used", null);
-            const daysText = daysUsed === null ? "\u2014" : daysUsed === 0 ? "Today" : daysUsed === 1 ? "Yesterday" : `${daysUsed}d ago`;
+            let daysText;
+            if (daysUsed === null) daysText = "\u2014";
+            else if (daysUsed === 0) daysText = this._t("time_today");
+            else if (daysUsed === 1) daysText = this._t("time_yesterday");
+            else daysText = this._t("time_days_ago").replace("{n}", daysUsed);
             rows = (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
-        ${this._statRow("clock", "Last Session", $8b62e546fdd14731$var$formatSession(this._numState("shaving_time", 0)))}
-        ${this._statRow("calendar", "Last Used", daysText)}
-        ${this._statRow("clock", "Total Time", $8b62e546fdd14731$var$formatAge(this._numState("total_age", 0)))}
-        ${this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0))}
+        ${this._statRow("clock", this._t("stat_last_session"), $8b62e546fdd14731$var$formatSession(this._numState("shaving_time", 0)))}
+        ${this._statRow("calendar", this._t("stat_last_used"), daysText)}
+        ${this._statRow("clock", this._t("stat_total_time"), $8b62e546fdd14731$var$formatAge(this._numState("total_age", 0)))}
+        ${this._statRow("counter", this._t("stat_total_uses"), this._numState("amount_of_operational_turns", 0))}
       `;
         }
         return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`<div class="stats">${rows}</div>`;
@@ -1332,28 +1343,29 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
         <div class="shave-stats">
           <div class="shave-stat-tile">
             <div class="shave-stat-val">${ma}</div>
-            <div class="shave-stat-label">mA</div>
+            <div class="shave-stat-label">${this._t("shave_ma")}</div>
           </div>
           <div class="shave-stat-tile">
             <div class="shave-stat-val">${this._numState("speed", 0)}</div>
-            <div class="shave-stat-label">Speed</div>
+            <div class="shave-stat-label">${this._t("shave_speed")}</div>
           </div>
         </div>
       `;
         const motion = this._stateVal("motion_type", "no_motion");
+        const motionText = motion === "no_motion" ? "\u2014" : this._t("motion_" + motion);
         return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
       <div class="shave-stats">
         <div class="shave-stat-tile">
           <div class="shave-stat-val">${rpm}</div>
-          <div class="shave-stat-label">RPM</div>
+          <div class="shave-stat-label">${this._t("shave_rpm")}</div>
         </div>
         <div class="shave-stat-tile">
           <div class="shave-stat-val">${ma}</div>
-          <div class="shave-stat-label">mA</div>
+          <div class="shave-stat-label">${this._t("shave_ma")}</div>
         </div>
         <div class="shave-stat-tile">
-          <div class="shave-stat-val">${$8b62e546fdd14731$var$MOTION_LABELS[motion] || "\u2014"}</div>
-          <div class="shave-stat-label">Motion</div>
+          <div class="shave-stat-val">${motionText}</div>
+          <div class="shave-stat-label">${this._t("shave_motion")}</div>
         </div>
       </div>
     `;
@@ -1381,14 +1393,14 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
             schema: [
                 {
                     name: "title",
-                    label: "Title (Optional)",
+                    label: (0, $d8078e452c66bdbe$export$625550452a3fa3ec)(null, "config_title"),
                     selector: {
                         text: {}
                     }
                 },
                 {
                     name: "show_model",
-                    label: "Show model number as subtitle",
+                    label: (0, $d8078e452c66bdbe$export$625550452a3fa3ec)(null, "config_show_model"),
                     selector: {
                         boolean: {}
                     },

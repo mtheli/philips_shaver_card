@@ -1,0 +1,50 @@
+{
+  "chip_battery": "Akku",
+  "chip_head": "Scherkopf",
+  "chip_clean": "Reinigung",
+
+  "gauge_session": "SITZUNG",
+  "gauge_battery": "Akku",
+  "gauge_standby": "Bereit",
+  "gauge_charging": "Laden",
+  "gauge_cleaning": "Reinigung",
+  "gauge_in_progress": "Läuft",
+  "gauge_low": "Niedrig",
+  "gauge_high": "Hoch",
+  "gauge_slow": "Langsam",
+  "gauge_fast": "Schnell",
+
+  "pressure_no_contact": "Kein Kontakt",
+  "pressure_too_low": "Zu niedrig",
+  "pressure_optimal": "Optimal",
+  "pressure_too_high": "Zu hoch",
+
+  "speed_none": "Keine Bewegung",
+  "speed_optimal": "Optimal",
+  "speed_too_fast": "Zu schnell",
+
+  "motion_small_circle": "Kreise",
+  "motion_large_stroke": "Züge",
+
+  "stat_charge_cycles": "Ladezyklen",
+  "stat_last_session": "Letzte Sitzung",
+  "stat_last_used": "Zuletzt benutzt",
+  "stat_total_time": "Gesamtzeit",
+  "stat_total_uses": "Nutzungen",
+  "stat_cycles_remaining": "Zyklen übrig",
+
+  "shave_rpm": "U/min",
+  "shave_ma": "mA",
+  "shave_speed": "Tempo",
+  "shave_motion": "Bewegung",
+
+  "time_today": "Heute",
+  "time_yesterday": "Gestern",
+  "time_days_ago": "vor {n} T.",
+
+  "config_title": "Titel (Optional)",
+  "config_show_model": "Modellnummer als Untertitel anzeigen",
+  "config_select_device": "Bitte wähle einen Philips Shaver in der Kartenkonfiguration.",
+  "config_no_device": "Bitte wähle ein Gerät.",
+  "default_title": "Philips Shaver"
+}

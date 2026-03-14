@@ -5,8 +5,9 @@
 
 import { LitElement, html, css, unsafeCSS, svg } from 'lit';
 import styles from 'bundle-text:./philips_shaver_card.css';
+import { t } from './translations.js';
 
-export const CARD_VERSION = "0.3.0";
+export const CARD_VERSION = "0.4.0";
 
 // ---------- Entity discovery map: translation_key → local alias ----------
 const TRANSLATION_KEY_MAP = {
@@ -153,32 +154,19 @@ const PRESSURE_COLORS = {
   optimal: "#4caf50",
   too_high: "#f44336",
 };
-const PRESSURE_LABELS = {
-  no_contact: "No Contact",
-  too_low: "Too Low",
-  optimal: "Optimal",
-  too_high: "Too High",
-};
 const SPEED_COLORS = {
   none: "var(--disabled-text-color, #9e9e9e)",
   optimal: "#4caf50",
   too_fast: "#ff9800",
-};
-const SPEED_LABELS = {
-  none: "No Movement",
-  optimal: "Optimal",
-  too_fast: "Too Fast",
-};
-const MOTION_LABELS = {
-  no_motion: "\u2014",
-  small_circle: "Circles",
-  large_stroke: "Strokes",
 };
 
 // ==========================================================
 // CARD CLASS
 // ==========================================================
 export class PhilipsShaverCard extends LitElement {
+
+  // ---------- Translation helper ----------
+  _t(key) { return t(this._hass, key); }
 
   set hass(hass) {
     this._hass = hass;
@@ -210,7 +198,7 @@ export class PhilipsShaverCard extends LitElement {
 
   setConfig(config) {
     if (!config.device_id) {
-      throw new Error("Please select a Philips Shaver device in the card configuration.");
+      throw new Error(t(null, "config_select_device"));
     }
     this.config = config;
     this._entities = null;
@@ -329,7 +317,7 @@ export class PhilipsShaverCard extends LitElement {
         this._entities = this._findEntities(hass, config.device_id);
       }
       if (!this._entities) {
-        return html`<ha-card><div class="unavailable">Please select a device.</div></ha-card>`;
+        return html`<ha-card><div class="unavailable">${this._t("config_no_device")}</div></ha-card>`;
       }
     }
 
@@ -352,7 +340,7 @@ export class PhilipsShaverCard extends LitElement {
   _renderHeader() {
     const device = this._hass.devices?.[this.config.device_id];
     const model = device?.model || "";
-    const name = this.config.title || "Philips Shaver";
+    const name = this.config.title || this._t("default_title");
     const showModel = this.config.show_model !== false;
 
     const espEntity = this._entity("esp_bridge_alive");
@@ -402,11 +390,11 @@ export class PhilipsShaverCard extends LitElement {
     const bg = ringBgArc();
 
     const tiles = [
-      { key: "battery", label: "Battery", value: `${bat}%`, frac: bat / 100, color: bc, icon: activity === "charging" ? ICONS.charge : ICONS.charges, entity: this._entities?.battery },
-      { key: "head", label: "Head", value: `${Math.round(head)}%`, frac: head / 100, color: hc, icon: ICONS.razor, entity: this._entities?.head_remaining },
+      { key: "battery", label: this._t("chip_battery"), value: `${bat}%`, frac: bat / 100, color: bc, icon: activity === "charging" ? ICONS.charge : ICONS.charges, entity: this._entities?.battery },
+      { key: "head", label: this._t("chip_head"), value: `${Math.round(head)}%`, frac: head / 100, color: hc, icon: ICONS.razor, entity: this._entities?.head_remaining },
     ];
     if (this._entities?.cleaning_cycles_remaining) {
-      tiles.push({ key: "cleaning", label: "Clean", value: clean.toFixed(0), frac: clean / 30, color: cc, icon: ICONS.droplet, entity: this._entities.cleaning_cycles_remaining });
+      tiles.push({ key: "cleaning", label: this._t("chip_clean"), value: clean.toFixed(0), frac: clean / 30, color: cc, icon: ICONS.droplet, entity: this._entities.cleaning_cycles_remaining });
     }
 
     return html`
@@ -480,7 +468,7 @@ export class PhilipsShaverCard extends LitElement {
           <!-- Zone separators -->
           ${separators}
           <!-- Session timer -->
-          <text x="${cx}" y="${cy - 48}" text-anchor="middle" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit" letter-spacing="1.5">SESSION</text>
+          <text x="${cx}" y="${cy - 48}" text-anchor="middle" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit" letter-spacing="1.5">${this._t("gauge_session")}</text>
           <text x="${cx}" y="${cy - 12}" text-anchor="middle" font-size="38" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="'SF Mono','Menlo','Consolas',monospace" letter-spacing="1">${timerStr}</text>
           <!-- Needle -->
           <line x1="${cx}" y1="${cy + 10}" x2="${tip.x}" y2="${tip.y}" stroke="${nc}" stroke-width="6" class="needle-glow"/>
@@ -489,10 +477,10 @@ export class PhilipsShaverCard extends LitElement {
           <circle cx="${cx}" cy="${cy + 10}" r="8" fill="var(--ps-card-bg)" stroke="var(--ps-border)" stroke-width="2"/>
           <circle cx="${cx}" cy="${cy + 10}" r="4" fill="${nc}"/>
           <!-- Edge labels -->
-          <text x="26" y="${cy + 28}" class="gauge-edge-label" text-anchor="start">Low</text>
-          <text x="${GAUGE_W - 26}" y="${cy + 28}" class="gauge-edge-label" text-anchor="end">High</text>
+          <text x="26" y="${cy + 28}" class="gauge-edge-label" text-anchor="start">${this._t("gauge_low")}</text>
+          <text x="${GAUGE_W - 26}" y="${cy + 28}" class="gauge-edge-label" text-anchor="end">${this._t("gauge_high")}</text>
         </svg>
-        <div class="pressure-label" style="color:${nc}">${PRESSURE_LABELS[pState] || "\u2014"}</div>
+        <div class="pressure-label" style="color:${nc}">${this._t("pressure_" + pState) || "\u2014"}</div>
         <div class="pressure-value">${pressure > 0 ? pressure : "\u2014"}</div>
       </div>
     `;
@@ -529,7 +517,7 @@ export class PhilipsShaverCard extends LitElement {
           <!-- Zone separator -->
           ${separator}
           <!-- Session timer -->
-          <text x="${cx}" y="${cy - 48}" text-anchor="middle" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit" letter-spacing="1.5">SESSION</text>
+          <text x="${cx}" y="${cy - 48}" text-anchor="middle" font-size="10" fill="var(--ps-text-dimmest)" font-family="inherit" letter-spacing="1.5">${this._t("gauge_session")}</text>
           <text x="${cx}" y="${cy - 12}" text-anchor="middle" font-size="38" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="'SF Mono','Menlo','Consolas',monospace" letter-spacing="1">${timerStr}</text>
           <!-- Needle -->
           <line x1="${cx}" y1="${cy + 10}" x2="${tip.x}" y2="${tip.y}" stroke="${nc}" stroke-width="6" class="needle-glow"/>
@@ -538,10 +526,10 @@ export class PhilipsShaverCard extends LitElement {
           <circle cx="${cx}" cy="${cy + 10}" r="8" fill="var(--ps-card-bg)" stroke="var(--ps-border)" stroke-width="2"/>
           <circle cx="${cx}" cy="${cy + 10}" r="4" fill="${nc}"/>
           <!-- Edge labels -->
-          <text x="26" y="${cy + 28}" class="gauge-edge-label" text-anchor="start">Slow</text>
-          <text x="${GAUGE_W - 26}" y="${cy + 28}" class="gauge-edge-label" text-anchor="end">Fast</text>
+          <text x="26" y="${cy + 28}" class="gauge-edge-label" text-anchor="start">${this._t("gauge_slow")}</text>
+          <text x="${GAUGE_W - 26}" y="${cy + 28}" class="gauge-edge-label" text-anchor="end">${this._t("gauge_fast")}</text>
         </svg>
-        <div class="pressure-label" style="color:${nc}">${SPEED_LABELS[sState] || "\u2014"}</div>
+        <div class="pressure-label" style="color:${nc}">${this._t("speed_" + sState) || "\u2014"}</div>
         <div class="pressure-value">${speed > 0 ? speed : "\u2014"}</div>
       </div>
     `;
@@ -558,9 +546,9 @@ export class PhilipsShaverCard extends LitElement {
           <path d="${describeArc(0, 1)}" fill="none" stroke="var(--ps-track)" stroke-width="${st}" stroke-linecap="round"/>
           <path d="${describeArc(0, bat / 100)}" fill="none" stroke="${bc}" stroke-width="${st}" stroke-linecap="round"/>
           <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="52" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit" letter-spacing="-2">${bat}%</text>
-          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="var(--ps-text-dim)" font-family="inherit">Battery</text>
+          <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="var(--ps-text-dim)" font-family="inherit">${this._t("gauge_battery")}</text>
         </svg>
-        <div class="gauge-status" style="color:var(--ps-text-dimmest)">Standby</div>
+        <div class="gauge-status" style="color:var(--ps-text-dimmest)">${this._t("gauge_standby")}</div>
       </div>
     `;
   }
@@ -608,7 +596,7 @@ export class PhilipsShaverCard extends LitElement {
           <span class="charge-dot"></span>
           <span class="charge-dot"></span>
           <span class="charge-dot"></span>
-          <span style="margin-left:2px">Charging</span>
+          <span style="margin-left:2px">${this._t("gauge_charging")}</span>
         </div>
       </div>
     `;
@@ -647,7 +635,7 @@ export class PhilipsShaverCard extends LitElement {
           </svg>
           <div class="cleaning-center">
             <div class="cleaning-pct">${Math.round(progress)}%</div>
-            <div class="cleaning-label">Cleaning</div>
+            <div class="cleaning-label">${this._t("gauge_cleaning")}</div>
           </div>
           <div class="cleaning-droplets">
             ${droplets.map(d => {
@@ -660,7 +648,7 @@ export class PhilipsShaverCard extends LitElement {
         </div>
         <div class="cleaning-status">
           <div class="clean-spinner"></div>
-          In Progress
+          ${this._t("gauge_in_progress")}
         </div>
       </div>
     `;
@@ -673,26 +661,31 @@ export class PhilipsShaverCard extends LitElement {
     let rows;
     if (activity === "charging") {
       rows = html`
-        ${this._statRow("charges", "Charge Cycles", this._numState("amount_of_charges", 0))}
-        ${this._statRow("clock", "Last Session", formatSession(this._numState("shaving_time", 0)))}
-        ${this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0))}
-        ${this._statRow("clock", "Total Time", formatAge(this._numState("total_age", 0)))}
+        ${this._statRow("charges", this._t("stat_charge_cycles"), this._numState("amount_of_charges", 0))}
+        ${this._statRow("clock", this._t("stat_last_session"), formatSession(this._numState("shaving_time", 0)))}
+        ${this._statRow("counter", this._t("stat_total_uses"), this._numState("amount_of_operational_turns", 0))}
+        ${this._statRow("clock", this._t("stat_total_time"), formatAge(this._numState("total_age", 0)))}
       `;
     } else if (activity === "cleaning") {
       const remaining = this._numState("cleaning_cycles_remaining", 0);
       rows = html`
-        ${this._statRow("droplet", "Cycles Remaining", remaining.toFixed(1))}
-        ${this._statRow("clock", "Last Session", formatSession(this._numState("shaving_time", 0)))}
-        ${this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0))}
+        ${this._statRow("droplet", this._t("stat_cycles_remaining"), remaining.toFixed(1))}
+        ${this._statRow("clock", this._t("stat_last_session"), formatSession(this._numState("shaving_time", 0)))}
+        ${this._statRow("counter", this._t("stat_total_uses"), this._numState("amount_of_operational_turns", 0))}
       `;
     } else {
       const daysUsed = this._numState("days_last_used", null);
-      const daysText = daysUsed === null ? "\u2014" : daysUsed === 0 ? "Today" : daysUsed === 1 ? "Yesterday" : `${daysUsed}d ago`;
+      let daysText;
+      if (daysUsed === null) daysText = "\u2014";
+      else if (daysUsed === 0) daysText = this._t("time_today");
+      else if (daysUsed === 1) daysText = this._t("time_yesterday");
+      else daysText = this._t("time_days_ago").replace("{n}", daysUsed);
+
       rows = html`
-        ${this._statRow("clock", "Last Session", formatSession(this._numState("shaving_time", 0)))}
-        ${this._statRow("calendar", "Last Used", daysText)}
-        ${this._statRow("clock", "Total Time", formatAge(this._numState("total_age", 0)))}
-        ${this._statRow("counter", "Total Uses", this._numState("amount_of_operational_turns", 0))}
+        ${this._statRow("clock", this._t("stat_last_session"), formatSession(this._numState("shaving_time", 0)))}
+        ${this._statRow("calendar", this._t("stat_last_used"), daysText)}
+        ${this._statRow("clock", this._t("stat_total_time"), formatAge(this._numState("total_age", 0)))}
+        ${this._statRow("counter", this._t("stat_total_uses"), this._numState("amount_of_operational_turns", 0))}
       `;
     }
 
@@ -708,30 +701,31 @@ export class PhilipsShaverCard extends LitElement {
         <div class="shave-stats">
           <div class="shave-stat-tile">
             <div class="shave-stat-val">${ma}</div>
-            <div class="shave-stat-label">mA</div>
+            <div class="shave-stat-label">${this._t("shave_ma")}</div>
           </div>
           <div class="shave-stat-tile">
             <div class="shave-stat-val">${this._numState("speed", 0)}</div>
-            <div class="shave-stat-label">Speed</div>
+            <div class="shave-stat-label">${this._t("shave_speed")}</div>
           </div>
         </div>
       `;
     }
 
     const motion = this._stateVal("motion_type", "no_motion");
+    const motionText = motion === "no_motion" ? "\u2014" : this._t("motion_" + motion);
     return html`
       <div class="shave-stats">
         <div class="shave-stat-tile">
           <div class="shave-stat-val">${rpm}</div>
-          <div class="shave-stat-label">RPM</div>
+          <div class="shave-stat-label">${this._t("shave_rpm")}</div>
         </div>
         <div class="shave-stat-tile">
           <div class="shave-stat-val">${ma}</div>
-          <div class="shave-stat-label">mA</div>
+          <div class="shave-stat-label">${this._t("shave_ma")}</div>
         </div>
         <div class="shave-stat-tile">
-          <div class="shave-stat-val">${MOTION_LABELS[motion] || "\u2014"}</div>
-          <div class="shave-stat-label">Motion</div>
+          <div class="shave-stat-val">${motionText}</div>
+          <div class="shave-stat-label">${this._t("shave_motion")}</div>
         </div>
       </div>
     `;
@@ -762,12 +756,12 @@ export class PhilipsShaverCard extends LitElement {
       schema: [
         {
           name: "title",
-          label: "Title (Optional)",
+          label: t(null, "config_title"),
           selector: { text: {} },
         },
         {
           name: "show_model",
-          label: "Show model number as subtitle",
+          label: t(null, "config_show_model"),
           selector: { boolean: {} },
           default: true,
         },

@@ -1,0 +1,50 @@
+{
+  "chip_battery": "Battery",
+  "chip_head": "Head",
+  "chip_clean": "Clean",
+
+  "gauge_session": "SESSION",
+  "gauge_battery": "Battery",
+  "gauge_standby": "Standby",
+  "gauge_charging": "Charging",
+  "gauge_cleaning": "Cleaning",
+  "gauge_in_progress": "In Progress",
+  "gauge_low": "Low",
+  "gauge_high": "High",
+  "gauge_slow": "Slow",
+  "gauge_fast": "Fast",
+
+  "pressure_no_contact": "No Contact",
+  "pressure_too_low": "Too Low",
+  "pressure_optimal": "Optimal",
+  "pressure_too_high": "Too High",
+
+  "speed_none": "No Movement",
+  "speed_optimal": "Optimal",
+  "speed_too_fast": "Too Fast",
+
+  "motion_small_circle": "Circles",
+  "motion_large_stroke": "Strokes",
+
+  "stat_charge_cycles": "Charge Cycles",
+  "stat_last_session": "Last Session",
+  "stat_last_used": "Last Used",
+  "stat_total_time": "Total Time",
+  "stat_total_uses": "Total Uses",
+  "stat_cycles_remaining": "Cycles Remaining",
+
+  "shave_rpm": "RPM",
+  "shave_ma": "mA",
+  "shave_speed": "Speed",
+  "shave_motion": "Motion",
+
+  "time_today": "Today",
+  "time_yesterday": "Yesterday",
+  "time_days_ago": "{n}d ago",
+
+  "config_title": "Title (Optional)",
+  "config_show_model": "Show model number as subtitle",
+  "config_select_device": "Please select a Philips Shaver device in the card configuration.",
+  "config_no_device": "Please select a device.",
+  "default_title": "Philips Shaver"
+}
