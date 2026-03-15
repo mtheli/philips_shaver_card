@@ -7,7 +7,7 @@ import { LitElement, html, css, unsafeCSS, svg } from 'lit';
 import styles from 'bundle-text:./philips_shaver_card.css';
 import { t } from './translations.js';
 
-export const CARD_VERSION = "0.4.0";
+export const CARD_VERSION = "0.4.1";
 
 // ---------- Entity discovery map: translation_key → local alias ----------
 const TRANSLATION_KEY_MAP = {

@@ -645,7 +645,7 @@ function $d8078e452c66bdbe$export$625550452a3fa3ec(hass, key) {
 }
 
 
-const $8b62e546fdd14731$export$d5e7ce6d07daf10f = "0.4.0";
+const $8b62e546fdd14731$export$d5e7ce6d07daf10f = "0.4.1";
 // ---------- Entity discovery map: translation_key → local alias ----------
 const $8b62e546fdd14731$var$TRANSLATION_KEY_MAP = {
     battery: "battery",
