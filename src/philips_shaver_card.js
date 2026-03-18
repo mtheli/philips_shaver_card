@@ -194,6 +194,13 @@ export class PhilipsShaverCard extends LitElement {
       this._entities = this._findEntities(hass, this.config.device_id);
     }
 
+    // Clear dismissed notifications once the real state catches up
+    if (this._dismissed?.size) {
+      for (const key of [...this._dismissed]) {
+        if (this._stateVal(key) !== "on") this._dismissed.delete(key);
+      }
+    }
+
     // Timer management
     const activity = this._stateVal("activity", "off");
     if (activity === "shaving" && !this._timer) this._startTimer();
@@ -399,7 +406,9 @@ export class PhilipsShaverCard extends LitElement {
 
   // ---------- Notification banner ----------
   _renderNotifications() {
-    const active = NOTIFICATIONS.filter(n => this._stateVal(n.key) === "on");
+    const active = NOTIFICATIONS.filter(n =>
+      this._stateVal(n.key) === "on" && !this._dismissed?.has(n.key)
+    );
     if (active.length === 0) return '';
 
     return html`
@@ -422,6 +431,9 @@ export class PhilipsShaverCard extends LitElement {
 
   _clearNotification(key) {
     if (!this._hass) return;
+    if (!this._dismissed) this._dismissed = new Set();
+    this._dismissed.add(key);
+    this.requestUpdate();
     const device = this._hass.devices?.[this.config.device_id];
     const entryId = device?.config_entries?.[0];
     this._hass.callService("philips_shaver", "acknowledge_notification", {

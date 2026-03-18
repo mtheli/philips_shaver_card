@@ -839,6 +839,12 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
     set hass(hass) {
         this._hass = hass;
         if ((!this._entities || !this._entities.battery) && this.config?.device_id) this._entities = this._findEntities(hass, this.config.device_id);
+        // Clear dismissed notifications once the real state catches up
+        if (this._dismissed?.size) {
+            for (const key of [
+                ...this._dismissed
+            ])if (this._stateVal(key) !== "on") this._dismissed.delete(key);
+        }
         // Timer management
         const activity = this._stateVal("activity", "off");
         if (activity === "shaving" && !this._timer) this._startTimer();
@@ -1010,7 +1016,7 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
     }
     // ---------- Notification banner ----------
     _renderNotifications() {
-        const active = $8b62e546fdd14731$var$NOTIFICATIONS.filter((n)=>this._stateVal(n.key) === "on");
+        const active = $8b62e546fdd14731$var$NOTIFICATIONS.filter((n)=>this._stateVal(n.key) === "on" && !this._dismissed?.has(n.key));
         if (active.length === 0) return '';
         return (0, $d33ef1320595a3ac$export$c0bb0b647f701bb5)`
       <div class="notification-banner">
@@ -1034,6 +1040,9 @@ class $8b62e546fdd14731$export$4778d74453ecc150 extends (0, $528e4332d1e3099e$ex
     }
     _clearNotification(key) {
         if (!this._hass) return;
+        if (!this._dismissed) this._dismissed = new Set();
+        this._dismissed.add(key);
+        this.requestUpdate();
         const device = this._hass.devices?.[this.config.device_id];
         const entryId = device?.config_entries?.[0];
         this._hass.callService("philips_shaver", "acknowledge_notification", {
