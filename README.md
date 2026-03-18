@@ -19,11 +19,15 @@ Custom Lovelace card for the [Philips Shaver](https://github.com/mtheli/philips_
 - **Clickable elements** — tap header, battery, or head bar to open the entity's more-info dialog
 - **Multi-language support** — English and German, auto-detected from your Home Assistant language setting
 
-The card automatically switches between four modes based on the shaver's activity state:
+The card automatically switches between modes based on the shaver's activity state:
 
 | Standby | Shaving | Charging | Cleaning |
 | :---: | :---: | :---: | :---: |
 | ![Standby](./screenshots/standby.png) | ![Shaving](./screenshots/shaving.png) | ![Charging](./screenshots/charging.png) | ![Cleaning](./screenshots/cleaning.png) |
+
+| Connecting | Warning |
+| :---: | :---: |
+| ![Connecting](./screenshots/connecting.png) | ![Warning](./screenshots/warning.png) |
 
 ## Installation
 
