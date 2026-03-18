@@ -6,6 +6,7 @@
   "gauge_session": "SITZUNG",
   "gauge_battery": "Akku",
   "gauge_standby": "Bereit",
+  "gauge_initializing": "Verbinde…",
   "gauge_charging": "Laden",
   "gauge_cleaning": "Reinigung",
   "gauge_in_progress": "Läuft",
@@ -41,6 +42,12 @@
   "time_today": "Heute",
   "time_yesterday": "Gestern",
   "time_days_ago": "vor {n} T.",
+
+  "notif_notification_motor_blocked": "Motor blockiert",
+  "notif_notification_clean_reminder": "Reinigung fällig",
+  "notif_notification_head_replacement": "Scherkopf wechseln",
+  "notif_notification_battery_overheated": "Akku überhitzt",
+  "notif_notification_unplug_required": "Ausstecken erforderlich",
 
   "config_title": "Titel (Optional)",
   "config_show_model": "Modellnummer als Untertitel anzeigen",

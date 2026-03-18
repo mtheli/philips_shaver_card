@@ -80,6 +80,49 @@ ha-card {
     opacity: 1;
 }
 
+/* ── NOTIFICATION BANNER ── */
+.notification-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 8px 14px 4px;
+    padding: 8px 12px;
+    background: color-mix(in srgb, #ff9800 12%, transparent);
+    border: 1px solid color-mix(in srgb, #ff9800 30%, transparent);
+    border-radius: 8px;
+}
+.notification-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #ff9800;
+}
+.notification-item svg {
+    width: 18px;
+    height: 18px;
+    fill: #ff9800;
+    flex-shrink: 0;
+}
+.notification-text {
+    flex: 1;
+    cursor: pointer;
+}
+.notification-clear {
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+}
+.notification-clear:hover { opacity: 1; }
+.notification-clear svg {
+    width: 14px;
+    height: 14px;
+    fill: #ff9800;
+}
+
 /* ── CHIPS ROW ── */
 .chips-row {
     display: grid;
@@ -478,6 +521,60 @@ ha-card {
 @keyframes chDot {
     0%,80%,100% { opacity: .2; transform: scale(.7); }
     40% { opacity: 1; transform: scale(1.1); }
+}
+
+/* ── INITIALIZING ── */
+.init-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.init-rings {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.init-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color, #3b82f6);
+    opacity: 0;
+    animation: initPulse 3s ease-out infinite;
+}
+.init-ring-1 { width: 70px; height: 70px; animation-delay: 0s; }
+.init-ring-2 { width: 70px; height: 70px; animation-delay: 1s; }
+.init-ring-3 { width: 70px; height: 70px; animation-delay: 2s; }
+@keyframes initPulse {
+    0% { width: 70px; height: 70px; opacity: 0.6; }
+    100% { width: 190px; height: 190px; opacity: 0; }
+}
+.init-bt {
+    position: relative;
+    z-index: 1;
+    width: 52px;
+    height: 52px;
+    animation: initBtPulse 2s ease-in-out infinite;
+}
+.init-bt svg {
+    width: 52px;
+    height: 52px;
+}
+@keyframes initBtPulse {
+    0%, 100% { opacity: 0.5; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+.init-label {
+    font-size: 13px;
+    color: var(--primary-color, #3b82f6);
+    margin-top: 6px;
+    margin-bottom: 8px;
+    font-weight: 500;
 }
 
 /* ── ANIMATIONS ── */
