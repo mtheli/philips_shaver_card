@@ -15,6 +15,8 @@ Custom Lovelace card for the [Philips Shaver](https://github.com/mtheli/philips_
 - **Cleaning ring gauge** with droplet animation during cleaning cycles
 - **Shaver head** remaining bar
 - **OneBlade support** with speed gauge and adapted stats
+- **Notification banner** — active warnings (motor blocked, head replacement, etc.) shown as dismissible alerts with per-notification clearing
+- **Connecting animation** — animated Bluetooth icon while the integration is initializing
 - **Context-dependent stats**: motor RPM & current during shaving, session history in standby, charge info while charging
 - **Clickable elements** — tap header, battery, or head bar to open the entity's more-info dialog
 - **Multi-language support** — English and German, auto-detected from your Home Assistant language setting
@@ -70,7 +72,7 @@ The card automatically uses your Home Assistant language setting. Unsupported la
 
 ## Requirements
 
-- [Philips Shaver](https://github.com/mtheli/philips_shaver) integration (v0.5.0+)
+- [Philips Shaver](https://github.com/mtheli/philips_shaver) integration (v0.10.0+)
 - Home Assistant 2024.11.0+
 
 ## License
