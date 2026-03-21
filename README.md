@@ -58,7 +58,8 @@ The card uses a visual editor — just add a card and select **Philips Shaver Ca
 ```yaml
 type: custom:philips-shaver-card
 device_id: <your-device-id>
-title: My Shaver  # optional, defaults to "Philips Shaver"
+title: My Shaver   # optional, defaults to "Philips Shaver"
+show_model: true   # optional, show model number as subtitle (default: true)
 ```
 
 ## Supported Languages
