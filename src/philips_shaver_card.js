@@ -7,7 +7,7 @@ import { LitElement, html, css, unsafeCSS, svg } from 'lit';
 import styles from 'bundle-text:./philips_shaver_card.css';
 import { t } from './translations.js';
 
-export const CARD_VERSION = "0.4.1";
+export const CARD_VERSION = "0.5.0-beta.1";
 
 // ---------- Entity discovery map: translation_key → local alias ----------
 const TRANSLATION_KEY_MAP = {
@@ -42,7 +42,20 @@ const TRANSLATION_KEY_MAP = {
   lightring_brightness: "lightring_brightness",
   speed: "speed",
   speed_verdict: "speed_verdict",
+  notification_motor_blocked: "notification_motor_blocked",
+  notification_clean_reminder: "notification_clean_reminder",
+  notification_head_replacement: "notification_head_replacement",
+  notification_battery_overheated: "notification_battery_overheated",
+  notification_unplug_required: "notification_unplug_required",
 };
+
+const NOTIFICATIONS = [
+  { key: "notification_motor_blocked", icon: "engine_off" },
+  { key: "notification_clean_reminder", icon: "spray" },
+  { key: "notification_head_replacement", icon: "razor" },
+  { key: "notification_battery_overheated", icon: "thermometer" },
+  { key: "notification_unplug_required", icon: "plug_off" },
+];
 
 // ---------- Gauge constants ----------
 const GAUGE = {
@@ -146,6 +159,12 @@ const ICONS = {
   droplet: 'M12 2c0 0-6 7.34-6 11a6 6 0 0 0 12 0c0-3.66-6-11-6-11zm0 15a3 3 0 0 1-3-3c0-.55.45-1 1-1s1 .45 1 1a1 1 0 0 0 1 1c.55 0 1 .45 1 1s-.45 1-1 1z',
   motor: 'M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.48 2.54l2.6 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7 0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95 0 5.52 4.47 10 9.99 10 3.31 0 6.24-1.61 8.06-4.09l-2.6-1.53A6.95 6.95 0 0 1 12 19z',
   charges: 'M15.67 4H14V2h-4v2H8.33A1.33 1.33 0 0 0 7 5.33v15.34C7 21.4 7.6 22 8.33 22h7.34c.74 0 1.33-.6 1.33-1.33V5.33C17 4.6 16.4 4 15.67 4z',
+  alert: 'M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z',
+  close: 'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z',
+  engine_off: 'M11 8h2v4.17l2 2V8h4v6.17l1.78 1.78c.14-.62.22-1.27.22-1.95 0-4.42-3.58-8-8-8-1.57 0-3.03.47-4.25 1.26L11 9.43V8zM2.81 2.81L1.39 4.22 5.17 8H3v8h4v4h6v-4h.17l4.61 4.61 1.41-1.41L2.81 2.81zM11 18H9v-4H7v-4h.17l3.83 3.83V18z',
+  spray: 'M12 2L8 6v2h8V6l-4-4zm-2 5V6.5l2-2 2 2V7h-4zm-3 4h10v9H7v-9zm2 2v5h6v-5H9z',
+  thermometer: 'M15 13V5c0-1.66-1.34-3-3-3S9 3.34 9 5v8c-1.21.91-2 2.37-2 4 0 2.76 2.24 5 5 5s5-2.24 5-5c0-1.63-.79-3.09-2-4zm-4-8c0-.55.45-1 1-1s1 .45 1 1v3h-2V5z',
+  plug_off: 'M12 2c-1.1 0-2 .9-2 2v2H8v5c0 2.21 1.79 4 4 4s4-1.79 4-4V6h-2V4c0-1.1-.9-2-2-2zm0 14c-4 0-6 2-6 4v1h12v-1c0-2-2-4-6-4z',
 };
 
 const PRESSURE_COLORS = {
@@ -173,6 +192,13 @@ export class PhilipsShaverCard extends LitElement {
 
     if ((!this._entities || !this._entities.battery) && this.config?.device_id) {
       this._entities = this._findEntities(hass, this.config.device_id);
+    }
+
+    // Clear dismissed notifications once the real state catches up
+    if (this._dismissed?.size) {
+      for (const key of [...this._dismissed]) {
+        if (this._stateVal(key) !== "on") this._dismissed.delete(key);
+      }
     }
 
     // Timer management
@@ -326,6 +352,7 @@ export class PhilipsShaverCard extends LitElement {
     return html`
       <ha-card>
         ${this._renderHeader()}
+        ${this._renderNotifications()}
         ${this._renderChips()}
         <div class="visual-area">
           ${this._renderGauge(activity)}
@@ -377,6 +404,44 @@ export class PhilipsShaverCard extends LitElement {
     `;
   }
 
+  // ---------- Notification banner ----------
+  _renderNotifications() {
+    const active = NOTIFICATIONS.filter(n =>
+      this._stateVal(n.key) === "on" && !this._dismissed?.has(n.key)
+    );
+    if (active.length === 0) return '';
+
+    return html`
+      <div class="notification-banner">
+        ${active.map(n => html`
+          <div class="notification-item">
+            <svg viewBox="0 0 24 24"><path d="${ICONS.alert}"/></svg>
+            <span class="notification-text"
+                  @click="${() => this._fireMoreInfo(this._entities?.[n.key])}"
+            >${this._t("notif_" + n.key)}</span>
+            <span class="notification-clear"
+                  @click="${(e) => { e.stopPropagation(); this._clearNotification(n.key); }}">
+              <svg viewBox="0 0 24 24"><path d="${ICONS.close}"/></svg>
+            </span>
+          </div>
+        `)}
+      </div>
+    `;
+  }
+
+  _clearNotification(key) {
+    if (!this._hass) return;
+    if (!this._dismissed) this._dismissed = new Set();
+    this._dismissed.add(key);
+    this.requestUpdate();
+    const device = this._hass.devices?.[this.config.device_id];
+    const entryId = device?.config_entries?.[0];
+    this._hass.callService("philips_shaver", "acknowledge_notification", {
+      notification: key,
+      ...(entryId ? { entry_id: entryId } : {}),
+    });
+  }
+
   // ---------- Chips row ----------
   _renderChips() {
     const bat = this._numState("battery", 0);
@@ -425,12 +490,31 @@ export class PhilipsShaverCard extends LitElement {
 
   // ---------- Gauge ----------
   _renderGauge(activity) {
+    if (activity === "initializing") return this._renderInitializing();
     if (activity === "shaving") {
       return this._isOneBlade ? this._renderSpeedGauge() : this._renderPressureGauge();
     }
     if (activity === "cleaning") return this._renderCleaningGauge();
     if (activity === "charging") return this._renderChargingBattery();
     return this._renderBatteryGauge();
+  }
+
+  _renderInitializing() {
+    return html`
+      <div class="init-wrap">
+        <div class="init-rings">
+          <div class="init-ring init-ring-1"></div>
+          <div class="init-ring init-ring-2"></div>
+          <div class="init-ring init-ring-3"></div>
+          <div class="init-bt">
+            <svg viewBox="0 0 24 24" fill="var(--primary-color, #3b82f6)">
+              <path d="${ICONS.bluetooth}"/>
+            </svg>
+          </div>
+        </div>
+        <div class="init-label">${this._t("gauge_initializing")}</div>
+      </div>
+    `;
   }
 
   _renderPressureGauge() {

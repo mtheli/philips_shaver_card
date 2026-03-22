@@ -15,15 +15,25 @@ Custom Lovelace card for the [Philips Shaver](https://github.com/mtheli/philips_
 - **Cleaning ring gauge** with droplet animation during cleaning cycles
 - **Shaver head** remaining bar
 - **OneBlade support** with speed gauge and adapted stats
+- **Notification banner** — active warnings (motor blocked, head replacement, etc.) shown as dismissible alerts with per-notification clearing
+- **Connecting animation** — animated Bluetooth icon while the integration is initializing
 - **Context-dependent stats**: motor RPM & current during shaving, session history in standby, charge info while charging
 - **Clickable elements** — tap header, battery, or head bar to open the entity's more-info dialog
 - **Multi-language support** — English and German, auto-detected from your Home Assistant language setting
 
-The card automatically switches between four modes based on the shaver's activity state:
+The card automatically switches between modes based on the shaver's activity state:
 
 | Standby | Shaving | Charging | Cleaning |
 | :---: | :---: | :---: | :---: |
 | ![Standby](./screenshots/standby.png) | ![Shaving](./screenshots/shaving.png) | ![Charging](./screenshots/charging.png) | ![Cleaning](./screenshots/cleaning.png) |
+
+| Connecting | Warning |
+| :---: | :---: |
+| ![Connecting](./screenshots/connecting.png) | ![Warning](./screenshots/warning.png) |
+
+## Community
+
+- [Smartes Badezimmer? So hilft dir ein Shelly Wall Display beim Zähneputzen & Rasieren!](https://www.youtube.com/watch?v=ROI91x2Swv8) — Video by smartmatic showing the card on a Shelly Wall Display with XP9405 and ESP32 Bridge (German)
 
 ## Installation
 
@@ -52,7 +62,8 @@ The card uses a visual editor — just add a card and select **Philips Shaver Ca
 ```yaml
 type: custom:philips-shaver-card
 device_id: <your-device-id>
-title: My Shaver  # optional, defaults to "Philips Shaver"
+title: My Shaver   # optional, defaults to "Philips Shaver"
+show_model: true   # optional, show model number as subtitle (default: true)
 ```
 
 ## Supported Languages
@@ -66,7 +77,7 @@ The card automatically uses your Home Assistant language setting. Unsupported la
 
 ## Requirements
 
-- [Philips Shaver](https://github.com/mtheli/philips_shaver) integration (v0.5.0+)
+- [Philips Shaver](https://github.com/mtheli/philips_shaver) integration (v0.10.0+)
 - Home Assistant 2024.11.0+
 
 ## License

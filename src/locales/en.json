@@ -6,6 +6,7 @@
   "gauge_session": "SESSION",
   "gauge_battery": "Battery",
   "gauge_standby": "Standby",
+  "gauge_initializing": "Connecting…",
   "gauge_charging": "Charging",
   "gauge_cleaning": "Cleaning",
   "gauge_in_progress": "In Progress",
@@ -41,6 +42,12 @@
   "time_today": "Today",
   "time_yesterday": "Yesterday",
   "time_days_ago": "{n}d ago",
+
+  "notif_notification_motor_blocked": "Motor Blocked",
+  "notif_notification_clean_reminder": "Cleaning Required",
+  "notif_notification_head_replacement": "Replace Shaving Head",
+  "notif_notification_battery_overheated": "Battery Overheated",
+  "notif_notification_unplug_required": "Unplug Before Use",
 
   "config_title": "Title (Optional)",
   "config_show_model": "Show model number as subtitle",
