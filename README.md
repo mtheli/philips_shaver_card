@@ -80,6 +80,10 @@ The card automatically uses your Home Assistant language setting. Unsupported la
 - [Philips Shaver](https://github.com/mtheli/philips_shaver) integration (v0.10.0+)
 - Home Assistant 2024.11.0+
 
+## Disclaimer
+
+This is an independent community project and is not affiliated with, endorsed by, or sponsored by Philips. All product names, trademarks, and registered trademarks are property of their respective owners.
+
 ## License
 
 [MIT](LICENSE)
