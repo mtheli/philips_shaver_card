@@ -7,7 +7,7 @@ import { LitElement, html, css, unsafeCSS, svg } from 'lit';
 import styles from 'bundle-text:./philips_shaver_card.css';
 import { t } from './translations.js';
 
-export const CARD_VERSION = "0.5.0-beta.1";
+export const CARD_VERSION = "0.5.0";
 
 // ---------- Entity discovery map: translation_key → local alias ----------
 const TRANSLATION_KEY_MAP = {
@@ -367,7 +367,14 @@ export class PhilipsShaverCard extends LitElement {
   _renderHeader() {
     const device = this._hass.devices?.[this.config.device_id];
     const model = device?.model || "";
-    const name = this.config.title || this._t("default_title");
+    // Default the header to the device's name (HA user-rename wins, then the
+    // integration-provided friendly_name) so the card matches what the device
+    // is actually called; fall back to the generic title only when unnamed.
+    const name =
+      this.config.title ||
+      device?.name_by_user ||
+      device?.name ||
+      this._t("default_title");
     const showModel = this.config.show_model !== false;
 
     const espEntity = this._entity("esp_bridge_alive");
