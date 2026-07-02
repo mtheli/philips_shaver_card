@@ -6,6 +6,11 @@
 
 Custom Lovelace card for the [Philips Shaver](https://github.com/mtheli/philips_shaver) Home Assistant integration.
 
+> [!IMPORTANT]
+> **The card now ships with the [Philips Shaver integration](https://github.com/mtheli/philips_shaver)** (v0.18.0 and newer) — no separate installation needed anymore. If you installed the card from this repository, please remove it: in HACS uninstall *Philips Shaver Card* (this also removes the dashboard resource), or delete the manually added resource. Your dashboards keep working unchanged — the card type stays `custom:philips-shaver-card`.
+>
+> This repository remains the home of the card's source code and issue tracker, but there will be no further standalone releases. Card updates ship with integration releases.
+
 ![Shaving mode](./screenshots/shaving.png)
 
 ## Features
@@ -37,21 +42,7 @@ The card automatically switches between modes based on the shaver's activity sta
 
 ## Installation
 
-### HACS (Recommended)
-
-1. Go to **HACS** > **Frontend**
-2. Click the three-dot menu > **Custom repositories**
-3. Add `https://github.com/mtheli/philips_shaver_card` with category **Dashboard**
-4. Find "Philips Shaver Card" and click **Install**
-5. Reload your browser
-
-### Manual
-
-1. Download `philips_shaver_card.js` from the [latest release](https://github.com/mtheli/philips_shaver_card/releases/latest)
-2. Copy it to `config/www/philips_shaver_card.js`
-3. Add the resource in **Settings** > **Dashboards** > **Resources**:
-   - URL: `/local/philips_shaver_card.js`
-   - Type: JavaScript Module
+The card is bundled with the [Philips Shaver integration](https://github.com/mtheli/philips_shaver) (v0.18.0+). Installing the integration — via HACS or manually — is all you need; the card registers itself automatically, no dashboard resource setup required.
 
 ## Configuration
 
