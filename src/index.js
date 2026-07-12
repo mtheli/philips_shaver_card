@@ -60,6 +60,29 @@ if (winner) {
     name: "Philips Shaver Card",
     description: "Custom card for the Philips Shaver integration with pressure gauge, battery, and diagnostics.",
     preview: true,
+    // Card picker suggestion (HA 2026.6+): suggest this card for any
+    // philips_shaver entity. The picked entity may sit on a sub-device
+    // (e.g. Connection), so normalize to the device owning the battery
+    // entity within the same config entry — same shape as getStubConfig.
+    getEntitySuggestion: (hass, entityId) => {
+      const entity = hass.entities?.[entityId];
+      if (!entity || entity.platform !== "philips_shaver") return null;
+      const devices = hass.devices || {};
+      const entryIds = devices[entity.device_id]?.config_entries || [];
+      const main = Object.values(hass.entities).find(
+        (e) =>
+          e.platform === "philips_shaver" &&
+          e.translation_key === "battery" &&
+          (e.device_id === entity.device_id ||
+            (devices[e.device_id]?.config_entries || []).some((ce) =>
+              entryIds.includes(ce),
+            )),
+      );
+      const deviceId = (main ?? entity).device_id;
+      // setConfig rejects a falsy device_id — better no suggestion than
+      // one whose preview renders an error card.
+      return deviceId ? { config: { type: `custom:${TAG}`, device_id: deviceId } } : null;
+    },
   });
 
   console.info(
