@@ -533,7 +533,8 @@ export class PhilipsShaverCard extends LitElement {
     const ts = elapsed % 60;
     const timerStr = String(tm).padStart(2, "0") + ":" + String(ts).padStart(2, "0");
 
-    const needleFrac = Math.min(pressure / max, 0.99);
+    // The pressure reading can dip below zero; keep the needle on the dial.
+    const needleFrac = Math.max(0, Math.min(pressure / max, 0.99));
     const nc = PRESSURE_COLORS[pState] || PRESSURE_COLORS.no_contact;
 
     const { ZONE_BASE: base, ZONE_LOW: low, ZONE_HIGH: high } = GAUGE;
