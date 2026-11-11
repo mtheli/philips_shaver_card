@@ -1,13 +1,12 @@
 # Philips Shaver Card
 
-[![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 [![GitHub Release](https://img.shields.io/github/v/release/mtheli/philips_shaver_card)](https://github.com/mtheli/philips_shaver_card/releases)
 [![License: MIT](https://img.shields.io/github/license/mtheli/philips_shaver_card)](LICENSE)
 
 Custom Lovelace card for the [Philips Shaver](https://github.com/mtheli/philips_shaver) Home Assistant integration.
 
 > [!IMPORTANT]
-> **The card now ships with the [Philips Shaver integration](https://github.com/mtheli/philips_shaver)** (v0.18.0 and newer) — no separate installation needed anymore. If you installed the card from this repository, please remove it: in HACS uninstall *Philips Shaver Card* (this also removes the dashboard resource), or delete the manually added resource. Your dashboards keep working unchanged — the card type stays `custom:philips-shaver-card`.
+> **The card now ships with the [Philips Shaver integration](https://github.com/mtheli/philips_shaver)** (v0.18.0 and newer) — no separate installation needed anymore. If you installed the card from this repository, please remove it: uninstall *Philips Shaver Card* in the Marketplace (in HACS before Home Assistant 2026.11; this also removes the dashboard resource), or delete the manually added resource. Your dashboards keep working unchanged — the card type stays `custom:philips-shaver-card`.
 >
 > This repository remains the home of the card's source code and issue tracker, but there will be no further standalone releases. Card updates ship with integration releases.
 
@@ -42,7 +41,7 @@ The card automatically switches between modes based on the shaver's activity sta
 
 ## Installation
 
-The card is bundled with the [Philips Shaver integration](https://github.com/mtheli/philips_shaver) (v0.18.0+). Installing the integration — via HACS or manually — is all you need; the card registers itself automatically, no dashboard resource setup required.
+The card is bundled with the [Philips Shaver integration](https://github.com/mtheli/philips_shaver) (v0.18.0+). Installing the integration — via the Marketplace or manually — is all you need; the card registers itself automatically, no dashboard resource setup required.
 
 ## Configuration
 
