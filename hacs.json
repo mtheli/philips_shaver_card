@@ -1,5 +1,6 @@
 {
   "name": "Philips Shaver Card",
+  "homeassistant": "2024.11.0",
   "render_readme": true,
   "filename": "philips_shaver_card.js"
 }
