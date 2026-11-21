@@ -5,6 +5,7 @@
   "gauge_session": "SITZUNG",
   "gauge_battery": "Akku",
   "gauge_standby": "Bereit",
+  "gauge_locked": "Gesperrt",
   "gauge_initializing": "Verbinde…",
   "gauge_charging": "Laden",
   "gauge_cleaning": "Reinigung",

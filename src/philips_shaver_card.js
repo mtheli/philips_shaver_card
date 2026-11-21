@@ -57,6 +57,12 @@ const NOTIFICATIONS = [
   { key: "notification_unplug_required", icon: "plug_off" },
 ];
 
+// ---------- Editor labels: config field → translation key ----------
+const CONFIG_LABEL_KEYS = {
+  title: "config_title",
+  show_model: "config_show_model",
+};
+
 // ---------- Gauge constants ----------
 const GAUGE = {
   CX: 140, CY: 142, R: 108, STROKE: 22,
@@ -224,7 +230,7 @@ export class PhilipsShaverCard extends LitElement {
 
   setConfig(config) {
     if (!config.device_id) {
-      throw new Error(t(null, "config_select_device"));
+      throw new Error(t(this._hass, "config_select_device"));
     }
     this.config = config;
     this._entities = null;
@@ -503,6 +509,7 @@ export class PhilipsShaverCard extends LitElement {
     }
     if (activity === "cleaning") return this._renderCleaningGauge();
     if (activity === "charging") return this._renderChargingBattery();
+    if (activity === "locked") return this._renderBatteryGauge("gauge_locked");
     return this._renderBatteryGauge();
   }
 
@@ -627,7 +634,7 @@ export class PhilipsShaverCard extends LitElement {
     `;
   }
 
-  _renderBatteryGauge() {
+  _renderBatteryGauge(statusKey = "gauge_standby") {
     const { CX: cx, CY: cy, STROKE: st } = GAUGE;
     const bat = this._numState("battery", 0);
     const bc = batteryColor(bat);
@@ -640,7 +647,7 @@ export class PhilipsShaverCard extends LitElement {
           <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="52" font-weight="700" fill="var(--primary-text-color, #fff)" font-family="inherit" letter-spacing="-2">${bat}%</text>
           <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="13" fill="var(--ps-text-dim)" font-family="inherit">${this._t("gauge_battery")}</text>
         </svg>
-        <div class="gauge-status" style="color:var(--ps-text-dimmest)">${this._t("gauge_standby")}</div>
+        <div class="gauge-status" style="color:var(--ps-text-dimmest)">${this._t(statusKey)}</div>
       </div>
     `;
   }
@@ -848,12 +855,10 @@ export class PhilipsShaverCard extends LitElement {
       schema: [
         {
           name: "title",
-          label: t(null, "config_title"),
           selector: { text: {} },
         },
         {
           name: "show_model",
-          label: t(null, "config_show_model"),
           selector: { boolean: {} },
           default: true,
         },
@@ -869,6 +874,13 @@ export class PhilipsShaverCard extends LitElement {
           },
         },
       ],
+      // HA ignores schema `label` and passes only `localize` here. It calls
+      // this as a method of its form editor element, so `this.hass` is the
+      // editor's hass (t() falls back to the global hass otherwise).
+      computeLabel(schema) {
+        const key = CONFIG_LABEL_KEYS[schema.name];
+        return key ? t(this?.hass, key) : undefined;
+      },
     };
   }
 

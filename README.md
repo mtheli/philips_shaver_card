@@ -63,11 +63,11 @@ show_model: true   # optional, show model number as subtitle (default: true)
 | English | `en` |
 | German / Deutsch | `de` |
 
-The card automatically uses your Home Assistant language setting. Unsupported languages fall back to English. Contributions for additional languages are welcome — just add a new JSON file in `src/locales/`.
+The card automatically uses your Home Assistant language setting. Unsupported languages fall back to English. Contributions for additional languages are welcome: copy `src/locales/en.json` to `src/locales/<code>.json`, translate the values, and register the new file in `src/translations.js` (add an `import` and an entry in `LOCALES`).
 
 ## Requirements
 
-- [Philips Shaver](https://github.com/mtheli/philips_shaver) integration (v0.10.0+)
+- [Philips Shaver](https://github.com/mtheli/philips_shaver) integration (v0.18.0+, which ships this card)
 - Home Assistant 2024.11.0+
 
 ## Disclaimer
