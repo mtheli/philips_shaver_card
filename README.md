@@ -31,9 +31,9 @@ The card automatically switches between modes based on the shaver's activity sta
 | :---: | :---: | :---: | :---: |
 | ![Standby](./screenshots/standby.png) | ![Shaving](./screenshots/shaving.png) | ![Charging](./screenshots/charging.png) | ![Cleaning](./screenshots/cleaning.png) |
 
-| Connecting | Warning |
-| :---: | :---: |
-| ![Connecting](./screenshots/connecting.png) | ![Warning](./screenshots/warning.png) |
+| Connecting | Warning | Too Much Pressure | Dark Theme |
+| :---: | :---: | :---: | :---: |
+| ![Connecting](./screenshots/connecting.png) | ![Warning](./screenshots/warning.png) | ![Pressure too high](./screenshots/pressure_high.png) | ![Dark theme](./screenshots/dark.png) |
 
 ## Community
 
