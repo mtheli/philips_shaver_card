@@ -10,7 +10,7 @@ Custom Lovelace card for the [Philips Shaver](https://github.com/mtheli/philips_
 >
 > This repository remains the home of the card's source code and issue tracker, but there will be no further standalone releases. Card updates ship with integration releases.
 
-[![Shaving mode](./screenshots/shaving.png)](./screenshots/shaving.png)
+<a href="./screenshots/shaving.png"><img src="./screenshots/shaving.png" alt="Shaving mode" width="500"></a>
 
 ## Features
 
@@ -29,11 +29,11 @@ The card automatically switches between modes based on the shaver's activity sta
 
 | Standby | Shaving | Charging | Cleaning |
 | :---: | :---: | :---: | :---: |
-| [![Standby](./screenshots/standby.png)](./screenshots/standby.png) | [![Shaving](./screenshots/shaving.png)](./screenshots/shaving.png) | [![Charging](./screenshots/charging.png)](./screenshots/charging.png) | [![Cleaning](./screenshots/cleaning.png)](./screenshots/cleaning.png) |
+| <a href="./screenshots/standby.png"><img src="./screenshots/standby.png" alt="Standby" width="199"></a> | <a href="./screenshots/shaving.png"><img src="./screenshots/shaving.png" alt="Shaving" width="199"></a> | <a href="./screenshots/charging.png"><img src="./screenshots/charging.png" alt="Charging" width="199"></a> | <a href="./screenshots/cleaning.png"><img src="./screenshots/cleaning.png" alt="Cleaning" width="199"></a> |
 
 | Connecting | Warning | Too Much Pressure | Dark Theme |
 | :---: | :---: | :---: | :---: |
-| [![Connecting](./screenshots/connecting.png)](./screenshots/connecting.png) | [![Warning](./screenshots/warning.png)](./screenshots/warning.png) | <a href="./screenshots/pressure_high.png"><img src="./screenshots/pressure_high.png" alt="Pressure too high" width="199"></a> | <a href="./screenshots/dark.png"><img src="./screenshots/dark.png" alt="Dark theme" width="199"></a> |
+| <a href="./screenshots/connecting.png"><img src="./screenshots/connecting.png" alt="Connecting" width="199"></a> | <a href="./screenshots/warning.png"><img src="./screenshots/warning.png" alt="Warning" width="199"></a> | <a href="./screenshots/pressure_high.png"><img src="./screenshots/pressure_high.png" alt="Pressure too high" width="199"></a> | <a href="./screenshots/dark.png"><img src="./screenshots/dark.png" alt="Dark theme" width="199"></a> |
 
 ## Community
 
