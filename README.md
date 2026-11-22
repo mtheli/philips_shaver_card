@@ -33,7 +33,7 @@ The card automatically switches between modes based on the shaver's activity sta
 
 | Connecting | Warning | Too Much Pressure | Dark Theme |
 | :---: | :---: | :---: | :---: |
-| [![Connecting](./screenshots/connecting.png)](./screenshots/connecting.png) | [![Warning](./screenshots/warning.png)](./screenshots/warning.png) | [![Pressure too high](./screenshots/pressure_high.png)](./screenshots/pressure_high.png) | [![Dark theme](./screenshots/dark.png)](./screenshots/dark.png) |
+| [![Connecting](./screenshots/connecting.png)](./screenshots/connecting.png) | [![Warning](./screenshots/warning.png)](./screenshots/warning.png) | <a href="./screenshots/pressure_high.png"><img src="./screenshots/pressure_high.png" alt="Pressure too high" width="199"></a> | <a href="./screenshots/dark.png"><img src="./screenshots/dark.png" alt="Dark theme" width="199"></a> |
 
 ## Community
 
