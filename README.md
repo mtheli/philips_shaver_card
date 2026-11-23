@@ -38,6 +38,7 @@ The card automatically switches between modes based on the shaver's activity sta
 ## Community
 
 - [Smartes Badezimmer? So hilft dir ein Shelly Wall Display beim Zähneputzen & Rasieren!](https://www.youtube.com/watch?v=ROI91x2Swv8) — Video by [@smartmatic](https://github.com/smartmatic) showing the card on a Shelly Wall Display with XP9405 and ESP32 Bridge (German)
+- [Philips Rasierer in Home Assistant integrieren und per Philips Shaver Karte ins Dashboard](https://www.youtube.com/shorts/ILX4mZ7Vg58) — YouTube Short by [@smartmatic](https://github.com/smartmatic) showing the setup and the card (German)
 
 ## Installation
 
